@@ -1,0 +1,10 @@
+.App {
+  display: flex; 
+  flex-direction: column;
+  justify-content: center;
+  color: #E4F4FB;
+}
+.MarshaContainer {
+  margin-left: auto; 
+  margin-right: 0;
+}
