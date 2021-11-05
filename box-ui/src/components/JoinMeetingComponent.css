@@ -1,0 +1,11 @@
+.JoinInputContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.InputContainer { 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
