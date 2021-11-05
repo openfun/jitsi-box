@@ -1,17 +1,20 @@
 import React from 'react';
-import MarshaComponent from './components/MarshaComponent';
-import HomeButtonsComponent from './components/HomeButtonsComponent';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes
+} from 'react-router-dom';
+import HomeComponent from './components/HomeComponent';
 
 const App= () => {
   return (
-    <div className="App">
-      <div>
-        <MarshaComponent />
+    <Router>
+      <div className="App">
+        <Routes>
+              <Route path='/' element={<HomeComponent/>}/>
+        </Routes>
       </div>
-      <div className="HomeButtonsContainer">
-      <HomeButtonsComponent />
-      </div>
-    </div>
+    </Router>
   );
 };
 
