@@ -1,4 +1,4 @@
-.Home {
+.Dashboard {
     display: flex; 
     flex-direction: column;
     justify-content: center;
@@ -7,7 +7,7 @@
     width: 100vw;
 }
 
-.HomeButtonsContainer {
+.DashboardButtonsContainer {
     width: 100vw;
     height: 100vh;
 }

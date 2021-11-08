@@ -1,0 +1,34 @@
+.DashboardButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: 0;
+    /* width: 100%;
+    height: 100%; */
+}
+.DashboardButtonsRow {
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-evenly;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+.ButtonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: center;
+    margin: 10px;
+    width: 100%;
+    height: 100%;
+}
+.Button {
+    height:80%;
+    width:70%;
+    color: white;
+}
+.lmj-logo {
+    height:80%;
+    width:70%;
+}
