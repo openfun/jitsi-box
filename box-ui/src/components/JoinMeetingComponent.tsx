@@ -1,5 +1,5 @@
 import { Box, Button } from '@mui/material';
-import { FunctionComponent, useState, useRef } from 'react';
+import React, { FunctionComponent, useState, useRef, ChangeEvent } from 'react';
 import './JoinMeetingComponent.css';
 import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
@@ -13,7 +13,7 @@ const JoinMeetingComponent: FunctionComponent = () => {
     const [layout, setLayout] = useState('default');
     const keyboard = useRef();
 
-    const onChange = (input: any) => {
+    const onChange = (input: string) => {
         setMeetingName(input);
     };
 
@@ -22,7 +22,7 @@ const JoinMeetingComponent: FunctionComponent = () => {
         setLayout(newLayoutName);
     };
 
-    const onKeyPress = (button: any) => {
+    const onKeyPress = (button: string) => {
         if (button === '{shift}' || button === '{lock}') handleShift();
     };
 
@@ -70,14 +70,6 @@ const JoinMeetingComponent: FunctionComponent = () => {
                         onKeyPress={onKeyPress}
                     />
                 </div>
-            </div>
-            <div>
-                <Keyboard
-                    keyboardRef={(r: any) => (keyboard.current = r)}
-                    layoutName={layout}
-                    onChange={onChange}
-                    onKeyPress={onKeyPress}
-                />
             </div>
         </div>
     );
