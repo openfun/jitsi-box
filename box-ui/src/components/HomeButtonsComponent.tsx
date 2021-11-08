@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import './HomeButtonsComponent.css';
+import { Link } from 'react-router-dom';
 const HomeButtonsComponent = () => {
     return (
         <div className='HomeButtonsComponent'>
@@ -10,7 +11,7 @@ const HomeButtonsComponent = () => {
                 </Button>
             </div>
             <div className='ButtonContainer'>
-                <Button variant='outlined' className='Button'>
+                <Button variant='outlined' className='Button' component={Link} to='/join'>
                     Join a meeting
                 </Button>
             </div>
