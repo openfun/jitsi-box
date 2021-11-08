@@ -1,12 +1,12 @@
 import * as React from 'react';
 import './CreateMeetingComponent.css'
-import MarshaComponent from './MarshaComponent';
+import HeaderComponent from './HeaderComponent';
 const CreateMeetingComponent = () => {
 
     return (
         <div className='CreateMeetingComponent'>
             <div>
-        <MarshaComponent />
+        <HeaderComponent />
         </div>
             test Create
         </div>

@@ -1,14 +1,14 @@
 import { Box, Button, TextField } from '@mui/material';
 import * as React from 'react';
 import './JoinMeetingComponent.css'
-import MarshaComponent from './MarshaComponent';
+import HeaderComponent from './HeaderComponent';
 
 const JoinMeetingComponent = () => {
 
     return (
         <div className='JoinMeetingComponent'>
             <div>
-        <MarshaComponent />
+        <HeaderComponent />
         </div>
         <div className='JoinInputContainer'>
             <div>
