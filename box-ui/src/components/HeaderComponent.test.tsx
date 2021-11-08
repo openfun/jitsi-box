@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import MarshaComponent from './MarshaComponent';
+import HeaderComponent from './HeaderComponent';
 
 test('renders learn react link', () => {
-  render(<MarshaComponent />);
+  render(<HeaderComponent />);
   const linkElement = screen.getByText(/learn react/i);
   expect(linkElement).toBeInTheDocument();
 });
