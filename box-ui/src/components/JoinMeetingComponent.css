@@ -1,9 +1,13 @@
+.JoinMeetingComponent {
+    background: #e4f4fb;
+}
+
 .JoinInputContainer {
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
-.InputContainer { 
+.InputContainer {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -12,7 +16,7 @@
     margin-right: 1%;
     margin-left: 1%;
 }
-.JoinMessage { 
+.JoinMessage {
     text-align: center;
 }
 .JoinButton {
@@ -22,5 +26,4 @@
 .InputMessage {
     flex-grow: 3;
     margin: auto;
-
 }
