@@ -71,6 +71,14 @@ const JoinMeetingComponent: FunctionComponent = () => {
                     />
                 </div>
             </div>
+            <div>
+                <Keyboard
+                    keyboardRef={(r: any) => (keyboard.current = r)}
+                    layoutName={layout}
+                    onChange={onChange}
+                    onKeyPress={onKeyPress}
+                />
+            </div>
         </div>
     );
 };
