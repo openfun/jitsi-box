@@ -18,7 +18,7 @@ const CreateMeetingComponent: FunctionComponent = () => {
     return (
         <div className='CreateMeetingComponent'>
             <div>
-                <HeaderComponent />
+                <HeaderComponent returnDisplayed={true} marshaDisplayed={true} />
             </div>
             <div className='CreateMeetingContainer'>
                 <div className='CreateMessage'>
