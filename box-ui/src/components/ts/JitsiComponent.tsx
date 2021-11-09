@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, FunctionComponent } from 'react';
 
 import '../css/JitsiComponent.css';
 
-const JitsiMeetComponent = () => {
-    const startConference = () => {
+const JitsiMeetComponent: FunctionComponent = () => {
+    const startConference = (): void => {
         try {
             const domain = 'meet.jit.si';
             const options = {
