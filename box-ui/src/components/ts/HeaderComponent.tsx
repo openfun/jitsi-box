@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
-import './HeaderComponent.css';
+import '../css/HeaderComponent.css';
 
 interface HeaderProps {
     returnDisplayed: boolean;
