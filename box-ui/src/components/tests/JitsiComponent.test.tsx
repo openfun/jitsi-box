@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import JitsiComponent from './JitsiComponent';
+import JitsiComponent from '../ts/JitsiComponent';
 
 test('renders learn react link', () => {
     render(<JitsiComponent />);

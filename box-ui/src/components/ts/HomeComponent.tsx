@@ -1,13 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import HeaderComponent from './HeaderComponent';
 import HomeButtonsComponent from './HomeButtonsComponent';
-import './HomeComponent.css';
+import '../css/HomeComponent.css';
 
 const HomeComponent: FunctionComponent = () => {
     return (
         <div className='Home'>
             <div>
-                <HeaderComponent />
+                <HeaderComponent homeDisplayed={false} marshaDisplayed={true} />
             </div>
             <div className='HomeButtonsContainer'>
                 <HomeButtonsComponent />

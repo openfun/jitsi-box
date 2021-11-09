@@ -1,7 +1,7 @@
-import React, { FunctionComponent } from 'react';
+import React, { useState, FunctionComponent } from 'react';
 import Button from '@mui/material/Button';
 import SliderComponent from './SliderComponent';
-import './DashboardButtonsComponent.css';
+import '../css/DashboardButtonsComponent.css';
 import CameraswitchOutlinedIcon from '@mui/icons-material/CameraswitchOutlined';
 import VideoCameraBackOutlinedIcon from '@mui/icons-material/VideoCameraBackOutlined';
 import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined';
@@ -12,14 +12,20 @@ import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 
 const DashboardButtonsComponent: FunctionComponent = () => {
+    const [micActivated, setMicActivated] = useState(true);
+
+    const switchMic = (): void => {
+        setMicActivated(!micActivated);
+    };
+
     return (
         <div className='DashboardButtons'>
             <div className='DashboardButtonsRow'>
                 <div className='ButtonContainer'>
-                    <Button variant='outlined' className='Button'>
-                        <MicNoneOutlinedIcon />
+                    <Button variant='outlined' className='Button' onClick={switchMic}>
+                        {micActivated ? <MicNoneOutlinedIcon /> : <MicOffOutlinedIcon />}
                     </Button>
-                    Micro
+                    Mic
                 </div>
                 <div className='ButtonContainer'>
                     <Button variant='outlined' className='Button'>

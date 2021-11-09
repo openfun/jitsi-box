@@ -5,7 +5,7 @@ import { Alert, Box, Button, Snackbar } from '@mui/material';
 import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
 import HeaderComponent from './HeaderComponent';
 
-import './MarshaLoginComponent.css';
+import '../css/MarshaLoginComponent.css';
 
 const MarshaLoginComponent: FunctionComponent = () => {
     const [code, setCode] = useState<Array<number>>([]);
@@ -85,7 +85,7 @@ const MarshaLoginComponent: FunctionComponent = () => {
     return (
         <div className='MarshaLoginComponent'>
             <div>
-                <HeaderComponent />
+                <HeaderComponent homeDisplayed={true} marshaDisplayed={false} />
             </div>
             <div>
                 <Snackbar

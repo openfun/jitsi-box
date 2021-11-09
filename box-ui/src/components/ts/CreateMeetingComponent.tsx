@@ -1,12 +1,11 @@
 import React, { useState, FunctionComponent } from 'react';
 import { Button } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
-import './CreateMeetingComponent.css';
+import '../css/CreateMeetingComponent.css';
 import HeaderComponent from './HeaderComponent';
 
 const CreateMeetingComponent: FunctionComponent = () => {
     const data = useLocation();
-
     const [linkRoom, setLinkRoom] = useState(
         data.state && data.state.link ? data.state.link : 'meeting.education/test',
     );
@@ -18,12 +17,12 @@ const CreateMeetingComponent: FunctionComponent = () => {
     return (
         <div className='CreateMeetingComponent'>
             <div>
-                <HeaderComponent />
+                <HeaderComponent homeDisplayed={true} marshaDisplayed={true} />
             </div>
             <div className='CreateMeetingContainer'>
                 <div className='CreateMessage'>
                     <div>
-                        <h1>Here is your Jitisi Link</h1>
+                        <h1>Here is your Jitsi Link</h1>
                     </div>
                     <div>
                         <h4>{linkRoom}</h4>
