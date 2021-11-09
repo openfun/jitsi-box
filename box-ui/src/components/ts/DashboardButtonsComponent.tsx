@@ -12,6 +12,7 @@ import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 
 const DashboardButtonsComponent: FunctionComponent = () => {
+    const;
     return (
         <div className='DashboardButtons'>
             <div className='DashboardButtonsRow'>
