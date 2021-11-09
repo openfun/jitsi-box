@@ -6,7 +6,7 @@ import DashboardButtonsComponent from './DashboardButtonsComponent';
 const DashboardComponent: FunctionComponent = () => {
     return (
         <div className='Dashboard'>
-            <HeaderComponent homeDisplayed={true} marshaDisplayed={false} />
+            <HeaderComponent homeDisplayed={false} marshaDisplayed={false} />
             <div className='DashboardButtonsContainer'>
                 <DashboardButtonsComponent />
             </div>
