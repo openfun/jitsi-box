@@ -3,3 +3,18 @@
     height: 100vh;
     width: 100vw;
 }
+.CreateMeetingContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+}
+
+.ButtonContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+}
