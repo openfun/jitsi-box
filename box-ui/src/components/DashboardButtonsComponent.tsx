@@ -64,7 +64,7 @@ const DashboardButtonsComponent: FunctionComponent = () => {
                     <Button variant='outlined' className='Button'>
                         <ExitToAppOutlinedIcon />
                     </Button>
-                    Deconnect
+                    Disconnect
                 </div>
             </div>
         </div>
