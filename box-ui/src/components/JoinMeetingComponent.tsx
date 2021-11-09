@@ -1,5 +1,5 @@
 import { Box, Button } from '@mui/material';
-import React, { FunctionComponent, useState, useRef, ChangeEvent } from 'react';
+import React, { FunctionComponent, useState, useRef, ChangeEvent, MutableRefObject } from 'react';
 import './JoinMeetingComponent.css';
 import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
@@ -13,11 +13,11 @@ const JoinMeetingComponent: FunctionComponent = () => {
     const [layout, setLayout] = useState('default');
     const keyboard = useRef();
 
-    const onChange = (input: string) => {
+    const onChange = (input: string): void => {
         setMeetingName(input);
     };
 
-    const handleShift = () => {
+    const handleShift = (): void => {
         const newLayoutName = layout === 'default' ? 'shift' : 'default';
         setLayout(newLayoutName);
     };
@@ -26,11 +26,11 @@ const JoinMeetingComponent: FunctionComponent = () => {
         if (button === '{shift}' || button === '{lock}') handleShift();
     };
 
-    const joinRoom = () => {
+    const joinRoom = (): void => {
         console.log('Launch Jitsi.meeting');
     };
 
-    const onChangeInput = (event: any) => {
+    const onChangeInput = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
         setMeetingName(event.target.value);
     };
     return (
@@ -50,7 +50,7 @@ const JoinMeetingComponent: FunctionComponent = () => {
                                 <OutlinedInput
                                     id='outlined-adornment-amount'
                                     value={meetingName}
-                                    onChange={onChangeInput}
+                                    onChange={(e) => onChangeInput(e)}
                                     label='Room Name'
                                 />
                             </FormControl>
@@ -64,7 +64,7 @@ const JoinMeetingComponent: FunctionComponent = () => {
                 </div>
                 <div>
                     <Keyboard
-                        keyboardRef={(r: any) => (keyboard.current = r)}
+                        keyboardRef={(r: MutableRefObject<undefined>) => (keyboard.current = r.current)}
                         layoutName={layout}
                         onChange={onChange}
                         onKeyPress={onKeyPress}
