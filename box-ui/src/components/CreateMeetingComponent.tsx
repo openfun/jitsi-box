@@ -1,11 +1,11 @@
-import * as React from 'react';
+import React, { FunctionComponent } from 'react';
 import './CreateMeetingComponent.css';
 import HeaderComponent from './HeaderComponent';
-const CreateMeetingComponent = () => {
+const CreateMeetingComponent: FunctionComponent = () => {
     return (
         <div className='CreateMeetingComponent'>
             <div>
-                <HeaderComponent />
+                <HeaderComponent returnDisplayed={true} marshaDisplayed={true} />
             </div>
             test Create
         </div>
