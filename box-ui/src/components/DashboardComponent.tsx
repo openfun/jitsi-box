@@ -1,18 +1,17 @@
 import * as React from 'react';
-import './DashboardComponent.css'
-import MarshaComponent from './MarshaComponent';
+import './DashboardComponent.css';
+import HeaderComponent from './HeaderComponent';
 import DashboardButtonsComponent from './DashboardButtonsComponent';
 
 const DashboardComponent = () => {
-
     return (
-        <div className='Dashboard'>   
-            <MarshaComponent />
-            <div className="DashboardButtonsContainer">
+        <div className='Dashboard'>
+            <HeaderComponent />
+            <div className='DashboardButtonsContainer'>
                 <DashboardButtonsComponent />
             </div>
         </div>
-      );
-}
+    );
+};
 
 export default DashboardComponent;
