@@ -4,7 +4,7 @@ import CreateMeetingComponent from './components/ts/CreateMeetingComponent';
 import HomeComponent from './components/ts/HomeComponent';
 import JoinMeetingComponent from './components/ts/JoinMeetingComponent';
 import DashboardComponent from './components/ts/DashboardComponent';
-import MarshaLoginComponent from './components/MarshaLoginComponent';
+import MarshaLoginComponent from './components/ts/MarshaLoginComponent';
 
 const App: FunctionComponent = () => {
     return (
@@ -12,10 +12,10 @@ const App: FunctionComponent = () => {
             <div className='App'>
                 <Routes>
                     <Route path='/' element={<HomeComponent />} />
+                    <Route path='/login' element={<MarshaLoginComponent />} />
                     <Route path='/join' element={<JoinMeetingComponent />} />
                     <Route path='/create' element={<CreateMeetingComponent />} />
                     <Route path='/dashboard' element={<DashboardComponent />} />
-                    <Route path='/login' element={<MarshaLoginComponent />} />
                 </Routes>
             </div>
         </Router>

@@ -1,20 +1,27 @@
 import React, { FunctionComponent } from 'react';
 import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
-import { ArrowBack } from '@mui/icons-material';
+import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate } from 'react-router-dom';
 import '../css/HeaderComponent.css';
 
 interface HeaderProps {
-    returnDisplayed: boolean;
+    homeDisplayed: boolean;
     marshaDisplayed: boolean;
 }
 
 const HeaderComponent: FunctionComponent<HeaderProps> = ({
-    returnDisplayed: isReturnDisplayed,
+    homeDisplayed: isReturnDisplayed,
     marshaDisplayed: isMarshaDisplayed,
 }) => {
     const navigate = useNavigate();
 
+    const goToLoginMarsha = (): void => {
+        navigate({ pathname: '/login' }, { replace: true });
+    };
+
+    const goBackToHome = (): void => {
+        navigate({ pathname: '/' }, { replace: true });
+    };
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position='static'>
@@ -22,20 +29,20 @@ const HeaderComponent: FunctionComponent<HeaderProps> = ({
                     {isReturnDisplayed ? (
                         <IconButton
                             size='large'
-                            onClick={() => navigate(-1)}
+                            onClick={goBackToHome}
                             edge='start'
                             color='inherit'
                             aria-label='menu'
                             sx={{ mr: 2 }}
                         >
-                            <ArrowBack />
+                            <HomeIcon />
                         </IconButton>
                     ) : null}
                     <Typography variant='h6' component='div' sx={{ flexGrow: 1 }}>
                         Jitsi-Box
                     </Typography>
                     {isMarshaDisplayed ? (
-                        <Button color='inherit' variant='outlined'>
+                        <Button color='inherit' variant='outlined' onClick={goToLoginMarsha}>
                             Marsha Login
                         </Button>
                     ) : null}
