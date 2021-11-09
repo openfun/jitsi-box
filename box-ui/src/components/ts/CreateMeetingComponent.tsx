@@ -1,7 +1,7 @@
 import React, { useState, FunctionComponent } from 'react';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import './CreateMeetingComponent.css';
+import '../css/CreateMeetingComponent.css';
 import HeaderComponent from './HeaderComponent';
 
 const CreateMeetingComponent: FunctionComponent = () => {

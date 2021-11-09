@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import CreateMeetingComponent from './components/CreateMeetingComponent';
-import HomeComponent from './components/HomeComponent';
-import JoinMeetingComponent from './components/JoinMeetingComponent';
-import DashboardComponent from './components/DashboardComponent';
+import CreateMeetingComponent from './components/ts/CreateMeetingComponent';
+import HomeComponent from './components/ts/HomeComponent';
+import JoinMeetingComponent from './components/ts/JoinMeetingComponent';
+import DashboardComponent from './components/ts/DashboardComponent';
 
 const App: FunctionComponent = () => {
     return (

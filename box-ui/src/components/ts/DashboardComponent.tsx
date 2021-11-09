@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import './DashboardComponent.css';
+import '../css/DashboardComponent.css';
 import HeaderComponent from './HeaderComponent';
 import DashboardButtonsComponent from './DashboardButtonsComponent';
 

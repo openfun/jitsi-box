@@ -1,6 +1,6 @@
 import { Box, Button } from '@mui/material';
 import React, { FunctionComponent, useState, useRef, ChangeEvent, MutableRefObject } from 'react';
-import './JoinMeetingComponent.css';
+import '../css/JoinMeetingComponent.css';
 import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
 import HeaderComponent from './HeaderComponent';
