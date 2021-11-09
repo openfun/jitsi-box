@@ -6,7 +6,6 @@ import HeaderComponent from './HeaderComponent';
 
 const CreateMeetingComponent: FunctionComponent = () => {
     const data = useLocation();
-
     const [linkRoom, setLinkRoom] = useState(
         data.state && data.state.link ? data.state.link : 'meeting.education/test',
     );
