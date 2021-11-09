@@ -46,7 +46,7 @@ const DashboardButtonsComponent: FunctionComponent = () => {
                     <Button variant='outlined' className='Button'>
                         <CameraswitchOutlinedIcon />
                     </Button>
-                    Retour Vidéo
+                    Visualize Camera output
                 </div>
                 <div className='ButtonContainer'>
                     <Button variant='outlined' className='Button'>
