@@ -1,17 +1,18 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios, { AxiosResponse, AxiosRequestConfig, Method } from 'axios';
-import { Box, Button } from '@mui/material';
+import { Alert, Box, Button, Snackbar } from '@mui/material';
 import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
 import HeaderComponent from './HeaderComponent';
-import JoinMeetingComponent from './JoinMeetingComponent';
 
 import './MarshaLoginComponent.css';
 
 const MarshaLoginComponent: FunctionComponent = () => {
     const [code, setCode] = useState<Array<number>>([]);
+    const [isAlert, setAlert] = useState<boolean>(false);
+    const navigate = useNavigate();
 
-    const onButtonPress = (button: any): void => {
-        console.log(button.currentTarget.value);
+    const onButtonPress = (button: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         if (button.currentTarget.value !== 'return') {
             setCode([...code, parseInt(button.currentTarget.value)]);
         } else {
@@ -24,7 +25,6 @@ const MarshaLoginComponent: FunctionComponent = () => {
         return axios(config)
             .then((response: AxiosResponse) => {
                 // Success
-                console.log(response.data.link);
                 return response.data.link;
             })
             .catch((error) => {
@@ -53,7 +53,6 @@ const MarshaLoginComponent: FunctionComponent = () => {
     }
 
     useEffect(() => {
-        console.log(code);
         if (code.length === 6) {
             const method: Method = 'POST';
             const options = {
@@ -69,7 +68,11 @@ const MarshaLoginComponent: FunctionComponent = () => {
             let link;
             const waitMarshaResponse = async () => {
                 link = await fetchMarsha(options);
-                console.log(link);
+                if (link) {
+                    navigate({ pathname: '/create' }, { state: { link }, replace: true });
+                } else {
+                    setAlert(true);
+                }
             };
             waitMarshaResponse();
             setCode([]);
@@ -83,6 +86,19 @@ const MarshaLoginComponent: FunctionComponent = () => {
         <div className='MarshaLoginComponent'>
             <div>
                 <HeaderComponent />
+            </div>
+            <div>
+                <Snackbar
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                    open={isAlert}
+                    autoHideDuration={6000}
+                    onClose={() => setAlert(false)}
+                    key={'marshaLoginAlert'}
+                >
+                    <Alert severity='error' sx={{ width: '100%' }} variant='filled'>
+                        {'Wrong code'}
+                    </Alert>
+                </Snackbar>
             </div>
             <div className='MarshaLoginInfoContainer'>
                 <h2>Entrez le code fourni par Marsha.</h2>

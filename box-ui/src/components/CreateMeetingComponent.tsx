@@ -1,11 +1,15 @@
 import React, { useState, FunctionComponent } from 'react';
 import { Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import './CreateMeetingComponent.css';
 import HeaderComponent from './HeaderComponent';
 
 const CreateMeetingComponent: FunctionComponent = () => {
-    const [linkRoom, setLinkRoom] = useState('meeting.education/test');
+    const data = useLocation();
+
+    const [linkRoom, setLinkRoom] = useState(
+        data.state && data.state.link ? data.state.link : 'meeting.education/test',
+    );
     const navigate = useNavigate();
 
     const goToJoinRoute = (): void => {
