@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import './JitsiComponent.css';
+import '../css/JitsiComponent.css';
 
 const JitsiMeetComponent = () => {
     const startConference = () => {

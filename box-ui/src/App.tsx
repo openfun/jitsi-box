@@ -4,8 +4,8 @@ import CreateMeetingComponent from './components/ts/CreateMeetingComponent';
 import HomeComponent from './components/ts/HomeComponent';
 import JoinMeetingComponent from './components/ts/JoinMeetingComponent';
 import DashboardComponent from './components/ts/DashboardComponent';
-import MarshaLoginComponent from './components/MarshaLoginComponent';
-import JitsiComponent from './components/JitsiComponent';
+import MarshaLoginComponent from './components/ts/MarshaLoginComponent';
+import JitsiComponent from './components/ts/JitsiComponent';
 
 const App: FunctionComponent = () => {
     return (
