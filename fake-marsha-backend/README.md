@@ -1,6 +1,13 @@
 # Desc
 This is just a little node server faking the marsha backend for development.
 
+# Env
+Create a `.env` file and add a `LINK` and a `PORT` entry to it (do not set port to 3000, it is usually used by the frontend):
+```env
+PORT=3001
+LINK=https://your.jitsi.meet.com/yourRoom
+```
+
 # Setup
 The `app.js` file sets a node server, listening for a post on route `/login`.
 
@@ -20,3 +27,5 @@ if code is `111111`, else the response will be `404 Error`
     link: undefined,
 }
 ```
+
+To start the server, use the command `node app.js`
