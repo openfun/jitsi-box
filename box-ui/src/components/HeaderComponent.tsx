@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React, { FunctionComponent } from 'react';
 import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import { ArrowBack } from '@mui/icons-material';
 import './HeaderComponent.css';
 
-const HeaderComponent = () => {
+const HeaderComponent: FunctionComponent = () => {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position='static'>

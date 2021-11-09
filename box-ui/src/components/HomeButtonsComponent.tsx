@@ -1,13 +1,14 @@
-import * as React from 'react';
+import React, { FunctionComponent } from 'react';
 import Button from '@mui/material/Button';
 import './HomeButtonsComponent.css';
 import { Link } from 'react-router-dom';
-const HomeButtonsComponent = () => {
+
+const HomeButtonsComponent: FunctionComponent = () => {
     return (
         <div className='HomeButtonsComponent'>
             <div className='ButtonContainer'>
-                <Button variant='outlined' className='Button'>
-                    Create a meeting{' '}
+                <Button variant='outlined' className='Button' component={Link} to='/create'>
+                    Create a meeting
                 </Button>
             </div>
             <div className='ButtonContainer'>
