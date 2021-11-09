@@ -7,7 +7,7 @@ const HomeComponent: FunctionComponent = () => {
     return (
         <div className='Home'>
             <div>
-                <HeaderComponent />
+                <HeaderComponent returnDisplayed={false} marshaDisplayed={true} />
             </div>
             <div className='HomeButtonsContainer'>
                 <HomeButtonsComponent />
