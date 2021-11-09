@@ -1,25 +1,13 @@
 import React, { useEffect } from 'react';
-import './JitsiMeet.css';
+
+import './JitsiComponent.css';
 
 const JitsiMeetComponent = () => {
-    const containerStyle = {
-        width: '800px',
-        height: '700px',
-        flex: 1,
-    };
-
-    const jitsiContainerStyle = {
-        display: 'block',
-        width: '100%',
-        height: '100%',
-    };
-
     const startConference = () => {
         try {
             const domain = 'meet.jit.si';
             const options = {
                 roomName: 'roomName',
-                height: 400,
                 parentNode: document.getElementById('jitsi-container'),
                 interfaceConfigOverwrite: {
                     filmStripOnly: false,
@@ -49,8 +37,8 @@ const JitsiMeetComponent = () => {
     }, []);
 
     return (
-        <div style={containerStyle}>
-            <div id='jitsi-container' style={jitsiContainerStyle} />
+        <div className='JitsiComponent'>
+            <div id='jitsi-container' className='jitsiContainer' />
         </div>
     );
 };
