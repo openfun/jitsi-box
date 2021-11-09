@@ -13,6 +13,7 @@ const App: FunctionComponent = () => {
             <div className='App'>
                 <Routes>
                     <Route path='/' element={<HomeComponent />} />
+                    <Route path='/login' element={<MarshaLoginComponent />} />
                     <Route path='/join' element={<JoinMeetingComponent />} />
                     <Route path='/create' element={<CreateMeetingComponent />} />
                     <Route path='/dashboard' element={<DashboardComponent />} />

@@ -36,7 +36,7 @@ const JoinMeetingComponent: FunctionComponent = () => {
     return (
         <div className='JoinMeetingComponent'>
             <div>
-                <HeaderComponent returnDisplayed={true} marshaDisplayed={true} />
+                <HeaderComponent homeDisplayed={true} marshaDisplayed={true} />
             </div>
             <div className='JoinInputContainer'>
                 <div className='JoinMessage'>

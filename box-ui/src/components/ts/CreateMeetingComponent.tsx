@@ -18,12 +18,12 @@ const CreateMeetingComponent: FunctionComponent = () => {
     return (
         <div className='CreateMeetingComponent'>
             <div>
-                <HeaderComponent returnDisplayed={true} marshaDisplayed={true} />
+                <HeaderComponent homeDisplayed={true} marshaDisplayed={true} />
             </div>
             <div className='CreateMeetingContainer'>
                 <div className='CreateMessage'>
                     <div>
-                        <h1>Here is your Jitisi Link</h1>
+                        <h1>Here is your Jitsi Link</h1>
                     </div>
                     <div>
                         <h4>{linkRoom}</h4>
