@@ -5,6 +5,7 @@ import HomeComponent from './components/HomeComponent';
 import JoinMeetingComponent from './components/JoinMeetingComponent';
 import DashboardComponent from './components/DashboardComponent';
 import MarshaLoginComponent from './components/MarshaLoginComponent';
+import JitsiComponent from './components/JitsiComponent';
 
 const App: FunctionComponent = () => {
     return (
@@ -16,6 +17,7 @@ const App: FunctionComponent = () => {
                     <Route path='/create' element={<CreateMeetingComponent />} />
                     <Route path='/dashboard' element={<DashboardComponent />} />
                     <Route path='/login' element={<MarshaLoginComponent />} />
+                    <Route path='/jitsi' element={<JitsiComponent />} />
                 </Routes>
             </div>
         </Router>
