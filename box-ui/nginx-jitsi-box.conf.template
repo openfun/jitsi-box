@@ -1,5 +1,5 @@
 server {
-    root {{ path/to/front/files }}/build;
+    root {{ path/to/front/files }};
     server_name {{ domain_name }};
     index index.html index.htm;
     client_max_body_size 10M;
