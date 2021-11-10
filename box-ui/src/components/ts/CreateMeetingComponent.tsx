@@ -1,23 +1,20 @@
 import React, { useState, FunctionComponent } from 'react';
 import { Button } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import '../css/CreateMeetingComponent.css';
 import HeaderComponent from './HeaderComponent';
+import QRCode from 'react-qr-code';
 
 const CreateMeetingComponent: FunctionComponent = () => {
     const data = useLocation();
     const [linkRoom, setLinkRoom] = useState(
-        data.state && data.state.link ? data.state.link : 'meeting.education/test',
+        data.state && data.state.link ? data.state.link : 'https://meeting.education/test',
     );
-    const navigate = useNavigate();
 
-    const goToJoinRoute = (): void => {
-        navigate({ pathname: '/join' }, { replace: true });
-    };
     return (
         <div className='CreateMeetingComponent'>
             <div>
-                <HeaderComponent homeDisplayed={true} marshaDisplayed={true} />
+                <HeaderComponent homeDisplayed={true} marshaDisplayed={true} joinDisplayed={true} />
             </div>
             <div className='CreateMeetingContainer'>
                 <div className='CreateMessage'>
@@ -27,18 +24,14 @@ const CreateMeetingComponent: FunctionComponent = () => {
                     <div>
                         <h4>{linkRoom}</h4>
                     </div>
+                    <div className='QRCode'>
+                        <QRCode value={linkRoom} size={128} />
+                    </div>
                 </div>
-                <div className='CreateButtonContainer'>
-                    <div>
-                        <Button variant='contained' size='large'>
-                            Go
-                        </Button>
-                    </div>
-                    <div className='BackToJoin'>
-                        <Button variant='outlined' onClick={goToJoinRoute}>
-                            I prefer to enter the link by myself
-                        </Button>
-                    </div>
+                <div>
+                    <Button variant='contained' size='large'>
+                        Go
+                    </Button>
                 </div>
             </div>
         </div>

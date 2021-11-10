@@ -85,7 +85,7 @@ const MarshaLoginComponent: FunctionComponent = () => {
     return (
         <div className='MarshaLoginComponent'>
             <div>
-                <HeaderComponent homeDisplayed={true} marshaDisplayed={false} />
+                <HeaderComponent homeDisplayed={true} marshaDisplayed={false} joinDisplayed={false} />
             </div>
             <div>
                 <Snackbar
@@ -101,8 +101,8 @@ const MarshaLoginComponent: FunctionComponent = () => {
                 </Snackbar>
             </div>
             <div className='MarshaLoginInfoContainer'>
-                <h2>Entrez le code fourni par Marsha.</h2>
-                <h3>{`Si vous n'en avez pas, revenez en arrière.`}</h3>
+                <h2>Tap the Marsha Code</h2>
+                <h3>If you do not have it, go back to the home page.</h3>
             </div>
             <div className='MarshaLoginDisplayContainer'>
                 {Array.from({ length: 6 }).map((_, index) => {

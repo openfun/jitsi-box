@@ -9,12 +9,13 @@ import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 
 const JoinMeetingComponent: FunctionComponent = () => {
-    const [meetingName, setMeetingName] = useState('');
+    const [roomName, setRoomName] = useState('');
+    const [domain, setDomain] = useState('');
     const [layout, setLayout] = useState('default');
     const keyboard = useRef();
 
     const onChange = (input: string): void => {
-        setMeetingName(input);
+        setRoomName(input);
     };
 
     const handleShift = (): void => {
@@ -30,13 +31,16 @@ const JoinMeetingComponent: FunctionComponent = () => {
         console.log('Launch Jitsi.meeting');
     };
 
-    const onChangeInput = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
-        setMeetingName(event.target.value);
+    const onChangeInputRoomName = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
+        setRoomName(event.target.value);
+    };
+    const onChangeInputDomain = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
+        setDomain(event.target.value);
     };
     return (
         <div className='JoinMeetingComponent'>
             <div>
-                <HeaderComponent homeDisplayed={true} marshaDisplayed={true} />
+                <HeaderComponent homeDisplayed={true} marshaDisplayed={true} joinDisplayed={false} />
             </div>
             <div className='JoinInputContainer'>
                 <div className='JoinMessage'>
@@ -46,18 +50,37 @@ const JoinMeetingComponent: FunctionComponent = () => {
                     <div className='InputMessage'>
                         <Box>
                             <FormControl fullWidth>
-                                <InputLabel htmlFor='outlined-adornment-amount'>Room Name/URL</InputLabel>
+                                <InputLabel htmlFor='outlined-adornment-amount'>Domain</InputLabel>
                                 <OutlinedInput
                                     id='outlined-adornment-amount'
-                                    value={meetingName}
-                                    onChange={(e) => onChangeInput(e)}
+                                    value={domain}
+                                    onChange={(e) => onChangeInputDomain(e)}
+                                    label='Domain'
+                                />
+                            </FormControl>
+                        </Box>
+                    </div>
+                    /
+                    <div className='InputMessage'>
+                        <Box>
+                            <FormControl fullWidth>
+                                <InputLabel htmlFor='outlined-adornment-amount'>Room Name</InputLabel>
+                                <OutlinedInput
+                                    id='outlined-adornment-amount'
+                                    value={roomName}
+                                    onChange={(e) => onChangeInputRoomName(e)}
                                     label='Room Name'
                                 />
                             </FormControl>
                         </Box>
                     </div>
                     <div className='JoinButton'>
-                        <Button variant='contained' size='large' onClick={joinRoom} disabled={meetingName.length === 0}>
+                        <Button
+                            variant='contained'
+                            size='large'
+                            onClick={joinRoom}
+                            disabled={roomName.length === 0 || domain.length === 0}
+                        >
                             Join
                         </Button>
                     </div>
