@@ -34,7 +34,7 @@ RUN echo -e '\
 # Arguments for certbot
 ARG deploy_user=jitsi
 ARG certbot_email=test@gmail.com
-ARG domain=jitsi-box.viarezo.from
+ARG domain=jitsi-box.cs-campus.fr
 ARG front_files=/var/www/build
 
 # Copy Nginx conf file
