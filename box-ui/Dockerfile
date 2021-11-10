@@ -1,5 +1,5 @@
 ## Stage 0, "build": based on Node.js, to build and compile the frontend
-FROM node:16-alpine as build
+FROM node:17-alpine as build
 
 WORKDIR /app
 
@@ -15,7 +15,9 @@ RUN npm run build
 FROM nginx:1.21
 
 # Install certbot for certificate auto renew
-RUN add-apt-repository ppa:certbot/certbot && \
+RUN apt update &&\
+    apt install software-properties-common &&\
+    add-apt-repository ppa:certbot/certbot && \
     apt update && \
     apt install certbot
 
