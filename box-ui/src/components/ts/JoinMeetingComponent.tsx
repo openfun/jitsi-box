@@ -1,6 +1,7 @@
 import { Box, Button } from '@mui/material';
 import React, { FunctionComponent, useState, ChangeEvent } from 'react';
 import '../css/JoinMeetingComponent.css';
+import { useNavigate } from 'react-router-dom';
 import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
 import HeaderComponent from './HeaderComponent';
@@ -21,6 +22,11 @@ const JoinMeetingComponent: FunctionComponent = () => {
     const [layout, setLayout] = useState<string>('default');
     const [inputName, setInputName] = useState<string>('default');
     // const keyboard = useRef();
+
+    const navigate = useNavigate();
+    const goToLaunchRoom = (): void => {
+        navigate({ pathname: '/launch' }, { replace: true });
+    };
 
     const onChangeAll = (inputs: InputRoom) => {
         setInputs({ ...inputs });
@@ -48,10 +54,6 @@ const JoinMeetingComponent: FunctionComponent = () => {
             domain: event.target.value as string,
         });
         // keyboard.current?.setInput(event.target.value as string);
-    };
-
-    const joinRoom = (): void => {
-        console.log('Launch Jitsi.meeting');
     };
 
     return (
@@ -96,7 +98,7 @@ const JoinMeetingComponent: FunctionComponent = () => {
                         </Box>
                     </div>
                     <div className='JoinButton'>
-                        <Button variant='contained' size='large' onClick={joinRoom}>
+                        <Button variant='contained' size='large' onClick={goToLaunchRoom}>
                             Join
                         </Button>
                     </div>

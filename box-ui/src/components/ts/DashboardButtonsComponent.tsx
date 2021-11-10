@@ -22,25 +22,25 @@ const DashboardButtonsComponent: FunctionComponent = () => {
         <div className='DashboardButtons'>
             <div className='DashboardButtonsRow'>
                 <div className='ButtonContainer'>
-                    <Button variant='outlined' className='Button' onClick={switchMic}>
+                    <Button variant='outlined' className='Button' onClick={switchMic} sx={{ borderRadius: 28 }}>
                         {micActivated ? <MicNoneOutlinedIcon /> : <MicOffOutlinedIcon />}
                     </Button>
                     Mic
                 </div>
                 <div className='ButtonContainer'>
-                    <Button variant='outlined' className='Button'>
+                    <Button variant='outlined' className='Button' sx={{ borderRadius: 28 }}>
                         <VideoCameraBackOutlinedIcon />
                     </Button>
                     Start/Stop Camera
                 </div>
                 <div className='ButtonContainer'>
-                    <Button variant='outlined' className='Button'>
+                    <Button variant='outlined' className='Button' sx={{ borderRadius: 28 }}>
                         <PeopleAltOutlinedIcon />
                     </Button>
                     Participants
                 </div>
                 <div className='ButtonContainer'>
-                    <Button variant='outlined' className='Button'>
+                    <Button variant='outlined' className='Button' sx={{ borderRadius: 28 }}>
                         <FiberManualRecordOutlinedIcon />
                     </Button>
                     Save
@@ -49,13 +49,13 @@ const DashboardButtonsComponent: FunctionComponent = () => {
 
             <div className='DashboardButtonsRow'>
                 <div className='ButtonContainer'>
-                    <Button variant='outlined' className='Button'>
+                    <Button variant='outlined' className='Button' sx={{ borderRadius: 28 }}>
                         <CameraswitchOutlinedIcon />
                     </Button>
                     Visualize Camera output
                 </div>
                 <div className='ButtonContainer'>
-                    <Button variant='outlined' className='Button'>
+                    <Button variant='outlined' className='Button' sx={{ borderRadius: 28 }}>
                         <ForumOutlinedIcon />
                     </Button>
                     Chat
@@ -64,7 +64,7 @@ const DashboardButtonsComponent: FunctionComponent = () => {
                     <SliderComponent />
                 </div>
                 <div className='ButtonContainer'>
-                    <Button variant='contained' className='Button' color='error'>
+                    <Button variant='contained' className='Button' color='error' sx={{ borderRadius: 28 }}>
                         <ExitToAppOutlinedIcon />
                     </Button>
                     Disconnect

@@ -28,6 +28,7 @@ const HeaderComponent: FunctionComponent<HeaderProps> = ({
     const goBackToHome = (): void => {
         navigate({ pathname: '/' }, { replace: true });
     };
+
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
