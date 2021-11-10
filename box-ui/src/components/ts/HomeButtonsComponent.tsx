@@ -6,7 +6,7 @@ const HomeButtonsComponent: FunctionComponent = () => {
     return (
         <div className='HomeButtonsComponent'>
             <div className='ButtonContainer'>
-                <Button variant='contained' className='Button' component={Link} to='/create'>
+                <Button variant='contained' className='Button' component={Link} to='/launch'>
                     Launch Meeting
                 </Button>
             </div>
