@@ -26,9 +26,9 @@ RUN mkdir /etc/letsencrypt/renewal-hooks &&\
     mkdir /etc/letsencrypt/renewal-hooks/pre &&\
     mkdir /etc/letsencrypt/renewal-hooks/post &&\
     chmod -R 755 /etc/letsencrypt/renewal-hooks &&\
-    echo "echo 'stopping service nginx for certificate renewal'\nsystemctl stop nginx"\
+    echo "echo 'stopping service nginx for certificate renewal'\nservice nginx stop"\
     > /etc/letsencrypt/renewal-hooks/pre/stop_services &&\
-    echo "echo 'starting service nginx after certificate renewal'\nsystemctl start nginx"\
+    echo "echo 'starting service nginx after certificate renewal'\nservice nginx start"\
     > /etc/letsencrypt/renewal-hooks/post/start_services &&\
     chmod 750 /etc/letsencrypt/renewal-hooks/pre/stop_services &&\
     chmod 750 /etc/letsencrypt/renewal-hooks/post/start_services
