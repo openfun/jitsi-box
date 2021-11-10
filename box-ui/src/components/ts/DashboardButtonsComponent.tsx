@@ -10,12 +10,17 @@ import FiberManualRecordOutlinedIcon from '@mui/icons-material/FiberManualRecord
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
+import StopCircleIcon from '@mui/icons-material/StopCircle';
 
 const DashboardButtonsComponent: FunctionComponent = () => {
     const [micActivated, setMicActivated] = useState(true);
+    const [saveActivated, setSaveActivated] = useState(false);
 
     const switchMic = (): void => {
         setMicActivated(!micActivated);
+    };
+    const switchSave = (): void => {
+        setSaveActivated(!saveActivated);
     };
 
     return (
@@ -40,10 +45,10 @@ const DashboardButtonsComponent: FunctionComponent = () => {
                     Participants
                 </div>
                 <div className='ButtonContainer'>
-                    <Button variant='outlined' className='Button' sx={{ borderRadius: 28 }}>
-                        <FiberManualRecordOutlinedIcon />
+                    <Button variant='outlined' className='Button' onClick={switchSave} sx={{ borderRadius: 28 }}>
+                        {!saveActivated ? <FiberManualRecordOutlinedIcon /> : <StopCircleIcon />}
                     </Button>
-                    Save
+                    {!saveActivated ? <div>Start Recording</div> : <div>Stop Recording</div>}
                 </div>
             </div>
 
