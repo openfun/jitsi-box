@@ -56,7 +56,7 @@ const MarshaLoginComponent: FunctionComponent = () => {
         if (code.length === 6) {
             const method: Method = 'POST';
             const options = {
-                url: 'http://127.0.0.1:3001/login',
+                url: `${process.env.REACT_APP_MARSHA_URL}/login`,
                 method: method,
                 headers: {
                     'Content-Type': 'application/json;charset=UTF-8',
