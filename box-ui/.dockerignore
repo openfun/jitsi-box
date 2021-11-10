@@ -1,0 +1,13 @@
+# Heavy files
+node_modules/
+build/
+
+# Dev files
+.env.template
+.eslintignore
+.eslintrc.js
+.prettierrc.js
+.gitignore
+
+# MAC OS folder info file
+.DS_Store
