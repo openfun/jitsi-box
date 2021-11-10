@@ -87,7 +87,9 @@ const HeaderComponent: FunctionComponent<HeaderProps> = ({
                                 onClose={handleClose}
                             >
                                 {isMarshaDisplayed ? <MenuItem onClick={goToLoginMarsha}>Login Marsha</MenuItem> : null}
-                                {isJoinDisplayed ? <MenuItem onClick={joinMeeting}>Join a wished room</MenuItem> : null}
+                                {isJoinDisplayed ? (
+                                    <MenuItem onClick={joinMeeting}>Join a specific room</MenuItem>
+                                ) : null}
                             </Menu>
                         </div>
                     ) : null}

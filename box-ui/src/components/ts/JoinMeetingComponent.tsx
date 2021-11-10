@@ -25,7 +25,7 @@ const JoinMeetingComponent: FunctionComponent = () => {
 
     const navigate = useNavigate();
     const goToLaunchRoom = (): void => {
-        navigate({ pathname: '/launch' }, { replace: true });
+        navigate({ pathname: '/launch' }, { state: { link: `${inputs.domain}${inputs.roomName}` }, replace: true });
     };
 
     const onChangeAll = (inputs: InputRoom) => {

@@ -69,7 +69,7 @@ const MarshaLoginComponent: FunctionComponent = () => {
             const waitMarshaResponse = async () => {
                 link = await fetchMarsha(options);
                 if (link) {
-                    navigate({ pathname: '/create' }, { state: { link }, replace: true });
+                    navigate({ pathname: '/launch' }, { state: { link }, replace: true });
                 } else {
                     setAlert(true);
                 }
