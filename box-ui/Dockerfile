@@ -25,30 +25,28 @@ RUN apt update &&\
 RUN mkdir /etc/letsencrypt/renewal-hooks &&\
     mkdir /etc/letsencrypt/renewal-hooks/pre &&\
     mkdir /etc/letsencrypt/renewal-hooks/post &&\
-    echo -e "echo 'stopping service nginx for certificate renewal'\n systemctl stop nginx"\
-    > /etc/letsencrypt/renewal-hooks/pre/stop_services && \
-    echo -e "echo 'starting service nginx after certificate renewal'\n systemctl start nginx"\
-    > /etc/letsencrypt/renewal-hooks/post/start_services
+    chmod -R 755 /etc/letsencrypt/renewal-hooks &&\
+    echo "echo 'stopping service nginx for certificate renewal'\nsystemctl stop nginx"\
+    > /etc/letsencrypt/renewal-hooks/pre/stop_services &&\
+    echo "echo 'starting service nginx after certificate renewal'\nsystemctl start nginx"\
+    > /etc/letsencrypt/renewal-hooks/post/start_services &&\
+    chmod 750 /etc/letsencrypt/renewal-hooks/pre/stop_services &&\
+    chmod 750 /etc/letsencrypt/renewal-hooks/post/start_services
 
 # Arguments for certbot
-ARG deploy_user=jitsi
 ARG certbot_email=test@gmail.com
 ARG domain=jitsi-box.cs-campus.fr
-ARG front_files=/var/www/build
+ARG front_files=/var/www/jitsi-box/box-ui/build
 
 # Copy Nginx conf file
 COPY ./nginx-jitsi-box.conf.template /etc/nginx/conf.d/nginx-jitsi-box.conf
 
 # Replace domain name variable in nginx template with its real value
-RUN sed -i "s/{{ domain_name }}/${domain}/g" /etc/nginx/conf.d/nginx-jitsi-box.conf && \
-    sed -i "s/{{ path/to/front/files }}/${front_files}/g" /etc/nginx/conf.d/nginx-jitsi-box.conf
-
-# Create deploy_user
-RUN useradd -s /bin/bash ${deploy_user}
-USER ${deploy_user}
+RUN sed -i "s/your_domain_name/${domain}/g" /etc/nginx/conf.d/nginx-jitsi-box.conf && \
+    sed -i "s/your_front_files/${front_files}/g" /etc/nginx/conf.d/nginx-jitsi-box.conf
 
 # Copy front files
-COPY --from=build /app/build /var/www/jitsi-box
+COPY --from=build /app/build ${front_files}
 
 # Create first certs
 RUN certbot certonly --standalone --noninteractive --agree-tos --email ${certbot_email} \
