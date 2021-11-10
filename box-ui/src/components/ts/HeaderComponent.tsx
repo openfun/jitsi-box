@@ -12,7 +12,7 @@ interface HeaderProps {
 const HeaderComponent: FunctionComponent<HeaderProps> = ({
     homeDisplayed: isReturnDisplayed,
     marshaDisplayed: isMarshaDisplayed,
-}) => {
+}: HeaderProps) => {
     const navigate = useNavigate();
 
     const goToLoginMarsha = (): void => {
