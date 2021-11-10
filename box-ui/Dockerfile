@@ -1,5 +1,5 @@
 ## Stage 0, "build": based on Node.js, to build and compile the frontend
-FROM node:17-alpine as build
+FROM node:16-alpine as build
 
 WORKDIR /app
 
@@ -16,19 +16,18 @@ FROM nginx:1.21
 
 # Install certbot for certificate auto renew
 RUN apt update &&\
-    apt install software-properties-common &&\
-    add-apt-repository ppa:certbot/certbot && \
+    apt install -y software-properties-common &&\
+    add-apt-repository -r ppa:certbot/certbot && \
     apt update && \
-    apt install certbot
+    apt install -y certbot
 
 # Setup certbot renew pre and post hooks
-RUN echo -e '\
-    echo "stopping service nginx"\n\
-    systemctl stop nginx'\
+RUN mkdir /etc/letsencrypt/renewal-hooks &&\
+    mkdir /etc/letsencrypt/renewal-hooks/pre &&\
+    mkdir /etc/letsencrypt/renewal-hooks/post &&\
+    echo -e "echo 'stopping service nginx for certificate renewal'\n systemctl stop nginx"\
     > /etc/letsencrypt/renewal-hooks/pre/stop_services && \
-    echo -e '\
-    echo "starting service nginx"\n\
-    systemctl start nginx'\
+    echo -e "echo 'starting service nginx after certificate renewal'\n systemctl start nginx"\
     > /etc/letsencrypt/renewal-hooks/post/start_services
 
 # Arguments for certbot
