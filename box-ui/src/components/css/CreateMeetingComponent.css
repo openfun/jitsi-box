@@ -6,24 +6,12 @@
 .CreateMeetingContainer {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     text-align: center;
 }
-.CreateMessage {
-    margin: auto;
-    margin-top: 6%;
-}
 .CreateButtonContainer {
-    margin-top: 3%;
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
-}
-
-.BackToJoin {
-    margin-top: 3%;
-}
-.QRCode {
-    margin-bottom: 5%;
 }

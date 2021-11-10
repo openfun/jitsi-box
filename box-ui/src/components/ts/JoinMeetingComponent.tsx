@@ -1,5 +1,5 @@
 import { Box, Button } from '@mui/material';
-import React, { FunctionComponent, useState, useRef, ChangeEvent, MutableRefObject } from 'react';
+import React, { FunctionComponent, useState, ChangeEvent } from 'react';
 import '../css/JoinMeetingComponent.css';
 import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
@@ -8,35 +8,52 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 
+interface InputRoom {
+    domain: string;
+    roomName: string;
+}
+
 const JoinMeetingComponent: FunctionComponent = () => {
-    const [roomName, setRoomName] = useState('');
-    const [domain, setDomain] = useState('');
-    const [layout, setLayout] = useState('default');
-    const keyboard = useRef();
+    const [inputs, setInputs] = useState<InputRoom>({
+        domain: '',
+        roomName: '',
+    });
+    const [layout, setLayout] = useState<string>('default');
+    const [inputName, setInputName] = useState<string>('default');
+    // const keyboard = useRef();
 
-    const onChange = (input: string): void => {
-        setRoomName(input);
+    const onChangeAll = (inputs: InputRoom) => {
+        setInputs({ ...inputs });
     };
-
     const handleShift = (): void => {
-        const newLayoutName = layout === 'default' ? 'shift' : 'default';
+        const newLayoutName: string = layout === 'default' ? 'shift' : 'default';
         setLayout(newLayoutName);
     };
 
-    const onKeyPress = (button: string) => {
+    const onKeyPress = (button: string): void => {
         if (button === '{shift}' || button === '{lock}') handleShift();
+    };
+
+    const onChangeRoomName = (event: ChangeEvent<HTMLTextAreaElement>) => {
+        setInputs({
+            ...inputs,
+            roomName: event.target.value as string,
+        });
+        // keyboard.current?.setInput(event.target.value as string);
+    };
+
+    const onChangeDomain = (event: ChangeEvent<HTMLTextAreaElement>) => {
+        setInputs({
+            ...inputs,
+            domain: event.target.value as string,
+        });
+        // keyboard.current?.setInput(event.target.value as string);
     };
 
     const joinRoom = (): void => {
         console.log('Launch Jitsi.meeting');
     };
 
-    const onChangeInputRoomName = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
-        setRoomName(event.target.value);
-    };
-    const onChangeInputDomain = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>): void => {
-        setDomain(event.target.value);
-    };
     return (
         <div className='JoinMeetingComponent'>
             <div>
@@ -53,9 +70,11 @@ const JoinMeetingComponent: FunctionComponent = () => {
                                 <InputLabel htmlFor='outlined-adornment-amount'>Domain</InputLabel>
                                 <OutlinedInput
                                     id='outlined-adornment-amount'
-                                    value={domain}
-                                    onChange={(e) => onChangeInputDomain(e)}
                                     label='Domain'
+                                    value={inputs.domain}
+                                    onChange={onChangeDomain}
+                                    onFocus={() => setInputName('domain')}
+                                    placeholder={'Domain'}
                                 />
                             </FormControl>
                         </Box>
@@ -67,29 +86,27 @@ const JoinMeetingComponent: FunctionComponent = () => {
                                 <InputLabel htmlFor='outlined-adornment-amount'>Room Name</InputLabel>
                                 <OutlinedInput
                                     id='outlined-adornment-amount'
-                                    value={roomName}
-                                    onChange={(e) => onChangeInputRoomName(e)}
                                     label='Room Name'
+                                    value={inputs.roomName}
+                                    onChange={onChangeRoomName}
+                                    onFocus={() => setInputName('roomName')}
+                                    placeholder={'Room Name'}
                                 />
                             </FormControl>
                         </Box>
                     </div>
                     <div className='JoinButton'>
-                        <Button
-                            variant='contained'
-                            size='large'
-                            onClick={joinRoom}
-                            disabled={roomName.length === 0 || domain.length === 0}
-                        >
+                        <Button variant='contained' size='large' onClick={joinRoom}>
                             Join
                         </Button>
                     </div>
                 </div>
                 <div>
                     <Keyboard
-                        keyboardRef={(r: MutableRefObject<undefined>) => (keyboard.current = r.current)}
+                        // keyboardRef={(r: MutableRefObject<undefined>) => (keyboard.current = r.current)}
+                        inputName={inputName}
                         layoutName={layout}
-                        onChange={onChange}
+                        onChangeAll={onChangeAll}
                         onKeyPress={onKeyPress}
                     />
                 </div>

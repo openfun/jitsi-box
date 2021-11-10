@@ -63,16 +63,15 @@ const DashboardButtonsComponent: FunctionComponent = () => {
                 <div className='ButtonContainer'>
                     <SliderComponent />
                 </div>
-            </div>
-
-            <div className='DashboardButtonsRow'>
                 <div className='ButtonContainer'>
-                    <Button variant='outlined' className='Button'>
+                    <Button variant='contained' className='Button' color='error'>
                         <ExitToAppOutlinedIcon />
                     </Button>
                     Disconnect
                 </div>
             </div>
+
+            <div className='DashboardButtonsRow'></div>
         </div>
     );
 };

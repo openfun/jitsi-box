@@ -1,9 +1,9 @@
 import React, { useState, FunctionComponent } from 'react';
-import { Button } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 import '../css/CreateMeetingComponent.css';
 import HeaderComponent from './HeaderComponent';
 import QRCode from 'react-qr-code';
+import DashboardButtonsComponent from './DashboardButtonsComponent';
 
 const CreateMeetingComponent: FunctionComponent = () => {
     const data = useLocation();
@@ -19,7 +19,7 @@ const CreateMeetingComponent: FunctionComponent = () => {
             <div className='CreateMeetingContainer'>
                 <div className='CreateMessage'>
                     <div>
-                        <h1>Here is your Jitsi Link</h1>
+                        <h2>Here is your Jitsi Link</h2>
                     </div>
                     <div>
                         <h4>{linkRoom}</h4>
@@ -29,9 +29,7 @@ const CreateMeetingComponent: FunctionComponent = () => {
                     </div>
                 </div>
                 <div>
-                    <Button variant='contained' size='large'>
-                        Go
-                    </Button>
+                    <DashboardButtonsComponent />
                 </div>
             </div>
         </div>
