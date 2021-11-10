@@ -1,6 +1,6 @@
 server {
-    root your_front_files/build;
-    server_name your_domain_name;
+    root {{ path/to/front/files }}/build;
+    server_name {{ domain_name }};
     index index.html index.htm;
     client_max_body_size 10M;
 
@@ -13,14 +13,14 @@ server {
     }
 
     listen 443 ssl;
-    ssl_certificate /etc/letsencrypt/live/your_domain_name/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/your_domain_name/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/{{ domain_name }}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{ domain_name }}/privkey.pem;
     
 }
 
 server {    
     listen 80 default_server;
-    server_name your_domain_name;
+    server_name {{ domain_name }};
 
     location / {
         return 301 https://$host$request_uri;

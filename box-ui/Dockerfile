@@ -42,8 +42,8 @@ ARG front_files=/var/www/jitsi-box/box-ui
 COPY ./nginx-jitsi-box.conf.template /etc/nginx/conf.d/nginx-jitsi-box.conf
 
 # Replace domain name variable in nginx template with its real value
-RUN sed -i "s|your_domain_name|${domain}|g" /etc/nginx/conf.d/nginx-jitsi-box.conf && \
-    sed -i "s|your_front_files|${front_files}|g" /etc/nginx/conf.d/nginx-jitsi-box.conf
+RUN sed -i "s|{{ domain_name }}|${domain}|g" /etc/nginx/conf.d/nginx-jitsi-box.conf && \
+    sed -i "s|{{ path/to/front/files }}|${front_files}|g" /etc/nginx/conf.d/nginx-jitsi-box.conf
 
 # Copy front files
 COPY --from=build /app/build ${front_files}
