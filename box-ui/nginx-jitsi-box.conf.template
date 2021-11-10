@@ -1,6 +1,8 @@
 server {
-    root {{ path/to/front/files }};
+    listen 80:
     server_name {{ domain_name }};
+
+    root {{ path/to/front/files }};
     index index.html index.htm;
     client_max_body_size 10M;
 
@@ -12,23 +14,4 @@ server {
         # proxy_pass http://localhost:3000;
     }
 
-    listen 443 ssl;
-    ssl_certificate /etc/letsencrypt/live/{{ domain_name }}/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/{{ domain_name }}/privkey.pem;
-    
-}
-
-server {    
-    listen 80 default_server;
-    server_name {{ domain_name }};
-
-    location / {
-        return 301 https://$host$request_uri;
-    }
-
-    location /.well-known/acme-challenge/ {
-        root /var/www/certbot;
-    }
-
-    return 404;
 }

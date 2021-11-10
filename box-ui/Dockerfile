@@ -19,19 +19,7 @@ RUN apt update &&\
     apt install -y software-properties-common &&\
     add-apt-repository -r ppa:certbot/certbot && \
     apt update && \
-    apt install -y certbot
-
-# Setup certbot renew pre and post hooks
-RUN mkdir /etc/letsencrypt/renewal-hooks &&\
-    mkdir /etc/letsencrypt/renewal-hooks/pre &&\
-    mkdir /etc/letsencrypt/renewal-hooks/post &&\
-    chmod -R 755 /etc/letsencrypt/renewal-hooks &&\
-    echo "echo 'stopping service nginx for certificate renewal'\nservice nginx stop"\
-    > /etc/letsencrypt/renewal-hooks/pre/stop_services &&\
-    echo "echo 'starting service nginx after certificate renewal'\nservice nginx start"\
-    > /etc/letsencrypt/renewal-hooks/post/start_services &&\
-    chmod 750 /etc/letsencrypt/renewal-hooks/pre/stop_services &&\
-    chmod 750 /etc/letsencrypt/renewal-hooks/post/start_services
+    apt install -y certbot python3-certbot-nginx
 
 # Arguments for certbot
 ARG certbot_email=test@gmail.com
@@ -48,12 +36,6 @@ RUN sed -i "s|{{ domain_name }}|${domain}|g" /etc/nginx/conf.d/nginx-jitsi-box.
 # Copy front files
 COPY --from=build /app/build ${front_files}
 
-# Create first certs
-RUN certbot certonly --standalone --noninteractive --agree-tos --email ${certbot_email} \
-    -d ${domain} --pre-hook /etc/letsencrypt/renewal-hooks/pre/stop_services \
-    --post-hook /etc/letsencrypt/renewal-hooks/post/start_services
+# Run certbot
+RUN certbot --noninteractive --agree-tos --email ${certbot_email} -d ${domain} --redirect --nginx
 
-# Add renew to deploy_user crontab
-RUN crontab -l |\
-    { cat; echo '30 3 * * * certbot renew --quiet --renew-hook "systemctl restart nginx"'; } |\
-    crontab -
