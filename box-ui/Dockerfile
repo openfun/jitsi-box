@@ -36,7 +36,7 @@ RUN mkdir /etc/letsencrypt/renewal-hooks &&\
 # Arguments for certbot
 ARG certbot_email=test@gmail.com
 ARG domain=jitsi-box.cs-campus.fr
-ARG front_files=/var/www/jitsi-box/box-ui/build
+ARG front_files=/var/www/jitsi-box/box-ui
 
 # Copy Nginx conf file
 COPY ./nginx-jitsi-box.conf.template /etc/nginx/conf.d/nginx-jitsi-box.conf
