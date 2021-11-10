@@ -3,8 +3,6 @@
     flex-direction: column;
     justify-content: space-evenly;
     margin: 0;
-    /* width: 100%;
-    height: 100%; */
 }
 .DashboardButtonsRow {
     display: flex;
@@ -25,11 +23,11 @@
     height: 100%;
 }
 .Button {
-    height:80%;
-    width:70%;
+    height: 70%;
+    width: 60%;
     color: white;
 }
 .lmj-logo {
-    height:80%;
-    width:70%;
+    height: 80%;
+    width: 70%;
 }

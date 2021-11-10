@@ -15,7 +15,7 @@ const App: FunctionComponent = () => {
                     <Route path='/' element={<HomeComponent />} />
                     <Route path='/login' element={<MarshaLoginComponent />} />
                     <Route path='/join' element={<JoinMeetingComponent />} />
-                    <Route path='/create' element={<CreateMeetingComponent />} />
+                    <Route path='/launch' element={<CreateMeetingComponent />} />
                     <Route path='/dashboard' element={<DashboardComponent />} />
                     <Route path='/login' element={<MarshaLoginComponent />} />
                     <Route path='/jitsi' element={<JitsiComponent />} />
