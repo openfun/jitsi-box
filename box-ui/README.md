@@ -53,7 +53,7 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 This web app is intendend to be deployed on a server to be served by a web server.
 
 ## `.env` file
-You must create a `.env` file (copy the `.env.template`).
+You must create a `.env` file (copy the `.env.template`), and fill it with the correct values.
 
 Env variables starting with `REACT_APP_` are automatically catched by react, so we do not need the `dotenv` package.
 
@@ -84,3 +84,6 @@ COPY --from=build-stage /app/build /var/www/lesrevelateursftv
 COPY ./nginx-jitsi-box.conf /etc/nginx/conf.d/nginx-jitsi-box.conf
 ```
 The second part of the Dockerfile copy the builded files inside the official Nginx docker image, and copy the service nginx configuration.
+
+## Run the app
+`docker-compose up`
