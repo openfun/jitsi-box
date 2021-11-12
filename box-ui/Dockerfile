@@ -21,10 +21,13 @@ RUN apt update &&\
     apt update && \
     apt install -y certbot python3-certbot-nginx
 
-# Arguments for certbot
+# ARG are defined only in build
 ARG certbot_email=test@gmail.com
 ARG domain=jitsi-box.cs-campus.fr
 ARG front_files=/var/www/jitsi-box/box-ui
+# ENV are accessible after build (when certbot CMD will be launched)
+ENV certbot_email=${certbot_email}
+ENV domain=${domain}
 
 # Copy Nginx conf file
 COPY ./nginx-jitsi-box.conf.template /etc/nginx/conf.d/nginx-jitsi-box.conf
@@ -37,5 +40,5 @@ RUN sed -i "s|{{ domain_name }}|${domain}|g" /etc/nginx/conf.d/nginx-jitsi-box.
 COPY --from=build /app/build ${front_files}
 
 # Run certbot
-RUN certbot --noninteractive --agree-tos --email ${certbot_email} -d ${domain} --redirect --nginx
+#CMD certbot --noninteractive --agree-tos --email ${certbot_email} -d ${domain} --redirect --nginx
 
