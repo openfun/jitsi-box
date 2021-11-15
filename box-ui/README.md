@@ -76,13 +76,16 @@ RUN cp src/config.js.template src/config.js && \
 The first part of the Dockerfile builds the frontend static files, from a node alpine image.
 
 ```Dockerfile
-# Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
+## Stage 1: based on the official nginx image, serves the static frontend files
 FROM nginx:1.21
 
-COPY --from=build-stage /app/build /var/www/lesrevelateursftv
+# ARG are defined only in build
+ARG front_files
 
+# Copy front files
+COPY --from=build /app/build ${front_files}
 ```
-The second part of the Dockerfile copy the builded files inside the official Nginx docker image, and copy the service nginx configuration.
+The second part of the Dockerfile copy the builded files inside the official Nginx docker image. The Nginx configuration file is managed by the [docker-compose](../staging/docker-compose.yml).
 
 ## Run the app
 `docker-compose up`
