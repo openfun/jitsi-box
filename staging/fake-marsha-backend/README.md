@@ -17,14 +17,14 @@ If code is `111111`, response will be `200 Success`
 ```json
 {
     "success": true,
-    "link": "link.defined.in.env",
+    "link": "link.defined.in.env"
 }
 ```
 else the response will be `404 Error`
 ```json
 {
     "success": false,
-    "link": null,
+    "link": null
 }
 ```
 

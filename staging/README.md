@@ -12,18 +12,18 @@ For more details, check the associated [README](./fake-marsha-backend/README.md)
 ## docker-compose
 We define 3 services in the [docker-compose](./docker-compose.yml) file:
 - the [web server container](../box-ui/README.md), based on the `Nginx` official image, listening on ports `80` and `443` and serving the static frontend files
-- the [certbot container](https://hub.docker.com/r/certbot/certbot), generating the SSL certificates
-- the [marsha-mimicking backend container](##Marsha-mimicking), retrieving a Jitsi room link
+- the [certbot container](https://hub.docker.com/r/certbot/certbot), used to generate the SSL certificates
+- the [marsha-mimicking backend container](##Marsha-mimicking), used to retrieve a Jitsi room link
 
-The `Nginx` container looks for its configuration in a [conf folder](./docker-data/nginx-conf), and shares two folders with the `Certbot` container, where the SSL certificates are stored.
+The `Nginx` container looks for its configuration in a [conf folder](./docker-data/nginx-conf), and shares two other folders with the `Certbot` container, where the SSL certificates are stored.
 
 ## docker-data
-Here are stored the nginx configuration and the SSL certificates. The certs are not added to the git repository for security reasons.
+Here are stored the `Nginx` configuration and the SSL certificates. The certs are not added to the git repository for security reasons.
 
 Unfortunately, this has a drawback: we cannot simply launch the `docker-compose up` command, as the `Nginx` container will fail because of the missing certificates. We therefore need to use the [init-letsencrypt.sh](./init-letsencrypt.sh) script.
 
 ## init-letsencrypt.sh
-This script gets recommended TLS parameters, generate dummy certificates, launches the `Nginx` container (which does not fail anymore because of the presence of the dummy certs), delete these dummy certs and use the certbot image to generate the good certificates.
+This script gets recommended TLS parameters, generates dummy certificates, launches the `Nginx` container (which does not fail anymore because of the presence of the dummy certs), delete these dummy certs and use the `Certbot` image to generate the good certificates.
 
 # Deploying
 
@@ -33,7 +33,7 @@ Pull the code on your server
 git clone https://github.com/openfun/jitsi-box.git
 ```
 
-Populate the __3__ env files __AND__ the `Nginx` conf folder
+Populate the **3** env files **AND** the `Nginx` conf folder
 
 Env files:
 ```bash
@@ -41,18 +41,18 @@ cp box-ui/.env.template box-ui/.env
 cp staging/.env.template staging/.env.template
 cp staging/fake-marsha-backend/.env.template staging/fake-marsha-backend/.env
 ```
-Populate those env files with your values.
+Populate those env files with your values. For the `REACT_APP_MARSHA_URL` variable, since **WE** mock the Marsha API, you must set `https://<your.domain.com>/marsha/login`.
 
-Nginx conf:
+`Nginx` conf:
 ```bash
 cp staging/docker-data/nginx-conf/nginx-jitsi-box.conf.template staging/docker-data/nginx-conf/nginx-jitsi-box.conf
 ```
-Modify the domain name and the front files path in the Nginx conf file. They are noted as Jinja2 variables, with double braces : `{{ variable }}`.
+Modify the marsha-mimicking app port (the same value you set in the backend [env file](./fake-marsha-backend/.env.template)), the domain name and the front files path in the `Nginx` conf file. They are noted as Jinja2 variables, with double braces : `{{ variable }}`.
 The front files path will be the location of the static files in the container. It is a good practice to put them in the `/var/www` folder, for instance `/var/www/jitsi-box/box-ui`, or `/var/www/DTYxFUN_Jitsi-Box`.
 
 ## Launching
 
-If it is the first time launching the services on this server, or if the `docker-data/certbot/conf/live/<your domain>` folder is not yet populated with the Letsencrypt certificates, launch the [init-letsencrypt](##init-letsencrypt.sh) script.
+If it is the first time launching the services on this server, or if the `docker-data/certbot/conf/live/<your domain>` folder is not yet populated with the `Letsencrypt` certificates, launch the [init-letsencrypt](##init-letsencrypt.sh) script.
 
 This will create the first certificates, and launch all the services.
 
