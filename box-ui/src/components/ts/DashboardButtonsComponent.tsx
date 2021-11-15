@@ -26,7 +26,6 @@ const DashboardButtonsComponent: FunctionComponent = () => {
                         </Button>
                     }
                     modal
-                    nested
                 >
                     {(close: any) => (
                         <div className='modal'>

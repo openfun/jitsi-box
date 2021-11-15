@@ -11,7 +11,6 @@ const ContinuousSlider: FunctionComponent = () => {
     const audioRef = useRef();
 
     const handleChange = (event: Event, newValue: number | number[]): void => {
-        console.log(newValue);
         setValue(newValue as number);
         //audioRef.current.volume = (newValue as number) / 100;
     };

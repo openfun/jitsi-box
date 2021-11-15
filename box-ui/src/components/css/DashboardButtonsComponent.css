@@ -33,6 +33,7 @@
 }
 .modal {
     font-size: 12px;
+    background-color: rgba(51, 119, 197, 0.952);
 }
 .modal > .header {
     width: 100%;
@@ -52,17 +53,4 @@
     text-align: center;
     display: flex;
     justify-content: space-around;
-}
-.modal > .close {
-    cursor: pointer;
-    position: absolute;
-    display: block;
-    padding: 2px 5px;
-    line-height: 20px;
-    right: -10px;
-    top: -10px;
-    font-size: 24px;
-    background: #ffffff;
-    border-radius: 18px;
-    border: 1px solid #cfcece;
 }
