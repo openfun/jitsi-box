@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   
-  nginx-jitsi-box:
+  nginx-and-front:
     build:
       context: ./box-ui
       args:
@@ -18,7 +18,7 @@ services:
       - ./docker-data/certbot/www:/var/www/certbot:ro
     networks:
       - jitsi-box-network
-    command: crontab -l | { cat; echo "0 */6 * * * nginx -s reload"; } | crontab -
+    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
 
   certbot:
     image: certbot/certbot:latest
@@ -27,7 +27,7 @@ services:
       - ./docker-data/certbot/www:/var/www/certbot:rw
     networks:
       - jitsi-box-network
-    command: certonly --webroot --webroot-path=/var/www/certbot --email ${CERTBOT_EMAIL} --agree-tos --no-eff-email -d ${DOMAIN}
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
   marsha-mock:
     build:
