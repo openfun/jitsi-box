@@ -1,13 +1,14 @@
 import React, { useEffect, FunctionComponent } from 'react';
 
+import DashboardComponent from './DashboardComponent';
 import '../css/JitsiComponent.css';
 
 const JitsiMeetComponent: FunctionComponent = () => {
     const startConference = (): void => {
         try {
-            const domain = 'meet.jit.si';
+            const domain = 'meeting.education';
             const options = {
-                roomName: 'roomName',
+                roomName: 'TestForSamuel',
                 parentNode: document.getElementById('jitsi-container'),
                 interfaceConfigOverwrite: {
                     filmStripOnly: false,
@@ -37,10 +38,18 @@ const JitsiMeetComponent: FunctionComponent = () => {
     }, []);
 
     return (
-        <div className='JitsiComponent'>
-            <div id='jitsi-container' className='jitsiContainer' />
+
+        <div className='JitsiPage'>
+            <div className='JitsiComponent'>
+                <div id='jitsi-container' className='jitsiContainer' />
+            </div>
+            <DashboardComponent/>
         </div>
     );
 };
+
+function handleClick() {
+    console.log('✨ Ceci est un clic ✨');
+}
 
 export default JitsiMeetComponent;
