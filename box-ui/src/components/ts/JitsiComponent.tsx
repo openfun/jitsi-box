@@ -1,29 +1,60 @@
 import React, { useEffect, FunctionComponent } from 'react';
 
 import '../css/JitsiComponent.css';
+interface InputRoomProps {
+    domain: string;
+    room: string;
+}
 
-const JitsiMeetComponent: FunctionComponent = () => {
+const JitsiMeetComponent: FunctionComponent<InputRoomProps> = ({
+    domain: domainName,
+    room: roomName,
+}: InputRoomProps) => {
     const startConference = (): void => {
         try {
-            const domain = 'meet.jit.si';
             const options = {
-                roomName: 'roomName',
+                roomName: roomName,
                 parentNode: document.getElementById('jitsi-container'),
+                userInfo: {
+                    email: '',
+                    displayName: 'Raspi',
+                },
                 interfaceConfigOverwrite: {
+                    TILE_VIEW_MAX_COLUMNS: 2,
                     filmStripOnly: false,
-                    SHOW_JITSI_WATERMARK: false,
+                    SHOW_JITSI_WATERMARK: true,
+                    SHOW_WATERMARK_FOR_GUESTS: false,
+                    DISPLAY_WELCOME_PAGE_CONTENT: false,
+                    DISABLE_JOIN_LEAVE_NOTIFICATIONS: false,
+                    TOOLBAR_BUTTONS: [
+                        'microphone',
+                        'camera',
+                        'chat',
+                        'recording',
+                        'videoquality',
+                        'fodeviceselection',
+                        'settings',
+                        'raisehand',
+                        'invite',
+                        'sharedvideo',
+                        'shareaudio',
+                        'invite',
+                        'tileview',
+                    ],
+                    TOOLBAR_ALWAYS_VISIBLE: true,
                 },
                 configOverwrite: {
                     disableSimulcast: false,
+                    prejoinPageEnabled: false,
+                    doNotStoreRoom: true,
+                    preferH264: true,
+                    startWithVideoMuted: false,
+                    startWithAudioMuted: false,
+                    enableWelcomePage: false,
                 },
             };
             // @ts-expect-error js to ts error
-            const api = new window.JitsiMeetExternalAPI(domain, options);
-            console.log('api', api);
-            api.addEventListener('videoConferenceJoined', () => {
-                console.log('Local User Joined');
-                // api.executeCommand('displayName', 'MyName');
-            });
+            const api = new window.JitsiMeetExternalAPI(domainName, options);
         } catch (error) {
             console.error('Failed to load Jitsi API', error);
         }
@@ -36,11 +67,7 @@ const JitsiMeetComponent: FunctionComponent = () => {
         else alert('Jitsi Meet API script not loaded');
     }, []);
 
-    return (
-        <div className='JitsiComponent'>
-            <div id='jitsi-container' className='jitsiContainer' />
-        </div>
-    );
+    return <div id='jitsi-container' className='jitsiContainer' />;
 };
 
 export default JitsiMeetComponent;

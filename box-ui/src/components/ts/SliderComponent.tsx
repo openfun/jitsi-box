@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Slider from '@mui/material/Slider';
@@ -8,8 +8,12 @@ import VolumeUp from '@mui/icons-material/VolumeUp';
 const ContinuousSlider: FunctionComponent = () => {
     const [value, setValue] = React.useState<number>(30);
 
+    const audioRef = useRef();
+
     const handleChange = (event: Event, newValue: number | number[]): void => {
+        console.log(newValue);
         setValue(newValue as number);
+        //audioRef.current.volume = (newValue as number) / 100;
     };
 
     return (

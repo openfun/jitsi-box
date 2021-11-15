@@ -58,6 +58,8 @@ const MarshaLoginComponent: FunctionComponent = () => {
             const options = {
                 url: 'http://127.0.0.1:3001/login',
                 method: method,
+                width: 700,
+                height: 700,
                 headers: {
                     'Content-Type': 'application/json;charset=UTF-8',
                 },

@@ -18,8 +18,8 @@ const HeaderComponent: FunctionComponent<HeaderProps> = ({
     marshaDisplayed: isMarshaDisplayed,
     joinDisplayed: isJoinDisplayed,
 }: HeaderProps) => {
-    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const navigate = useNavigate();
 
     const goToLoginMarsha = (): void => {
         navigate({ pathname: '/login' }, { replace: true });

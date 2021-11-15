@@ -1,82 +1,60 @@
-import React, { useState, FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import SliderComponent from './SliderComponent';
 import '../css/DashboardButtonsComponent.css';
-import CameraswitchOutlinedIcon from '@mui/icons-material/CameraswitchOutlined';
-import VideoCameraBackOutlinedIcon from '@mui/icons-material/VideoCameraBackOutlined';
-import MicNoneOutlinedIcon from '@mui/icons-material/MicNoneOutlined';
-import MicOffOutlinedIcon from '@mui/icons-material/MicOffOutlined';
-import FiberManualRecordOutlinedIcon from '@mui/icons-material/FiberManualRecordOutlined';
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
-import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
-import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
-import StopCircleIcon from '@mui/icons-material/StopCircle';
+import Popup from 'reactjs-popup';
 
 const DashboardButtonsComponent: FunctionComponent = () => {
-    const [micActivated, setMicActivated] = useState(true);
-    const [saveActivated, setSaveActivated] = useState(false);
-
-    const switchMic = (): void => {
-        setMicActivated(!micActivated);
-    };
-    const switchSave = (): void => {
-        setSaveActivated(!saveActivated);
+    const navigate = useNavigate();
+    const disconnect = (): void => {
+        navigate({ pathname: '/' }, { replace: true });
     };
 
     return (
         <div className='DashboardButtons'>
-            <div className='DashboardButtonsRow'>
-                <div className='ButtonContainer'>
-                    <Button variant='outlined' className='Button' onClick={switchMic} sx={{ borderRadius: 28 }}>
-                        {micActivated ? <MicNoneOutlinedIcon /> : <MicOffOutlinedIcon />}
-                    </Button>
-                    Mic
-                </div>
-                <div className='ButtonContainer'>
-                    <Button variant='outlined' className='Button' sx={{ borderRadius: 28 }}>
-                        <VideoCameraBackOutlinedIcon />
-                    </Button>
-                    Start/Stop Camera
-                </div>
-                <div className='ButtonContainer'>
-                    <Button variant='outlined' className='Button' sx={{ borderRadius: 28 }}>
-                        <PeopleAltOutlinedIcon />
-                    </Button>
-                    Participants
-                </div>
-                <div className='ButtonContainer'>
-                    <Button variant='outlined' className='Button' onClick={switchSave} sx={{ borderRadius: 28 }}>
-                        {!saveActivated ? <FiberManualRecordOutlinedIcon /> : <StopCircleIcon />}
-                    </Button>
-                    {!saveActivated ? <div>Start Recording</div> : <div>Stop Recording</div>}
-                </div>
+            <div className='ButtonContainer'>
+                <SliderComponent />
             </div>
-
-            <div className='DashboardButtonsRow'>
-                <div className='ButtonContainer'>
-                    <Button variant='outlined' className='Button' sx={{ borderRadius: 28 }}>
-                        <CameraswitchOutlinedIcon />
-                    </Button>
-                    Visualize Camera output
-                </div>
-                <div className='ButtonContainer'>
-                    <Button variant='outlined' className='Button' sx={{ borderRadius: 28 }}>
-                        <ForumOutlinedIcon />
-                    </Button>
-                    Chat
-                </div>
-                <div className='ButtonContainer'>
-                    <SliderComponent />
-                </div>
-                <div className='ButtonContainer'>
-                    <Button variant='contained' className='Button' color='error' sx={{ borderRadius: 28 }}>
-                        <ExitToAppOutlinedIcon />
-                    </Button>
-                    Disconnect
-                </div>
+            <div className='ButtonContainer'>
+                <Popup
+                    trigger={
+                        <Button variant='contained' className='Button' color='error' sx={{ borderRadius: 28 }}>
+                            <ExitToAppOutlinedIcon />
+                            Disconnect
+                        </Button>
+                    }
+                    modal
+                    nested
+                >
+                    {(close: any) => (
+                        <div className='modal'>
+                            <Button className='close' onClick={close}>
+                                &times;
+                            </Button>
+                            <div className='header'>
+                                {' '}
+                                <h2> Disconnection </h2>
+                            </div>
+                            <div className='content'>
+                                <h3>
+                                    If you confirm your disconnection, you will leave the room and be redirected to the
+                                    home page.
+                                </h3>
+                            </div>
+                            <div className='actions'>
+                                <Button variant='contained' color='error' onClick={disconnect}>
+                                    Leave the room
+                                </Button>
+                                <Button variant='contained' onClick={close}>
+                                    Stay in the room
+                                </Button>
+                            </div>
+                        </div>
+                    )}
+                </Popup>
             </div>
-
-            <div className='DashboardButtonsRow'></div>
         </div>
     );
 };
