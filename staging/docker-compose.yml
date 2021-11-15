@@ -4,7 +4,7 @@ services:
   
   nginx-and-front:
     build:
-      context: ./box-ui
+      context: ../box-ui
       args:
         - domain=${DOMAIN}
         - front_files=${FRONT_FILES}
@@ -19,6 +19,8 @@ services:
     networks:
       - jitsi-box-network
     command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"
+    depends_on:
+      - marsha-mimic
 
   certbot:
     image: certbot/certbot:latest
@@ -28,11 +30,13 @@ services:
     networks:
       - jitsi-box-network
     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
+    depends_on:
+      - marsha-mimic
 
-  marsha-mock:
+  marsha-mimic:
     build:
       context: ./fake-marsha-backend
-    image: marsha-mock:${TAG}
+    image: marsha-mimic:${TAG}
     networks:
       - jitsi-box-network
 

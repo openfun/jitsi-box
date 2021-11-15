@@ -1,5 +1,5 @@
 upstream marsha {
-    server marsha-mock:8001;
+    server marsha-mimic:8001;
 }
 
 server {

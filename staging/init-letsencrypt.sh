@@ -5,10 +5,17 @@ if ! [ -x "$(command -v docker-compose)" ]; then
   exit 1
 fi
 
-domains=(example.org www.example.org)
+if ! [ -f .env ]
+then
+  echo 'Error: no .env file found.' >&2
+  exit 1
+fi
+export $(cat .env | sed 's/#.*//g' | xargs)
+
+domains=($DOMAIN)
 rsa_key_size=4096
-data_path="./data/certbot"
-email="" # Adding a valid address is strongly recommended
+data_path="./docker-data/certbot"
+email=$CERTBOT_EMAIL # Adding a valid address is strongly recommended
 staging=0 # Set to 1 if you're testing your setup to avoid hitting request limits
 
 if [ -d "$data_path" ]; then
@@ -37,9 +44,10 @@ docker-compose run --rm --entrypoint "\
     -subj '/CN=localhost'" certbot
 echo
 
-
+# We start nginx and the fake marsha backend server,
+# because of the reverse proxy nginx start fails if backend is missing
 echo "### Starting nginx ..."
-docker-compose up --force-recreate -d nginx
+docker-compose up --build --force-recreate -d marsha-mimic nginx-and-front
 echo
 
 echo "### Deleting dummy certificate for $domains ..."
@@ -73,6 +81,7 @@ docker-compose run --rm --entrypoint "\
     $domain_args \
     --rsa-key-size $rsa_key_size \
     --agree-tos \
+    --no-eff-email \
     --force-renewal" certbot
 echo
 

@@ -1,8 +1,2 @@
 # Apple folder misc info
 .DS_Store
-
-# Env
-.env
-
-# Nginx conf & certs
-docker-data/nginx-conf/*.conf

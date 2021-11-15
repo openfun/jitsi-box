@@ -81,7 +81,6 @@ FROM nginx:1.21
 
 COPY --from=build-stage /app/build /var/www/lesrevelateursftv
 
-COPY ./nginx-jitsi-box.conf /etc/nginx/conf.d/nginx-jitsi-box.conf
 ```
 The second part of the Dockerfile copy the builded files inside the official Nginx docker image, and copy the service nginx configuration.
 
