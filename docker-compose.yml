@@ -18,6 +18,7 @@ services:
       - ./docker-data/certbot/www:/var/www/certbot:ro
     networks:
       - jitsi-box-network
+    command: crontab -l | { cat; echo "0 */6 * * * nginx -s reload"; } | crontab -
 
   certbot:
     image: certbot/certbot:latest
