@@ -14,14 +14,14 @@ The `app.js` file sets a node server, listening for a post on route `/marsha/log
 The body of the request must contain a `code` key, with a string value.
 
 If code is `111111`, response will be `200 Success`
-```json
+```javascript
 {
     "success": true,
     "link": "link.defined.in.env"
 }
 ```
 else the response will be `404 Error`
-```json
+```javascript
 {
     "success": false,
     "link": null
