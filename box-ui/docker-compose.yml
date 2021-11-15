@@ -1,8 +1,0 @@
-version: "3.9"
-
-services:
-  jitsi-box:
-    build: .
-    ports:
-      - "80:80"
-      - "443:443"

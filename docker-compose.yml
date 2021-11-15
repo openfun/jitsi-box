@@ -1,0 +1,39 @@
+version: "3.9"
+
+services:
+  
+  nginx-jitsi-box:
+    build:
+      context: ./box-ui
+      args:
+        - domain=${DOMAIN}
+        - front_files=${FRONT_FILES}
+    image: nginx-jitsi-box:${TAG}
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker-data/nginx-conf:/etc/nginx/conf.d:ro
+      - ./docker-data/certbot/conf:/etc/letsencrypt:ro
+      - ./docker-data/certbot/www:/var/www/certbot:ro
+    networks:
+      - jitsi-box-network
+
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./docker-data/certbot/conf:/etc/letsencrypt:rw
+      - ./docker-data/certbot/www:/var/www/certbot:rw
+    networks:
+      - jitsi-box-network
+    command: certonly --webroot --webroot-path=/var/www/certbot --email ${CERTBOT_EMAIL} --agree-tos --no-eff-email -d ${DOMAIN}
+
+  marsha-mock:
+    build:
+      context: ./fake-marsha-backend
+    image: marsha-mock:${TAG}
+    networks:
+      - jitsi-box-network
+
+networks:
+  jitsi-box-network:

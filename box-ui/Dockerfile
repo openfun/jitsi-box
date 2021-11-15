@@ -15,26 +15,27 @@ RUN npm run build
 FROM nginx:1.21
 
 # Install certbot for certificate auto renew
-RUN apt update &&\
-    apt install -y software-properties-common &&\
-    add-apt-repository -r ppa:certbot/certbot && \
-    apt update && \
-    apt install -y certbot python3-certbot-nginx
+#RUN apt update &&\
+#    apt install -y software-properties-common &&\
+#    add-apt-repository -r ppa:certbot/certbot && \
+#    apt update && \
+#    apt install -y certbot python3-certbot-nginx
 
 # ARG are defined only in build
-ARG certbot_email=test@gmail.com
-ARG domain=jitsi-box.cs-campus.fr
-ARG front_files=/var/www/jitsi-box/box-ui
+#ARG certbot_email=test@gmail.com
+ARG domain
+ARG front_files
+
 # ENV are accessible after build (when certbot CMD will be launched)
-ENV certbot_email=${certbot_email}
-ENV domain=${domain}
+#ENV certbot_email=${certbot_email}
+#ENV domain=${domain}
 
 # Copy Nginx conf file
-COPY ./nginx-jitsi-box.conf.template /etc/nginx/conf.d/nginx-jitsi-box.conf
+#COPY ./nginx-jitsi-box.conf.template /etc/nginx/conf.d/nginx-jitsi-box.conf
 
 # Replace domain name variable in nginx template with its real value
-RUN sed -i "s|{{ domain_name }}|${domain}|g" /etc/nginx/conf.d/nginx-jitsi-box.conf && \
-    sed -i "s|{{ path/to/front/files }}|${front_files}|g" /etc/nginx/conf.d/nginx-jitsi-box.conf
+#RUN sed -i "s|{{ domain_name }}|${domain}|g" /etc/nginx/conf.d/nginx-jitsi-box.conf && \
+#    sed -i "s|{{ path/to/front/files }}|${front_files}|g" /etc/nginx/conf.d/nginx-jitsi-box.conf
 
 # Copy front files
 COPY --from=build /app/build ${front_files}
