@@ -31,6 +31,7 @@ This script gets recommended TLS parameters, generates dummy certificates, launc
 Pull the code on your server
 ```bash
 git clone https://github.com/openfun/jitsi-box.git
+cd jitsi-box
 ```
 
 Populate the **3** env files **AND** the `Nginx` conf folder
@@ -38,7 +39,7 @@ Populate the **3** env files **AND** the `Nginx` conf folder
 Env files:
 ```bash
 cp box-ui/.env.template box-ui/.env
-cp staging/.env.template staging/.env.template
+cp staging/.env.template staging/.env
 cp staging/fake-marsha-backend/.env.template staging/fake-marsha-backend/.env
 ```
 Populate those env files with your values. For the `REACT_APP_MARSHA_URL` variable, since **WE** mock the Marsha API, you must set `https://<your.domain.com>/marsha/login`.
