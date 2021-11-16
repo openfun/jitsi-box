@@ -9,8 +9,8 @@ import JitsiComponent from './JitsiComponent';
 const CreateMeetingComponent: FunctionComponent = () => {
     const data = useLocation();
 
-    const [roomName, setRoomName] = useState(data.state && data.state.roomName ? data.state.roomName : 'dty');
-    const [domain, setDomain] = useState(data.state && data.state.domain ? data.state.domain : 'meeting.education');
+    const [roomName] = useState(data.state && data.state.roomName ? data.state.roomName : 'dty');
+    const [domain] = useState(data.state && data.state.domain ? data.state.domain : 'meeting.education');
 
     return (
         <div className='CreateMeetingComponent'>

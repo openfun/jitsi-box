@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import SliderComponent from './SliderComponent';
@@ -27,7 +27,7 @@ const DashboardButtonsComponent: FunctionComponent = () => {
                     }
                     modal
                 >
-                    {(close: any) => (
+                    {(close: React.MouseEventHandler<HTMLButtonElement> | undefined) => (
                         <div className='modal'>
                             <Button className='close' onClick={close}>
                                 &times;
