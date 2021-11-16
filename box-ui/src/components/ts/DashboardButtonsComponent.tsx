@@ -15,15 +15,14 @@ const DashboardButtonsComponent: FunctionComponent = () => {
     return (
         <div className='DashboardButtons'>
             <div className='ButtonContainer'>
-                <SliderComponent />
-            </div>
-            <div className='ButtonContainer'>
                 <Popup
                     trigger={
-                        <Button variant='contained' className='Button' color='error' sx={{ borderRadius: 28 }}>
-                            <ExitToAppOutlinedIcon />
+                        <div>
+                            <Button variant='contained' className='Button' color='error' sx={{ borderRadius: 28 }}>
+                                <ExitToAppOutlinedIcon />
+                            </Button>
                             Disconnect
-                        </Button>
+                        </div>
                     }
                     modal
                 >

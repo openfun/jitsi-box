@@ -6,6 +6,13 @@
     height: 100vh;
     width: 100vw;
 }
+.CreateMessage {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-right: 1%;
+    margin-left: 1%;
+}
 .CreateMeetingContainer {
     display: flex;
     flex-direction: row;

@@ -55,6 +55,10 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = ({
             };
             // @ts-expect-error js to ts error
             const api = new window.JitsiMeetExternalAPI(domainName, options);
+            api.addEventListener('videoConferenceJoined', () => {
+                console.log('Local User Joined');
+                // api.executeCommand('displayName', 'MyName');
+            });
         } catch (error) {
             console.error('Failed to load Jitsi API', error);
         }
