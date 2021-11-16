@@ -26,7 +26,7 @@ const CreateMeetingComponent: FunctionComponent = () => {
                         </h5>
                     </div>
                     <div className='QRCode'>
-                        <QRCode value={`https://${domain}/${roomName}`} size={128} />
+                        <QRCode value={`https://${domain}/${roomName}`} size={156} />
                     </div>
                     <div>
                         <DashboardButtonsComponent />
