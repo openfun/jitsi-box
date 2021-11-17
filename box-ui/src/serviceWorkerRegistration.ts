@@ -1,5 +1,15 @@
-// tslint:disable:no-console
-// In production, we register a service worker to serve assets from local cache.
+// This optional code is used to register a service worker.
+// register() is not called by default.
+
+// This lets the app load faster on subsequent visits in production, and gives
+// it offline capabilities. However, it also means that developers (and users)
+// will only see deployed updates on subsequent visits to a page, after all the
+// existing tabs open on the page have been closed, since previously cached
+// resources are updated in the background.
+
+// To learn more about the benefits of this model and instructions on how to
+// opt-in, read https://cra.link/PWA
+
 const isLocalhost = Boolean(
     window.location.hostname === 'localhost' ||
         // [::1] is the IPv6 localhost address.
@@ -36,7 +46,7 @@ export function register(config?: Config): void {
                 navigator.serviceWorker.ready.then(() => {
                     console.log(
                         'This web app is being served cache-first by a service ' +
-                            'worker. To learn more, visit https://bit.ly/CRA-PWA',
+                            'worker. To learn more, visit https://cra.link/PWA',
                     );
                 });
             } else {
@@ -47,7 +57,7 @@ export function register(config?: Config): void {
     }
 }
 
-const registerValidSW = (swUrl: string, config?: Config): void => {
+function registerValidSW(swUrl: string, config?: Config): void {
     navigator.serviceWorker
         .register(swUrl)
         .then((registration) => {
@@ -64,8 +74,9 @@ const registerValidSW = (swUrl: string, config?: Config): void => {
                             // content until all client tabs are closed.
                             console.log(
                                 'New content is available and will be used when all ' +
-                                    'tabs for this page are closed. See https://bit.ly/CRA-PWA.',
+                                    'tabs for this page are closed. See https://cra.link/PWA.',
                             );
+
                             // Execute callback
                             if (config && config.onUpdate) {
                                 config.onUpdate(registration);
@@ -88,9 +99,9 @@ const registerValidSW = (swUrl: string, config?: Config): void => {
         .catch((error) => {
             console.error('Error during service worker registration:', error);
         });
-};
+}
 
-const checkValidServiceWorker = (swUrl: string, config?: Config): void => {
+function checkValidServiceWorker(swUrl: string, config?: Config): void {
     // Check if the service worker can be found. If it can't reload the page.
     fetch(swUrl, {
         headers: { 'Service-Worker': 'script' },
@@ -113,12 +124,16 @@ const checkValidServiceWorker = (swUrl: string, config?: Config): void => {
         .catch(() => {
             console.log('No internet connection found. App is running in offline mode.');
         });
-};
+}
 
 export function unregister(): void {
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.ready.then((registration) => {
-            registration.unregister();
-        });
+        navigator.serviceWorker.ready
+            .then((registration) => {
+                registration.unregister();
+            })
+            .catch((error) => {
+                console.error(error.message);
+            });
     }
 }

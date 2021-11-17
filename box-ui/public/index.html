@@ -3,37 +3,25 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width,height=device-height, initial-scale=1" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="white">
     <meta name="theme-color" media="(prefers-color-scheme: dark)"  content="black">
     <meta
       name="description"
       content="Jitsi Box created by Paris Digital Lab and Fun."
     />
-    <link rel="apple-touch-icon" href="./logo192.png" />
-    <link rel="manifest" href="./manifest.json" />
+    <link rel="apple-touch-icon" href="logo192.png" />
+    <link rel="manifest" href="manifest.json" />
     <title>Jitsi Box</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root">        
     </div>
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-          navigator.serviceWorker.register('serviceWorker')
-            .then((registration) =>{
-              console.log('Worker registration successful', registration.scope);
-          }, (err) => {
-            console.log('Worker registration failed', err);
-          }).catch((err) => {
-            console.log(err);
-          });
-        });
-      } else {
-        console.log('Service Worker is not supported by browser.');
-      }
-    </script>
     <script src='https://meet.jit.si/external_api.js'></script>
   </body>
 </html>
