@@ -16,8 +16,7 @@ app.use(express.urlencoded({
 // cors
 app.use(cors());
 
-// A sample route
-app.get('/', (req, res) => res.send('Hello World!'))
+// Check-code route
 app.post('/marsha/login', (req, res) => {
   if (req.body.code == '111111') {
     res.status(200).json({
