@@ -20,7 +20,7 @@ const MarshaLoginComponent: FunctionComponent = () => {
         }
     };
 
-    async function fetchMarsha(config: AxiosRequestConfig<any>): Promise<string> {
+    async function fetchMarsha(config: AxiosRequestConfig<unknown>): Promise<string> {
         // Ask marsha API if the code is known, and retrieve the corresponding link
         return axios(config)
             .then((response: AxiosResponse) => {

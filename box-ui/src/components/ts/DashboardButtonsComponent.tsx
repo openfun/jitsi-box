@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent } from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import SliderComponent from './SliderComponent';
 import '../css/DashboardButtonsComponent.css';
@@ -12,13 +12,15 @@ import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
 import ForumOutlinedIcon from '@mui/icons-material/ForumOutlined';
 import StopCircleIcon from '@mui/icons-material/StopCircle';
 
-const DashboardButtonsComponent: FunctionComponent = () => {
-    const [micActivated, setMicActivated] = useState(true);
+interface DBProps {
+    micActivated: boolean;
+    setMicActivated: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const DashboardButtonsComponent = (props: DBProps) => {
     const [saveActivated, setSaveActivated] = useState(false);
 
-    const switchMic = (): void => {
-        setMicActivated(!micActivated);
-    };
     const switchSave = (): void => {
         setSaveActivated(!saveActivated);
     };
@@ -27,11 +29,17 @@ const DashboardButtonsComponent: FunctionComponent = () => {
         <div className='DashboardButtons'>
             <div className='DashboardButtonsRow'>
                 <div className='ButtonContainer'>
-                    <Button variant='outlined' className='Button' onClick={switchMic} sx={{ borderRadius: 28 }}>
-                        {micActivated ? <MicNoneOutlinedIcon /> : <MicOffOutlinedIcon />}
+                    <Button
+                        variant='outlined'
+                        className='Button'
+                        onClick={() => props.setMicActivated(!props.micActivated)}
+                        sx={{ borderRadius: 28 }}
+                    >
+                        {props.micActivated ? <MicNoneOutlinedIcon /> : <MicOffOutlinedIcon />}
                     </Button>
                     Mic
                 </div>
+                <div>{props.micActivated}</div>
                 <div className='ButtonContainer'>
                     <Button variant='outlined' className='Button' sx={{ borderRadius: 28 }}>
                         <VideoCameraBackOutlinedIcon />

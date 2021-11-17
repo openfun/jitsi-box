@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import '../css/CreateMeetingComponent.css';
 import HeaderComponent from './HeaderComponent';
 import QRCode from 'react-qr-code';
-import DashboardButtonsComponent from './DashboardButtonsComponent';
+// import DashboardButtonsComponent from './DashboardButtonsComponent';
 
 const CreateMeetingComponent: FunctionComponent = () => {
     const data = useLocation();
@@ -28,9 +28,9 @@ const CreateMeetingComponent: FunctionComponent = () => {
                         <QRCode value={linkRoom} size={128} />
                     </div>
                 </div>
-                <div>
+                {/* <div>
                     <DashboardButtonsComponent />
-                </div>
+                </div> */}
             </div>
         </div>
     );

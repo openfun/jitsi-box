@@ -1,9 +1,12 @@
 import React, { useEffect, FunctionComponent } from 'react';
 
-import DashboardComponent from './DashboardComponent';
 import '../css/JitsiComponent.css';
 
-const JitsiMeetComponent: FunctionComponent = () => {
+interface JitsiProps {
+    mic: boolean;
+}
+
+const JitsiMeetComponent = (props: JitsiProps) => {
     const startConference = (): void => {
         try {
             const domain = 'meeting.education';
@@ -37,19 +40,18 @@ const JitsiMeetComponent: FunctionComponent = () => {
         else alert('Jitsi Meet API script not loaded');
     }, []);
 
-    return (
+    // useEffect(() => {
+    //     api.executeCommand('toggleAudio');
+    // }, [props.mic])
 
+    return (
         <div className='JitsiPage'>
             <div className='JitsiComponent'>
                 <div id='jitsi-container' className='jitsiContainer' />
             </div>
-            <DashboardComponent/>
+            <div>mic= {props.mic ? 'true' : 'false'}</div>
         </div>
     );
 };
-
-function handleClick() {
-    console.log('✨ Ceci est un clic ✨');
-}
 
 export default JitsiMeetComponent;
