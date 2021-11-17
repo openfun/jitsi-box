@@ -86,4 +86,4 @@ docker-compose run --rm --entrypoint "\
 echo
 
 echo "### Reloading nginx ..."
-docker-compose up --force-recreate
+docker-compose up -d --force-recreate

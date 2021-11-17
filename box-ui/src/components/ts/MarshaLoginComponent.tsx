@@ -69,7 +69,16 @@ const MarshaLoginComponent: FunctionComponent = () => {
             const waitMarshaResponse = async () => {
                 link = await fetchMarsha(options);
                 if (link) {
-                    navigate({ pathname: '/launch' }, { state: { link }, replace: true });
+                    const linkAsURL = new URL(link);
+                    const domain = linkAsURL.host;
+                    const roomName = linkAsURL.pathname;
+                    navigate(
+                        { pathname: '/launch' },
+                        {
+                            state: { roomName: roomName, domain: domain },
+                            replace: true,
+                        },
+                    );
                 } else {
                     setAlert(true);
                 }
