@@ -1,5 +1,5 @@
 import { Box, Button } from '@mui/material';
-import React, { FunctionComponent, useState, ChangeEvent } from 'react';
+import React, { FunctionComponent, useState, ChangeEvent, useRef } from 'react';
 import '../css/JoinMeetingComponent.css';
 import { useNavigate } from 'react-router-dom';
 import Keyboard from 'react-simple-keyboard';
@@ -21,7 +21,7 @@ const JoinMeetingComponent: FunctionComponent = () => {
     });
     const [layout, setLayout] = useState<string>('default');
     const [inputName, setInputName] = useState<string>('default');
-    // const keyboard = useRef();
+    //const keyboardRef = useRef(null) as React.MutableRefObject<null | Keyboard>;
 
     const navigate = useNavigate();
     const goToLaunchRoom = (): void => {
@@ -33,33 +33,33 @@ const JoinMeetingComponent: FunctionComponent = () => {
             },
         );
     };
-
-    const onChangeAll = (inputs: InputRoom) => {
-        setInputs({ ...inputs });
-    };
     const handleShift = (): void => {
         const newLayoutName: string = layout === 'default' ? 'shift' : 'default';
         setLayout(newLayoutName);
     };
-
     const onKeyPress = (button: string): void => {
         if (button === '{shift}' || button === '{lock}') handleShift();
     };
-
-    const onChangeRoomName = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        setInputs({
-            ...inputs,
-            roomName: event.target.value as string,
-        });
-        // keyboard.current?.setInput(event.target.value as string);
+    const onChangeAll = (inputs: InputRoom) => {
+        setInputs({ ...inputs });
     };
 
-    const onChangeDomain = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    const onChangeRoomName = (event: ChangeEvent<HTMLTextAreaElement>) => {
+        const inputVal = event.target.value;
+
         setInputs({
             ...inputs,
-            domain: event.target.value as string,
+            roomName: inputVal,
         });
-        // keyboard.current?.setInput(event.target.value as string);
+        //keyboardRef?.current?.setInput(event.target.value as string);
+    };
+    const onChangeDomain = (event: ChangeEvent<HTMLTextAreaElement>) => {
+        const inputVal = event.target.value;
+        setInputs({
+            ...inputs,
+            domain: inputVal,
+        });
+        //keyboardRef.current.setInput(event.target.value as string);
     };
 
     return (
@@ -105,14 +105,19 @@ const JoinMeetingComponent: FunctionComponent = () => {
                         </Box>
                     </div>
                     <div className='JoinButton'>
-                        <Button variant='contained' size='large' onClick={goToLaunchRoom}>
+                        <Button
+                            variant='contained'
+                            size='large'
+                            onClick={goToLaunchRoom}
+                            disabled={!inputs.roomName || !inputs.domain}
+                        >
                             Join
                         </Button>
                     </div>
                 </div>
                 <div>
                     <Keyboard
-                        // keyboardRef={(r: MutableRefObject<undefined>) => (keyboard.current = r.current)}
+                        //keyboardRef={(r: MutableRefObject<undefined>) => (keyboard.current = r.current)}
                         inputName={inputName}
                         layoutName={layout}
                         onChangeAll={onChangeAll}
