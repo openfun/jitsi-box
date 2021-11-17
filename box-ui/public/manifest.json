@@ -22,7 +22,7 @@
     }
   ],
   "dir": "ltr",
-  "start_url": "/",
+  "start_url": "",
   "scope": "/",
   "display": "standalone",
   "orientation":  "landscape",
