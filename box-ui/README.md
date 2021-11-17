@@ -6,7 +6,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `yarn start`
+### `yarn start` / `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -39,8 +39,53 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+### `npm run lint`
+
+Launch the `eslint` linter with the `-fix` option: it will correct as much linter errors as it can, and the remaining ones must be fixed by yourself.
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+# Deployment
+
+This web app is intendend to be deployed on a server to be served by a web server.
+
+## `.env` file
+You must create a `.env` file (copy the `.env.template`), and fill it with the correct values.
+
+Env variables starting with `REACT_APP_` are automatically catched by react, so we do not need the `dotenv` package.
+
+## Dockerfile
+
+```Dockerfile
+## Stage 0, "build-stage", based on Node.js, to build and compile the frontend
+FROM node:16-alpine as build
+
+WORKDIR /app
+
+# Separate npm install and npm build to make the best of Docker cache
+COPY package.json /app/package.json
+RUN npm install
+
+COPY . /app/
+RUN cp src/config.js.template src/config.js && \
+    npm run build
+```
+The first part of the Dockerfile builds the frontend static files, from a node alpine image.
+
+```Dockerfile
+## Stage 1: based on the official nginx image, serves the static frontend files
+FROM nginx:1.21
+
+# ARG are defined only in build
+ARG front_files
+
+# Copy front files
+COPY --from=build /app/build ${front_files}
+```
+The second part of the Dockerfile copy the builded files inside the official Nginx docker image. The Nginx configuration file is managed by the [docker-compose](../staging/docker-compose.yml).
+
+## Run the app
+`docker-compose up`
