@@ -25,7 +25,13 @@ const JoinMeetingComponent: FunctionComponent = () => {
 
     const navigate = useNavigate();
     const goToLaunchRoom = (): void => {
-        navigate({ pathname: '/launch' }, { state: { link: `${inputs.domain}${inputs.roomName}` }, replace: true });
+        navigate(
+            { pathname: '/launch' },
+            {
+                state: { roomName: inputs.roomName, domain: inputs.domain },
+                replace: true,
+            },
+        );
     };
 
     const onChangeAll = (inputs: InputRoom) => {
@@ -66,6 +72,7 @@ const JoinMeetingComponent: FunctionComponent = () => {
                     <h2>Enter the link of the Jitsi Meeting</h2>
                 </div>
                 <div className='InputContainer'>
+                    https://
                     <div className='InputMessage'>
                         <Box>
                             <FormControl fullWidth>
