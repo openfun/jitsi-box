@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import '../css/DashboardButtonsComponent.css';
+import '../css/LargeDashboardButtonsComponent.css';
 import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
 import Popup from 'reactjs-popup';
 
