@@ -76,5 +76,5 @@ Be careful, launching the [init-letsencrypt](##init-letsencrypt.sh) script start
 ## Updating
 After any modification, if you still have the SSL certificates, you can rebuild and restart the modified service with the command
 ```bash
-docker-compose up --build --force-recreate <service name>
+docker-compose up -d --build --force-recreate <service name>
 ```
