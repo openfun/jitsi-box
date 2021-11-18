@@ -35,6 +35,7 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = ({
                         'fodeviceselection',
                         'raisehand',
                         'tileview',
+                        'hangup',
                     ],
                     TOOLBAR_ALWAYS_VISIBLE: true,
                 },
@@ -53,10 +54,6 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = ({
             api.addListener('videoConferenceLeft', () => {
                 console.log('Video Conference Left');
             });
-            // api.addEventListener('videoConferenceJoined', () => {
-            //     console.log('Local User Joined');
-            //     // api.executeCommand('displayName', 'MyName');
-            // });
         } catch (error) {
             console.error('Failed to load Jitsi API', error);
         }
