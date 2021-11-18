@@ -57,7 +57,6 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = ({
                 navigate(
                     { pathname: '/' },
                     {
-                        state: { status: 'left' },
                         replace: true,
                     },
                 );
