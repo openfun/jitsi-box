@@ -5,13 +5,18 @@
     background: #1F1F1F;
     height: 100vh;
     width: 100vw;
+    align-self: center;
 }
 
 .HomeButtonsContainer {
-    width: 50%;
-    align-self: center;
+    width: 50vw;
     height: 20vh;
     text-align: center;
-    margin-top: 20%;
+    align-self: center;
+    padding-bottom: 20%;
+}
+
+.logo {
+    display: flex;
 }
   
