@@ -6,8 +6,11 @@ const HomeButtonsComponent: FunctionComponent = () => {
     return (
         <div className='HomeButtonsComponent'>
             <div className='ButtonContainer'>
-                <Button variant='contained' className='Button' component={Link} to='/launch'>
+                <Button id='StartMeetingButton' variant='contained' className='Button' component={Link} to='/launch'>
                     Démarrer un Meeting
+                </Button>
+                <Button id='ReturnToMeetingButton' variant='contained' className='Button' component={Link} to='/launch'>
+                    Revenir dans le meeting
                 </Button>
             </div>
         </div>

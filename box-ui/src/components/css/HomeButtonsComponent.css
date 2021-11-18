@@ -1,13 +1,21 @@
 .HomeButtonsComponent {
-    display: flex;
+    display: block;
     width: 100%;
     height: 100%;
 }
 .ButtonContainer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: center;
+    display: block;
+    /* justify-content: center; */
+    align-self: center;
     width: 100%;
     height: 100%;
+    padding-top: 30px;
+}
+
+#StartMeetingButton{
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#ReturnToMeetingButton{
+    display: none;
 }
