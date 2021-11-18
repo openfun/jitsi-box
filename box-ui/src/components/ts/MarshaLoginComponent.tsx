@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios, { AxiosResponse, AxiosRequestConfig, Method } from 'axios';
-import { Alert, Box, Button, Snackbar } from '@mui/material';
+import { Alert, Box, Button, Grid, Snackbar } from '@mui/material';
 import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
-import HeaderComponent from './HeaderComponent';
+import { StyledEngineProvider } from '@mui/material/styles';
 
 import '../css/MarshaLoginComponent.css';
 
@@ -52,6 +52,45 @@ const MarshaLoginComponent: FunctionComponent = () => {
             });
     }
 
+    const InputRow = (valuesArray: Array<string>, addReturnButton: boolean) => {
+        return (
+            <React.Fragment>
+                {valuesArray.map((index) => {
+                    return (
+                        <Grid item key={index} xs={4} className='numberInputGridItem'>
+                            <Button
+                                value={index}
+                                variant='contained'
+                                className='numberButton'
+                                sx={{ backgroundColor: '#fcfcfe' }}
+                                onClick={(e) => onButtonPress(e)}
+                            >
+                                {index}
+                            </Button>
+                        </Grid>
+                    );
+                })}
+                {(() => {
+                    if (addReturnButton) {
+                        return (
+                            <Grid item key={'return'} xs={4} className='numberInputGridItem'>
+                                <Button
+                                    value={'return'}
+                                    variant='contained'
+                                    className='numberButton'
+                                    sx={{ backgroundColor: '#fcfcfe' }}
+                                    onClick={(e) => onButtonPress(e)}
+                                >
+                                    <BackspaceOutlinedIcon />
+                                </Button>
+                            </Grid>
+                        );
+                    }
+                })()}
+            </React.Fragment>
+        );
+    };
+
     useEffect(() => {
         if (code.length === 6) {
             const method: Method = 'POST';
@@ -88,82 +127,57 @@ const MarshaLoginComponent: FunctionComponent = () => {
         }
     }, [code]);
 
-    const inputFirstLine = ['0', '1', '2', '3', '4'];
-    const inputSecondLine = ['5', '6', '7', '8', '9'];
+    const inputFirstLine = ['1', '2', '3'];
+    const inputSecondLine = ['4', '5', '6'];
+    const inputThirdLine = ['7', '8', '9'];
+    const inputFourthLine = ['0'];
 
     return (
-        <div className='MarshaLoginComponent'>
-            <div>
-                <HeaderComponent homeDisplayed={true} marshaDisplayed={false} joinDisplayed={false} />
-            </div>
-            <div>
-                <Snackbar
-                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                    open={isAlert}
-                    autoHideDuration={6000}
-                    onClose={() => setAlert(false)}
-                    key={'marshaLoginAlert'}
-                >
-                    <Alert severity='error' sx={{ width: '100%' }} variant='filled'>
-                        {'Wrong code'}
-                    </Alert>
-                </Snackbar>
-            </div>
-            <div className='MarshaLoginInfoContainer'>
-                <h2>Tap the Marsha Code</h2>
-                <h3>If you do not have it, go back to the home page.</h3>
-            </div>
-            <div className='MarshaLoginDisplayContainer'>
-                {Array.from({ length: 6 }).map((_, index) => {
-                    return (
-                        <Box component='div' key={index} className='numberDisplay'>
-                            {typeof code[index] === 'number' ? code[index] : '_'}
+        <StyledEngineProvider injectFirst>
+            {
+                <div className='MarshaLoginComponent'>
+                    <div>
+                        <Snackbar
+                            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                            open={isAlert}
+                            autoHideDuration={6000}
+                            onClose={() => setAlert(false)}
+                            key={'marshaLoginAlert'}
+                        >
+                            <Alert severity='error' sx={{ width: '100%' }} variant='filled'>
+                                {'Wrong code'}
+                            </Alert>
+                        </Snackbar>
+                    </div>
+                    <div className='MarshaLoginInfoContainer'>{/*<h2>Enter the Marsha Code</h2>*/}</div>
+                    <div className='MarshaLoginDisplayDiv'>
+                        <Box className='MarshaLoginDisplayContainer'>
+                            <Grid container spacing={0.5}>
+                                {Array.from({ length: 6 }).map((_, index) => {
+                                    return (
+                                        <Grid item xs={'auto'} key={index} className='numberDisplayGridItem'>
+                                            <Box className='numberDisplayBox'>
+                                                {typeof code[index] === 'number' ? code[index] : ''}
+                                            </Box>
+                                        </Grid>
+                                    );
+                                })}
+                            </Grid>
                         </Box>
-                    );
-                })}
-                <Button
-                    key={'return'}
-                    value={'return'}
-                    variant='outlined'
-                    className='deleteButton'
-                    onClick={(e) => onButtonPress(e)}
-                >
-                    <BackspaceOutlinedIcon />
-                </Button>
-            </div>
-            <div className='MarshaLoginInputContainer'>
-                <div className='MarshaLoginInputContainerFirstLine'>
-                    {inputFirstLine.map((index) => {
-                        return (
-                            <Button
-                                key={index}
-                                value={index}
-                                variant='outlined'
-                                className='numberButton'
-                                onClick={(e) => onButtonPress(e)}
-                            >
-                                {index}
-                            </Button>
-                        );
-                    })}
+                    </div>
+                    <div className='MarshaLoginInputDiv'>
+                        <Box className='MarshaLoginInputContainer'>
+                            <div className='MarshaLoginInputContainerLine'>{InputRow(inputFirstLine, false)}</div>
+                            <div className='MarshaLoginInputContainerLine'>{InputRow(inputSecondLine, false)}</div>
+                            <div className='MarshaLoginInputContainerLine'>{InputRow(inputThirdLine, false)}</div>
+                            <div className='MarshaLoginInputContainerLine MarshaLoginInputContainerLastLine'>
+                                {InputRow(inputFourthLine, true)}
+                            </div>
+                        </Box>
+                    </div>
                 </div>
-                <div className='MarshaLoginInputContainerSecondLine'>
-                    {inputSecondLine.map((index) => {
-                        return (
-                            <Button
-                                key={index}
-                                value={index}
-                                variant='outlined'
-                                className='numberButton'
-                                onClick={(e) => onButtonPress(e)}
-                            >
-                                {index}
-                            </Button>
-                        );
-                    })}
-                </div>
-            </div>
-        </div>
+            }
+        </StyledEngineProvider>
     );
 };
 

@@ -6,41 +6,81 @@
     flex-direction: column;
 }
 
-.MarshaLoginInputContainer {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-
 .MarshaLoginInfoContainer {
     text-align: center;
     display: inline;
 }
 
+.MarshaLoginDisplayDiv {
+    margin-top: 6vh;
+    margin-bottom: 7vh;
+}
+
 .MarshaLoginDisplayContainer {
+    width: 70%;
+    margin: auto;
+}
+
+.numberDisplayGridItem {
+    flex-grow: 1;
+}
+
+.numberDisplayBox {
+    height: 10vh;
+    width: 10vw;
+    background-color: #dbe7f5;
+    font-size: x-large;
+    border-radius: 10%;
     display: flex;
-    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.MarshaLoginInputDiv {
+    flex-grow: 1;
+}
+
+.MarshaLoginInputContainer {
+    display: flex;
+    width: 90%;
+    height: 90%;
+    margin: auto;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .MarshaLoginInputContainerFirstLine,
 .MarshaLoginInputContainerSecondLine,
-.MarshaLoginDisplayContainer {
+.MarshaLoginDisplayContainer,
+.MarshaLoginInputContainerLine { 
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     flex-grow: 1;
     justify-content: space-evenly;
     align-content: space-around;
     align-items: center;
 }
 
-.numberDisplay {
-    display: flex;
+.MarshaLoginInputContainerLastLine { 
+    justify-content: flex-end;
 }
 
-.deleteButton {
+.numberInputGridItem {
     display: flex;
+    justify-content: space-evenly;
+    align-content: space-around;
+    align-items: center;
 }
-.numberButton {
+
+.numberButton, .deleteButton {
+    width: 25vw;
+    height: 11vh;
+    font-size: x-large;
     display: flex;
+    color: #000;
+}
+
+.numberButton:hover, .deleteButton:hover {
+    display: flex;
+    color: #fff;
 }
