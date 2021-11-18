@@ -7,7 +7,7 @@ const HomeButtonsComponent: FunctionComponent = () => {
         <div className='HomeButtonsComponent'>
             <div className='ButtonContainer'>
                 <Button variant='contained' className='Button' component={Link} to='/launch'>
-                    Launch Meeting
+                    Démarrer un Meeting
                 </Button>
             </div>
         </div>

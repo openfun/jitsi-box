@@ -2,13 +2,16 @@
     display: flex; 
     flex-direction: column;
     justify-content: center;
-    background: #E4F4FB;
+    background: #1F1F1F;
     height: 100vh;
     width: 100vw;
 }
 
 .HomeButtonsContainer {
-    width: 100vw;
-    height: 100vh;
+    width: 50%;
+    align-self: center;
+    height: 20vh;
+    text-align: center;
+    margin-top: 20%;
 }
   
