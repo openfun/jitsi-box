@@ -1,5 +1,5 @@
 import React, { useEffect, FunctionComponent } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import '../css/JitsiComponent.css';
 interface InputRoomProps {
     domain: string;
@@ -10,6 +10,7 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = ({
     domain: domainName,
     room: roomName,
 }: InputRoomProps) => {
+    const navigate = useNavigate();
     const startConference = (): void => {
         try {
             const options = {
@@ -53,6 +54,13 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = ({
             const api = new window.JitsiMeetExternalAPI(domainName, options);
             api.addListener('videoConferenceLeft', () => {
                 console.log('Video Conference Left');
+                navigate(
+                    { pathname: '/' },
+                    {
+                        state: { status: 'left' },
+                        replace: true,
+                    },
+                );
             });
         } catch (error) {
             console.error('Failed to load Jitsi API', error);
