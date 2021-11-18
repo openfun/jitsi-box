@@ -5,6 +5,8 @@ import HomeComponent from './components/ts/HomeComponent';
 import JoinMeetingComponent from './components/ts/JoinMeetingComponent';
 import DashboardComponent from './components/ts/DashboardComponent';
 import MarshaLoginComponent from './components/ts/MarshaLoginComponent';
+import JitsiComponent from './components/ts/JitsiComponent';
+import PopupComponent from './components/ts/PopupComponent';
 
 const App: FunctionComponent = () => {
     return (
@@ -17,6 +19,9 @@ const App: FunctionComponent = () => {
                     <Route path='/launch' element={<CreateMeetingComponent />} />
                     <Route path='/dashboard' element={<DashboardComponent />} />
                     <Route path='/login' element={<MarshaLoginComponent />} />
+                    <Route path='/popup' element={<PopupComponent />} />
+
+                    {/* <Route path='/jitsi' element={<JitsiComponent />} /> */}
                 </Routes>
             </div>
         </Router>
