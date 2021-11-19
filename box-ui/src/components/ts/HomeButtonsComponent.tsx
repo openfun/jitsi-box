@@ -7,9 +7,10 @@ interface CounterProps {
     counter: number;
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const HomeButtonsComponent = (props: CounterProps) => {
     let button;
-    if (props.counter != 0) {
+    if (props.counter > 0) {
         button = (
             <>
                 <Button id='ReturnToMeetingButton' variant='contained' className='Button' component={Link} to='/launch'>
