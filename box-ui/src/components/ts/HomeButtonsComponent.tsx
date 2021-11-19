@@ -2,34 +2,54 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import '../css/HomeButtonsComponent.css';
 import { Link } from 'react-router-dom';
+import { styled } from '@mui/material/styles';
+import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+import { width } from '@mui/system';
 
 interface CounterProps {
     counter: number;
 }
+const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
+    height: 10,
+    borderRadius: 5,
+    width: '60vw',
+    [`&.${linearProgressClasses.colorPrimary}`]: {
+        backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+    },
+    [`& .${linearProgressClasses.bar}`]: {
+        borderRadius: 5,
+        backgroundColor: theme.palette.mode === 'light' ? '#1a90ff' : '#308fe8',
+    },
+}));
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const HomeButtonsComponent = (props: CounterProps) => {
-    let button;
-    if (props.counter > 0) {
-        button = (
-            <>
-                <Button id='ReturnToMeetingButton' variant='contained' className='Button' component={Link} to='/launch'>
-                    Revenir dans le meeting
-                </Button>
-                <div id='counter'>Disparaît dans {props.counter} secondes</div>
-            </>
-        );
-    }
-
     return (
-        <div className='HomeButtonsComponent'>
+        <>
             <div className='ButtonContainer'>
                 <Button id='StartMeetingButton' variant='contained' className='Button' component={Link} to='/launch'>
                     Démarrer un Meeting
                 </Button>
-                <div>{button}</div>
             </div>
-        </div>
+            {props.counter > 0 ? (
+                <div>
+                    <div className='ButtonContainer'>
+                        <Button
+                            id='ReturnToMeetingButton'
+                            variant='contained'
+                            className='Button'
+                            component={Link}
+                            to='/launch'
+                        >
+                            Revenir dans le meeting
+                        </Button>
+                    </div>
+                    <div className='LinearProgress'>
+                        <BorderLinearProgress variant='determinate' value={props.counter * 10} />
+                    </div>
+                    <div id='counter'>Disparaît dans {props.counter} secondes</div>
+                </div>
+            ) : null}
+        </>
     );
 };
 

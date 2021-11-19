@@ -1,7 +1,7 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState, useEffect } from 'react';
 import HomeButtonsComponent from './HomeButtonsComponent';
 import '../css/HomeComponent.css';
-import JitsiBoxLogo from '/Users/arthurpdl/Documents/jitsi-box/box-ui/src/logo/jitsibox.svg';
+import JitsiBoxLogo from '../../logo/jitsibox.svg';
 import { useLocation } from 'react-router-dom';
 
 const HomeComponent: FunctionComponent = () => {
@@ -10,20 +10,20 @@ const HomeComponent: FunctionComponent = () => {
     const { state } = useLocation();
     const { count } = state != null ? state : 0;
 
-    React.useEffect(() => {
+    useEffect(() => {
         setCounter(count);
     }, [count]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
     }, [counter]);
 
     return (
-        <div className='Home'>
-            <div className='HomeButtonsContainer'>
+        <div className='HomeButtonsContainer'>
+            <div className='LogoContainer'>
                 <img src={JitsiBoxLogo} alt='logo de la jitsi-box' className='logo' />
-                <HomeButtonsComponent counter={counter} />
             </div>
+            <HomeButtonsComponent counter={counter} />
         </div>
     );
 };

@@ -1,26 +1,25 @@
-.HomeButtonsComponent {
-    display: inline-block;
-    width: 100%;
-    height: 100%;
-}
 .ButtonContainer {
-    display: inline-block;
-    /* justify-content: center; */
-    align-self: center;
-    width: 100%;
-    padding-top: 30px;
-    
+    padding-top: 4%;
 }
 
-#StartMeetingButton{
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    margin:5px;
+#StartMeetingButton {
+    height: 17vh;
+    width: 60vw;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-#ReturnToMeetingButton{
-    margin: 5px;
+#ReturnToMeetingButton {
+    height: 17vh;
+    width: 60vw;
 }
 
-#counter{
+#counter {
     color: azure;
+    margin-top: 1%;
+}
+.LinearProgress {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -1%;
 }
