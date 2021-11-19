@@ -2,7 +2,6 @@ import React, { useState, FunctionComponent } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../css/CreateMeetingComponent.css';
 import HeaderComponent from './HeaderComponent';
-import QRCode from 'react-qr-code';
 import LargeDashboardButtonsComponent from './LargeDashboardButtonsComponent';
 import JitsiComponent from './JitsiComponent';
 import PopupComponent from './PopupComponent';
