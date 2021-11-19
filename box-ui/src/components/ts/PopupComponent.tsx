@@ -112,7 +112,7 @@ const PopupComponent: FunctionComponent<roomProps> = ({ domain: domain, roomName
                 }}
             >
                 {popNumber === 1 ? <JoinMeetingComponent /> : null}
-                {popNumber === 2 ? <QrCodeComponent /> : null}
+                {popNumber === 2 ? <QrCodeComponent domain={domain} roomName={roomName} /> : null}
                 {popNumber === 3 ? <MarshaLoginComponent /> : null}
             </Popover>
         </div>

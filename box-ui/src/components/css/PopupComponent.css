@@ -48,3 +48,7 @@
     border-radius: 6px;
     height: 55px;
 }
+.QrcodeButton QrCodeIcon {
+    height: 30px;
+    width: 30px;
+}

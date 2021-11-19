@@ -1,8 +1,21 @@
 .qrCodeContainer {
     background: #e4f4fb;
-    height: 80vh;
+    height: 90vh;
     width: 100vw;
     display: flex;
-    justify-content: space-around;
-    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.QRItem {
+    flex: 1 1 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.DetailsContainer {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

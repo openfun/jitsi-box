@@ -9,11 +9,13 @@ interface InputRoom {
     roomName: string;
 }
 
-const QrCodeComponent: FunctionComponent = () => {
+const QrCodeComponent: FunctionComponent<InputRoom> = ({ domain: domain, roomName: roomName }) => {
     return (
         <div className='qrCodeContainer'>
-            <div>test</div>
-            <div> information</div>
+            <div className='QRItem'>
+                <QRCode value={`https://${domain}/${roomName}`} size={320} />
+            </div>
+            <div className='DetailsContainer'> information</div>
         </div>
     );
 };
