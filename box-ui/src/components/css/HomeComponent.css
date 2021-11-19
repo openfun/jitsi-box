@@ -1,6 +1,5 @@
 .Home {
     display: flex; 
-    /* flex-direction: column; */
     justify-content: center;
     background: #1F1F1F;
     height: 100vh;
@@ -10,11 +9,9 @@
 
 .HomeButtonsContainer {
     display: inline-block;
-    width: 50vw;
-    height: 20vh;
     text-align: center;
     align-self: center;
-    padding-bottom: 20%;
+    padding: 20%;
 }
 
 .logo {

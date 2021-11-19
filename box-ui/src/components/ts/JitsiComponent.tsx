@@ -58,7 +58,7 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = ({
                     { pathname: '/' },
                     {
                         replace: true,
-                        state: { count: 5 },
+                        state: { count: 10 },
                     },
                 );
             });
