@@ -1,21 +1,26 @@
 .HomeButtonsComponent {
-    display: block;
+    display: inline-block;
     width: 100%;
     height: 100%;
 }
 .ButtonContainer {
-    display: block;
+    display: inline-block;
     /* justify-content: center; */
     align-self: center;
     width: 100%;
-    height: 100%;
     padding-top: 30px;
+    
 }
 
 #StartMeetingButton{
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    margin:5px;
 }
 
 #ReturnToMeetingButton{
-    /* display: none; */
+    margin: 5px;
+}
+
+#counter{
+    color: azure;
 }

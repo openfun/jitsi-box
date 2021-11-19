@@ -1,6 +1,6 @@
 .Home {
     display: flex; 
-    flex-direction: column;
+    /* flex-direction: column; */
     justify-content: center;
     background: #1F1F1F;
     height: 100vh;
@@ -9,6 +9,7 @@
 }
 
 .HomeButtonsContainer {
+    display: inline-block;
     width: 50vw;
     height: 20vh;
     text-align: center;

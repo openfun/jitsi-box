@@ -11,9 +11,12 @@ const HomeButtonsComponent = (props: CounterProps) => {
     let button;
     if (props.counter != 0) {
         button = (
-            <Button id='ReturnToMeetingButton' variant='contained' className='Button' component={Link} to='/launch'>
-                Revenir dans le meeting
-            </Button>
+            <>
+                <Button id='ReturnToMeetingButton' variant='contained' className='Button' component={Link} to='/launch'>
+                    Revenir dans le meeting
+                </Button>
+                <div id='counter'>Disparaît dans {props.counter} secondes</div>
+            </>
         );
     }
 
