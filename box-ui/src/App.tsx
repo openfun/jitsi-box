@@ -19,7 +19,6 @@ const App: FunctionComponent = () => {
                     <Route path='/launch' element={<CreateMeetingComponent />} />
                     <Route path='/dashboard' element={<DashboardComponent />} />
                     <Route path='/login' element={<MarshaLoginComponent />} />
-                    <Route path='/popup' element={<PopupComponent />} />
 
                     {/* <Route path='/jitsi' element={<JitsiComponent />} /> */}
                 </Routes>

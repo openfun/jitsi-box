@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { useState, MouseEvent, FunctionComponent } from 'react';
 import Popover from '@mui/material/Popover';
 import { Button } from '@mui/material';
 import DashboardComponent from './DashboardComponent';
@@ -16,7 +16,7 @@ interface roomProps {
     roomName: string;
 }
 
-const PopupComponent: FunctionComponent<roomProps> = ({ domain: domain, roomName: room }) => {
+const PopupComponent: FunctionComponent<roomProps> = ({ domain: domain, roomName: roomName }) => {
     const [detailsShowed, setDetailsShowed] = useState<boolean>(true);
     const [joinMeetingDisplayed, setJoinMeetingDisplayed] = useState<boolean>(false);
     const [qrCodeDisplayed, setQrCodeDisplayed] = useState<boolean>(false);
@@ -72,7 +72,7 @@ const PopupComponent: FunctionComponent<roomProps> = ({ domain: domain, roomName
                             }}
                             onClick={(event: MouseEvent<HTMLButtonElement>) => handleClick(event, 1)}
                         >
-                            <h4> https://meeting.education/dty</h4>
+                            <h4> {`https://${domain}/${roomName}`}</h4>
                         </Button>
                     </div>
                 ) : null}
