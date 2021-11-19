@@ -1,5 +1,5 @@
 import React, { useEffect, FunctionComponent } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import '../css/JitsiComponent.css';
 interface InputRoomProps {
     domain: string;
@@ -10,6 +10,7 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = ({
     domain: domainName,
     room: roomName,
 }: InputRoomProps) => {
+    const navigate = useNavigate();
     const startConference = (): void => {
         try {
             const options = {
@@ -20,12 +21,12 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = ({
                     displayName: 'Raspi',
                 },
                 interfaceConfigOverwrite: {
+                    MOBILE_APP_PROMO: false,
                     TILE_VIEW_MAX_COLUMNS: 2,
                     filmStripOnly: false,
                     SHOW_JITSI_WATERMARK: true,
                     SHOW_WATERMARK_FOR_GUESTS: false,
                     DISPLAY_WELCOME_PAGE_CONTENT: false,
-                    DISABLE_JOIN_LEAVE_NOTIFICATIONS: false,
                     TOOLBAR_BUTTONS: [
                         'microphone',
                         'camera',
@@ -35,6 +36,7 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = ({
                         'fodeviceselection',
                         'raisehand',
                         'tileview',
+                        'hangup',
                     ],
                     TOOLBAR_ALWAYS_VISIBLE: true,
                 },
@@ -43,16 +45,22 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = ({
                     prejoinPageEnabled: false,
                     doNotStoreRoom: true,
                     preferH264: true,
-                    startWithVideoMuted: false,
-                    startWithAudioMuted: false,
+                    startWithVideoMuted: true,
+                    startWithAudioMuted: true,
                     enableWelcomePage: false,
                 },
             };
             // @ts-expect-error js to ts error
             const api = new window.JitsiMeetExternalAPI(domainName, options);
-            api.addEventListener('videoConferenceJoined', () => {
-                console.log('Local User Joined');
-                // api.executeCommand('displayName', 'MyName');
+            api.addListener('videoConferenceLeft', () => {
+                console.log('Video Conference Left');
+                navigate(
+                    { pathname: '/' },
+                    {
+                        replace: true,
+                        state: { count: 10 },
+                    },
+                );
             });
         } catch (error) {
             console.error('Failed to load Jitsi API', error);

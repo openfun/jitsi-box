@@ -13,7 +13,7 @@ const LargeDashboardButtonsComponent: FunctionComponent = () => {
 
     return (
         <div className='DashboardButtons'>
-            <div className='ButtonContainer'>
+            <div className='ButtonContainer3'>
                 <Popup
                     trigger={
                         <div>
