@@ -1,0 +1,8 @@
+.qrCodeContainer {
+    background: #e4f4fb;
+    height: 80vh;
+    width: 100vw;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+}
