@@ -113,6 +113,14 @@ const PopupComponent: FunctionComponent<roomProps> = ({ domain: domain, roomName
                     vertical: 'bottom',
                     horizontal: 'left',
                 }}
+                sx={{
+                    '& .MuiPopover-paper': {
+                        display: 'flex',
+                        alignItems: 'stretch',
+                        minWidth: 'calc(100% - 32px)',
+                        minHeight: 'calc(100% - 64px)',
+                    },
+                }}
             >
                 {popNumber === 1 ? <JoinMeetingComponent /> : null}
                 {popNumber === 2 ? <QrCodeComponent close={handleClose} domain={domain} roomName={roomName} /> : null}

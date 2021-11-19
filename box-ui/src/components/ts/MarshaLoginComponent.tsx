@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios, { AxiosResponse, AxiosRequestConfig, Method } from 'axios';
-import { Alert, Box, Button, Grid, Snackbar } from '@mui/material';
+import { Alert, Box, Button, Grid, IconButton, Snackbar } from '@mui/material';
 import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
 import { StyledEngineProvider } from '@mui/material/styles';
 
@@ -74,15 +74,9 @@ const MarshaLoginComponent: FunctionComponent = () => {
                     if (addReturnButton) {
                         return (
                             <Grid item key={'return'} xs={4} className='numberInputGridItem'>
-                                <Button
-                                    value={'return'}
-                                    variant='contained'
-                                    className='numberButton'
-                                    sx={{ backgroundColor: '#fcfcfe' }}
-                                    onClick={(e) => onButtonPress(e)}
-                                >
+                                <IconButton value={'return'} className='deleteButton' onClick={(e) => onButtonPress(e)}>
                                     <BackspaceOutlinedIcon />
-                                </Button>
+                                </IconButton>
                             </Grid>
                         );
                     }

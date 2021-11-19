@@ -1,9 +1,8 @@
 .MarshaLoginComponent {
-    background: #e4f4fb;
-    height: 90vh;
-    width: 100vw;
+    background: #ffffff;
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
 }
 
 .MarshaLoginInfoContainer {
@@ -80,7 +79,10 @@
     color: #000;
 }
 
-.numberButton:hover, .deleteButton:hover {
-    display: flex;
+.numberButton:hover {
     color: #fff;
+}
+
+.deleteButton:hover {
+    color: #f00;
 }
