@@ -28,7 +28,7 @@ const ConnectionComponent: FunctionComponent = () => {
                     </div>
                 </div>
                 <div className='SecondLineButton'>
-                    <Button variant='contained' style={{ backgroundColor: '#EFF5FC' }}>
+                    <Button variant='contained' style={{ backgroundColor: '#EFF5FC' }} className='MarshaButton'>
                         <div>
                             <img src={LogoMarsha} height='60%' />
                             <div>
@@ -43,10 +43,7 @@ const ConnectionComponent: FunctionComponent = () => {
                     <h2>Comment ça marche ?</h2>
                 </div>
                 <div className='Paragraph'>
-                    <p>
-                        At vero eos et quasi architecto beatae vitae sine causa, mox videro; interea hoc tenebo, si mihi
-                        probabis ea, quae dices, libenter assentiar probabo.
-                    </p>
+                    <p>Choisissez le service à utiliser. Saisissez le code à 6 chiffres.</p>
                 </div>
             </div>
         </div>
