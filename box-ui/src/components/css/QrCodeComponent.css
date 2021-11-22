@@ -39,3 +39,8 @@
     font-weight: normal;
     letter-spacing: 0.46px;
 }
+.CloseButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+}

@@ -66,13 +66,16 @@ const PopupComponent: FunctionComponent<roomProps> = ({ domain: domain, roomName
                         <Button
                             className='meetingUrl'
                             style={{
-                                justifyContent: 'flex-start',
-                                background: '#D9E7F7',
-                                color: '#035ccd',
+                                justifyContent: joinMeetingDisplayed ? 'center' : 'flex-start',
+                                color: joinMeetingDisplayed ? '#ffffff' : '#035ccd',
                             }}
+                            variant={joinMeetingDisplayed ? 'contained' : 'outlined'}
                             onClick={(event: MouseEvent<HTMLButtonElement>) => handleClick(event, 1)}
                         >
-                            <h4> {`https://${domain}/${roomName}`}</h4>
+                            <h4>
+                                {' '}
+                                {!joinMeetingDisplayed ? `https://${domain}/${roomName}` : 'Joindre une rencontre'}
+                            </h4>
                         </Button>
                     </div>
                 ) : null}
@@ -104,6 +107,7 @@ const PopupComponent: FunctionComponent<roomProps> = ({ domain: domain, roomName
             <Popover
                 id={id}
                 open={open}
+                className='Popover'
                 anchorEl={anchorEl}
                 onClose={handleClose}
                 anchorOrigin={{
@@ -112,8 +116,8 @@ const PopupComponent: FunctionComponent<roomProps> = ({ domain: domain, roomName
                 }}
             >
                 {popNumber === 1 ? <JoinMeetingComponent /> : null}
-                {popNumber === 2 ? <QrCodeComponent domain={domain} roomName={roomName} /> : null}
-                {popNumber === 3 ? <ConnectionComponent /> : null}
+                {popNumber === 2 ? <QrCodeComponent close={handleClose} domain={domain} roomName={roomName} /> : null}
+                {popNumber === 3 ? <ConnectionComponent close={handleClose} /> : null}
             </Popover>
         </div>
     );

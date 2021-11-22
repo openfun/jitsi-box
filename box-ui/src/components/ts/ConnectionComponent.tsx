@@ -6,7 +6,12 @@ import LogoMarsha from '../../logo/LogoMarsha.svg';
 import LogoUbicast from '../../logo/LogoUbicast.svg';
 import LogoPod from '../../logo/LogoPod.svg';
 import MarshaLoginComponent from './MarshaLoginComponent';
-const ConnectionComponent: FunctionComponent = () => {
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+
+interface ConnectionProps {
+    close: () => void;
+}
+const ConnectionComponent: FunctionComponent<ConnectionProps> = ({ close: close }) => {
     const [serviceChosen, setServiceChosen] = useState<string>('');
 
     return (
@@ -78,6 +83,11 @@ const ConnectionComponent: FunctionComponent = () => {
                     ) : null}
                 </>
             )}
+            <div className='CloseButton'>
+                <Button aria-label='close' onClick={close}>
+                    <HighlightOffIcon style={{ height: '35px', width: '35px' }} />
+                </Button>
+            </div>
         </div>
     );
 };
