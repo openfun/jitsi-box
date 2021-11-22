@@ -1,5 +1,5 @@
 import { Box, Button } from '@mui/material';
-import React, { FunctionComponent, useState, ChangeEvent, useRef } from 'react';
+import React, { FunctionComponent } from 'react';
 import '../css/QrCodeComponent.css';
 import 'react-simple-keyboard/build/css/index.css';
 import QRCode from 'react-qr-code';
