@@ -4,7 +4,7 @@
     width: 100vw;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 }
 .QRItem {
     flex: 1 1 0;
@@ -16,6 +16,27 @@
     flex: 1;
     overflow: auto;
     display: flex;
-    justify-content: center;
     align-items: center;
+}
+.DetailsContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: rgb(3, 92, 205);
+}
+.ParagraphContainer {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-content: center;
+    margin-top: 10%;
+}
+.ParagraphItem {
+    margin-left: 5%;
+    margin-top: -3%;
+    width: 60%;
+    height: 132px;
+    font-family: Roboto-Regular;
+    font-weight: normal;
+    letter-spacing: 0.46px;
 }
