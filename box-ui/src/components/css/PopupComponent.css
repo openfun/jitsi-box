@@ -1,0 +1,57 @@
+.OpenTopBarButton {
+    height: 100%;
+    border: 1px solid rgb(3, 92, 205);
+    border-radius: 6px;
+    height: 55px;
+}
+.HeaderContainer {
+    display: flex;
+    flex-direction: row;
+    height: 55px;
+    margin-top: 1%;
+    margin-right: 1%;
+    margin-left: 1%;
+    margin-bottom: 1%;
+}
+.TopBarContainer {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    height: 55px;
+    flex-grow: 2;
+}
+.ButtonElementContainer {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    height: 55px;
+}
+.meetingUrl {
+    border-radius: 6px;
+    height: 100%;
+    width: 100%;
+    justify-content: flex-start;
+}
+.urlContainer {
+    flex-grow: 1;
+    margin-left: 1%;
+    margin-right: 1%;
+}
+.meetingUrl h4 {
+    text-transform: none;
+}
+.QrcodeItem {
+    margin-right: 2%;
+    margin-left: 2%;
+}
+.QrcodeButton {
+    border-radius: 6px;
+    height: 55px;
+}
+.QrcodeButton QrCodeIcon {
+    height: 30px;
+    width: 30px;
+}
+.Popover {
+    margin-top: 2%;
+}

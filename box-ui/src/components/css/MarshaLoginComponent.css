@@ -1,6 +1,6 @@
 .MarshaLoginComponent {
     background: #e4f4fb;
-    height: 100vh;
+    height: 90vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
@@ -22,7 +22,9 @@
     flex-direction: row;
 }
 
-.MarshaLoginInputContainerFirstLine, .MarshaLoginInputContainerSecondLine , .MarshaLoginDisplayContainer { 
+.MarshaLoginInputContainerFirstLine,
+.MarshaLoginInputContainerSecondLine,
+.MarshaLoginDisplayContainer {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

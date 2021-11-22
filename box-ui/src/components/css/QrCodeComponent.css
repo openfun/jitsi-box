@@ -1,0 +1,44 @@
+.qrCodeContainer {
+    height: 90vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.QRItem {
+    flex: 1 1 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.DetailsContainer {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+}
+.DetailsContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    color: rgb(3, 92, 205);
+}
+.ParagraphContainer {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-content: center;
+    margin-top: 10%;
+}
+.ParagraphItem {
+    margin-left: 5%;
+    margin-top: -3%;
+    width: 60%;
+    height: 132px;
+    letter-spacing: 0.46px;
+}
+.CloseButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
