@@ -1,4 +1,3 @@
-import { Box, Button } from '@mui/material';
 import React, { FunctionComponent, useState } from 'react';
 import '../css/ConnectionComponent.css';
 import 'react-simple-keyboard/build/css/index.css';
@@ -7,6 +6,7 @@ import LogoUbicast from '../../logo/LogoUbicast.svg';
 import LogoPod from '../../logo/LogoPod.svg';
 import MarshaLoginComponent from './MarshaLoginComponent';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import { Button } from '@mui/material';
 
 interface ConnectionProps {
     close: () => void;

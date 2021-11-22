@@ -1,7 +1,6 @@
 import React, { useState, MouseEvent, FunctionComponent } from 'react';
 import Popover from '@mui/material/Popover';
 import { Button } from '@mui/material';
-import DashboardComponent from './DashboardComponent';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import QrCodeIcon from '@mui/icons-material/QrCode';

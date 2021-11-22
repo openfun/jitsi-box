@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import Button from '@mui/material/Button';
 import '../css/HomeButtonsComponent.css';
 import { Link } from 'react-router-dom';
@@ -21,7 +21,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     },
 }));
 
-const HomeButtonsComponent = (props: CounterProps) => {
+const HomeButtonsComponent: FunctionComponent<CounterProps> = (props: CounterProps) => {
     return (
         <>
             <div className='ButtonContainer'>
