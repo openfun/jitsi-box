@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import QrCodeComponent from '../ts/QrCodeComponent';
+import ConnectionComponent from '../ts/ConnectionComponent';
 
 test('renders learn react link', () => {
-    render(<QrCodeComponent domain='meeting.education' roomName='dty' />);
+    render(<ConnectionComponent />);
     const linkElement = screen.getByText(/learn react/i);
     expect(linkElement).toBeInTheDocument();
 });

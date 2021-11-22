@@ -1,4 +1,3 @@
-import { Box, Button } from '@mui/material';
 import React, { FunctionComponent } from 'react';
 import '../css/QrCodeComponent.css';
 import 'react-simple-keyboard/build/css/index.css';
