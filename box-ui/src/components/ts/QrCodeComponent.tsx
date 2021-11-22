@@ -4,12 +4,16 @@ import 'react-simple-keyboard/build/css/index.css';
 import QRCode from 'react-qr-code';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import { Button } from '@mui/material';
+
 interface InputRoom {
     domain: string;
     roomName: string;
+    close: () => void;
 }
 
-const QrCodeComponent: FunctionComponent<InputRoom> = ({ domain: domain, roomName: roomName }) => {
+const QrCodeComponent: FunctionComponent<InputRoom> = ({ domain: domain, roomName: roomName, close: close }) => {
     return (
         <div className='qrCodeContainer'>
             <div className='QRItem'>
@@ -38,6 +42,11 @@ const QrCodeComponent: FunctionComponent<InputRoom> = ({ domain: domain, roomNam
                         </p>
                     </div>
                 </div>
+            </div>
+            <div className='CloseButton'>
+                <Button aria-label='close' onClick={close}>
+                    <HighlightOffIcon style={{ height: '35px', width: '35px' }} />
+                </Button>
             </div>
         </div>
     );
