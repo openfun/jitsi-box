@@ -15,7 +15,7 @@ interface roomProps {
     roomName: string;
 }
 
-const PopupComponent: FunctionComponent<roomProps> = ({ domain: domain, roomName: roomName }) => {
+const PopupComponent: FunctionComponent<roomProps> = ({ domain: domain, roomName: roomName }: roomProps) => {
     const [detailsShowed, setDetailsShowed] = useState<boolean>(true);
     const [joinMeetingDisplayed, setJoinMeetingDisplayed] = useState<boolean>(false);
     const [qrCodeDisplayed, setQrCodeDisplayed] = useState<boolean>(false);

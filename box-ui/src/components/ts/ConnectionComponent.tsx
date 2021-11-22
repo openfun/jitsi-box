@@ -11,7 +11,7 @@ import { Button } from '@mui/material';
 interface ConnectionProps {
     close: () => void;
 }
-const ConnectionComponent: FunctionComponent<ConnectionProps> = ({ close: close }) => {
+const ConnectionComponent: FunctionComponent<ConnectionProps> = ({ close: close }: ConnectionProps) => {
     const [serviceChosen, setServiceChosen] = useState<string>('');
 
     return (

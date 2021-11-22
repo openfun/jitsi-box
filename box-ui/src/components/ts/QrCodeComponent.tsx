@@ -13,7 +13,11 @@ interface InputRoom {
     close: () => void;
 }
 
-const QrCodeComponent: FunctionComponent<InputRoom> = ({ domain: domain, roomName: roomName, close: close }) => {
+const QrCodeComponent: FunctionComponent<InputRoom> = ({
+    domain: domain,
+    roomName: roomName,
+    close: close,
+}: InputRoom) => {
     return (
         <div className='qrCodeContainer'>
             <div className='QRItem'>
