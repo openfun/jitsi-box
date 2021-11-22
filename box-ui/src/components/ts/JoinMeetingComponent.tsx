@@ -21,7 +21,6 @@ const JoinMeetingComponent: FunctionComponent = () => {
     });
     const [layout, setLayout] = useState<string>('default');
     const [inputName, setInputName] = useState<string>('default');
-    //const keyboardRef = useRef(null) as React.MutableRefObject<null | Keyboard>;
 
     const navigate = useNavigate();
     const goToLaunchRoom = (): void => {
@@ -44,24 +43,6 @@ const JoinMeetingComponent: FunctionComponent = () => {
         setInputs({ ...inputs });
     };
 
-    const onChangeRoomName = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        const inputVal = event.target.value;
-
-        setInputs({
-            ...inputs,
-            roomName: inputVal,
-        });
-        //keyboardRef?.current?.setInput(event.target.value as string);
-    };
-    const onChangeDomain = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        const inputVal = event.target.value;
-        setInputs({
-            ...inputs,
-            domain: inputVal,
-        });
-        //keyboardRef.current.setInput(event.target.value as string);
-    };
-
     return (
         <StyledEngineProvider injectFirst>
             {
@@ -78,7 +59,6 @@ const JoinMeetingComponent: FunctionComponent = () => {
                                                 id='outlined-adornment-amount'
                                                 label='Domain'
                                                 value={inputs.domain}
-                                                onChange={onChangeDomain}
                                                 onFocus={() => setInputName('domain')}
                                                 placeholder={'Domain'}
                                                 sx={{ input: { color: '#235dbc' } }}
@@ -95,7 +75,6 @@ const JoinMeetingComponent: FunctionComponent = () => {
                                                 id='outlined-adornment-amount'
                                                 label='Room Name'
                                                 value={inputs.roomName}
-                                                onChange={onChangeRoomName}
                                                 autoFocus={true}
                                                 onFocus={() => setInputName('roomName')}
                                                 placeholder={'Room Name'}

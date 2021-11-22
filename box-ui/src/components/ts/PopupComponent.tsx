@@ -66,14 +66,16 @@ const PopupComponent: FunctionComponent<roomProps> = ({ domain: domain, roomName
                             className='meetingUrl'
                             style={{
                                 justifyContent: joinMeetingDisplayed ? 'center' : 'flex-start',
-                                color: joinMeetingDisplayed ? '#ffffff' : '#035ccd',
+                                color: '#035ccd',
+                                backgroundColor: '#D9E7F7',
                             }}
-                            variant={joinMeetingDisplayed ? 'contained' : 'outlined'}
+                            variant='outlined'
                             onClick={(event: MouseEvent<HTMLButtonElement>) => handleClick(event, 1)}
                         >
                             <h4>
-                                {' '}
-                                {!joinMeetingDisplayed ? `https://${domain}/${roomName}` : 'Joindre une rencontre'}
+                                {!joinMeetingDisplayed
+                                    ? `https://${domain}/${roomName}`
+                                    : 'Saisissez le domaine et le nom de la rencontre'}
                             </h4>
                         </Button>
                     </div>

@@ -4,7 +4,6 @@ import axios, { AxiosResponse, AxiosRequestConfig, Method } from 'axios';
 import { Alert, Box, Button, Grid, IconButton, Snackbar } from '@mui/material';
 import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
 import { StyledEngineProvider } from '@mui/material/styles';
-
 import '../css/MarshaLoginComponent.css';
 
 const MarshaLoginComponent: FunctionComponent = () => {

@@ -21,7 +21,7 @@ const QrCodeComponent: FunctionComponent<InputRoom> = ({
     return (
         <div className='qrCodeContainer'>
             <div className='QRItem'>
-                <QRCode value={`https://${domain}/${roomName}`} size={320} />
+                <QRCode value={`https://${domain}/${roomName}`} size={340} />
             </div>
             <div className='DetailsContainer'>
                 <div className='ParagraphContainer'>
