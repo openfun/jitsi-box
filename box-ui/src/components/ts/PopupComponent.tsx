@@ -8,7 +8,7 @@ import QrCodeIcon from '@mui/icons-material/QrCode';
 import SettingsInputAntennaIcon from '@mui/icons-material/SettingsInputAntenna';
 import '../css/PopupComponent.css';
 import JoinMeetingComponent from './JoinMeetingComponent';
-import MarshaLoginComponent from './MarshaLoginComponent';
+import ConnectionComponent from './ConnectionComponent';
 import QrCodeComponent from './QrCodeComponent';
 
 interface roomProps {
@@ -113,7 +113,7 @@ const PopupComponent: FunctionComponent<roomProps> = ({ domain: domain, roomName
             >
                 {popNumber === 1 ? <JoinMeetingComponent /> : null}
                 {popNumber === 2 ? <QrCodeComponent domain={domain} roomName={roomName} /> : null}
-                {popNumber === 3 ? <MarshaLoginComponent /> : null}
+                {popNumber === 3 ? <ConnectionComponent /> : null}
             </Popover>
         </div>
     );
