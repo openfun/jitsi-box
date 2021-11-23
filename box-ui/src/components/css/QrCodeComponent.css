@@ -15,20 +15,19 @@
     flex: 1;
     overflow: auto;
     display: flex;
-    align-items: center;
-}
-.DetailsContainer {
-    display: flex;
-    align-items: center;
     flex-direction: column;
+    display: flex;
+    align-items: flex-start;
     color: rgb(3, 92, 205);
 }
+
 .ParagraphContainer {
     display: flex;
     justify-content: flex-start;
     flex-direction: row;
     align-content: center;
     margin-top: 10%;
+    margin-left: 8%;
 }
 .ParagraphItem {
     margin-left: 5%;

@@ -13,9 +13,11 @@ import QrCodeComponent from './QrCodeComponent';
 interface roomProps {
     domain: string;
     roomName: string;
+    setRoomName: (value: string) => void;
+    setDomain: (value: string) => void;
 }
 
-const PopupComponent: FunctionComponent<roomProps> = ({ domain: domain, roomName: roomName }: roomProps) => {
+const PopupComponent: FunctionComponent<roomProps> = (props: roomProps) => {
     const [detailsShowed, setDetailsShowed] = useState<boolean>(true);
     const [joinMeetingDisplayed, setJoinMeetingDisplayed] = useState<boolean>(false);
     const [qrCodeDisplayed, setQrCodeDisplayed] = useState<boolean>(false);
@@ -66,14 +68,16 @@ const PopupComponent: FunctionComponent<roomProps> = ({ domain: domain, roomName
                             className='meetingUrl'
                             style={{
                                 justifyContent: joinMeetingDisplayed ? 'center' : 'flex-start',
-                                color: joinMeetingDisplayed ? '#ffffff' : '#035ccd',
+                                color: '#035ccd',
+                                backgroundColor: '#D9E7F7',
                             }}
-                            variant={joinMeetingDisplayed ? 'contained' : 'outlined'}
+                            variant='outlined'
                             onClick={(event: MouseEvent<HTMLButtonElement>) => handleClick(event, 1)}
                         >
                             <h4>
-                                {' '}
-                                {!joinMeetingDisplayed ? `https://${domain}/${roomName}` : 'Joindre une rencontre'}
+                                {!joinMeetingDisplayed
+                                    ? `https://${props.domain}/${props.roomName}`
+                                    : 'Saisissez le domaine et le nom de la rencontre'}
                             </h4>
                         </Button>
                     </div>
@@ -113,9 +117,27 @@ const PopupComponent: FunctionComponent<roomProps> = ({ domain: domain, roomName
                     vertical: 'bottom',
                     horizontal: 'left',
                 }}
+                sx={{
+                    '& .MuiPopover-paper': {
+                        display: 'flex',
+                        alignItems: 'stretch',
+                        minWidth: 'calc(100% - 32px)',
+                        minHeight: 'calc(100% - 64px)',
+                    },
+                }}
             >
-                {popNumber === 1 ? <JoinMeetingComponent /> : null}
-                {popNumber === 2 ? <QrCodeComponent close={handleClose} domain={domain} roomName={roomName} /> : null}
+                {popNumber === 1 ? (
+                    <JoinMeetingComponent
+                        close={handleClose}
+                        setRoomName={props.setRoomName}
+                        setDomain={props.setDomain}
+                        domain={props.domain}
+                        roomName={props.roomName}
+                    />
+                ) : null}
+                {popNumber === 2 ? (
+                    <QrCodeComponent close={handleClose} domain={props.domain} roomName={props.roomName} />
+                ) : null}
                 {popNumber === 3 ? <ConnectionComponent close={handleClose} /> : null}
             </Popover>
         </div>

@@ -7,7 +7,7 @@ import LogoPod from '../../logo/LogoPod.svg';
 import MarshaLoginComponent from './MarshaLoginComponent';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Button } from '@mui/material';
-
+import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 interface ConnectionProps {
     close: () => void;
 }
@@ -16,33 +16,44 @@ const ConnectionComponent: FunctionComponent<ConnectionProps> = ({ close: close 
 
     return (
         <div className='ConnectionContainer'>
+            {serviceChosen == '' ? null : (
+                <div className='ReturnButton'>
+                    <Button
+                        onClick={() => {
+                            setServiceChosen('');
+                        }}
+                    >
+                        <ArrowBackRoundedIcon style={{ height: '50px', width: '50px' }} />
+                    </Button>
+                </div>
+            )}
             {serviceChosen == '' ? (
                 <>
                     <div className='Partners'>
                         <div className='FirstLineButton'>
-                            <div>
+                            <div style={{ width: '100%' }}>
                                 <Button
                                     variant='contained'
                                     className='MediumButton'
                                     style={{ backgroundColor: '#EFF5FC' }}
                                     disabled
                                 >
-                                    <div>
-                                        <img src={LogoUbicast} height='60%' />
-                                        <strong> Ubicast </strong>
+                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <img src={LogoUbicast} height='80%' />
+                                        <strong className='TitleButton'> Ubicast </strong>
                                     </div>
                                 </Button>
                             </div>
-                            <div>
+                            <div style={{ width: '100%' }}>
                                 <Button
                                     variant='contained'
                                     className='MediumButton'
                                     style={{ backgroundColor: '#EFF5FC' }}
                                     disabled
                                 >
-                                    <div>
-                                        <img src={LogoPod} height='60%' />
-                                        <strong> Pod </strong>
+                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <img src={LogoPod} height='80%' />
+                                        <strong className='TitleButton'> Pod </strong>
                                     </div>
                                 </Button>
                             </div>
@@ -59,7 +70,7 @@ const ConnectionComponent: FunctionComponent<ConnectionProps> = ({ close: close 
                                 <div>
                                     <img src={LogoMarsha} height='60%' />
                                     <div>
-                                        <strong> Marsha </strong>
+                                        <strong className='TitleButton'> Marsha </strong>
                                     </div>
                                 </div>
                             </Button>
@@ -85,7 +96,7 @@ const ConnectionComponent: FunctionComponent<ConnectionProps> = ({ close: close 
             )}
             <div className='CloseButton'>
                 <Button aria-label='close' onClick={close}>
-                    <HighlightOffIcon style={{ height: '35px', width: '35px' }} />
+                    <HighlightOffIcon style={{ height: '50px', width: '50px' }} />
                 </Button>
             </div>
         </div>
