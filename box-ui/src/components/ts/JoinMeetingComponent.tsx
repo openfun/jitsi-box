@@ -1,46 +1,51 @@
 import { Box, Button } from '@mui/material';
-import React, { FunctionComponent, useState, ChangeEvent, useRef } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import { StyledEngineProvider } from '@mui/material/styles';
-
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import TextField from '@mui/material/TextField';
+import InputAdornment from '@mui/material/InputAdornment';
 import '../css/JoinMeetingComponent.css';
 interface InputRoom {
     domain: string;
     roomName: string;
 }
+interface JoinMeetingProps {
+    close: () => void;
+    domain: string;
+    roomName: string;
+    setRoomName: (value: string) => void;
+    setDomain: (value: string) => void;
+}
 
-const JoinMeetingComponent: FunctionComponent = () => {
-    const [inputs, setInputs] = useState<InputRoom>({
-        domain: 'https://meeting.education',
-        roomName: '',
-    });
-    const [layout, setLayout] = useState<string>('default');
-    const [inputName, setInputName] = useState<string>('default');
+const JoinMeetingComponent: FunctionComponent<JoinMeetingProps> = (props: JoinMeetingProps) => {
+    const [domain, setDomain] = useState<string>(props.domain);
+    const [roomName, setRoomName] = useState<string>('');
+    const [layoutName, setLayoutName] = useState('default');
+    const [inputName, setInputName] = useState('default');
 
-    const navigate = useNavigate();
-    const goToLaunchRoom = (): void => {
-        navigate(
-            { pathname: '/launch' },
-            {
-                state: { roomName: inputs.roomName, domain: inputs.domain },
-                replace: true,
-            },
-        );
+    const submitRoomChange = (): void => {
+        props.setDomain(domain);
+        props.setRoomName(roomName);
+        props.close();
     };
-    const handleShift = (): void => {
-        const newLayoutName: string = layout === 'default' ? 'shift' : 'default';
-        setLayout(newLayoutName);
+    const handleShift = () => {
+        const newLayoutName = layoutName === 'default' ? 'shift' : 'default';
+        setLayoutName(newLayoutName);
     };
     const onKeyPress = (button: string): void => {
         if (button === '{shift}' || button === '{lock}') handleShift();
     };
-    const onChangeAll = (inputs: InputRoom) => {
-        setInputs({ ...inputs });
+    const onChangeAll = (inputRoom: InputRoom) => {
+        //console.log('inputs');
+        if (inputName === 'domain') {
+            setDomain(inputRoom.domain);
+        } else {
+            setRoomName(inputRoom.roomName);
+        }
     };
 
     return (
@@ -48,38 +53,36 @@ const JoinMeetingComponent: FunctionComponent = () => {
             {
                 <div className='JoinMeetingComponent'>
                     <div className='JoinInputContainer'>
-                        <div className='JoinMessage'>{/*<h2>Enter the link of the Jitsi Meeting</h2>*/}</div>
                         <div className='InputContainer'>
                             <div className='RoomInput'>
                                 <div className='InputMessage DomainName'>
                                     <Box>
-                                        <FormControl fullWidth>
-                                            <InputLabel htmlFor='outlined-adornment-amount'>Domain</InputLabel>
-                                            <OutlinedInput
-                                                id='outlined-adornment-amount'
-                                                label='Domain'
-                                                value={inputs.domain}
-                                                onFocus={() => setInputName('domain')}
-                                                placeholder={'Domain'}
-                                                sx={{ input: { color: '#235dbc' } }}
-                                            />
-                                        </FormControl>
+                                        <TextField
+                                            fullWidth
+                                            id='outlined-adornment-amount'
+                                            value={domain}
+                                            helperText='Entrez un nom de domaine jitsi valide'
+                                            onFocus={() => setInputName('domain')}
+                                            sx={{ input: { color: '#235dbc' } }}
+                                            InputProps={{
+                                                startAdornment: (
+                                                    <InputAdornment position='start'>https://</InputAdornment>
+                                                ),
+                                            }}
+                                        />
                                     </Box>
                                 </div>
-                                /
+                                <h2 style={{ marginTop: '-10px' }}>/</h2>
                                 <div className='InputMessage RoomName'>
                                     <Box>
-                                        <FormControl fullWidth>
-                                            <InputLabel htmlFor='outlined-adornment-amount'>Room Name</InputLabel>
-                                            <OutlinedInput
-                                                id='outlined-adornment-amount'
-                                                label='Room Name'
-                                                value={inputs.roomName}
-                                                autoFocus={true}
-                                                onFocus={() => setInputName('roomName')}
-                                                placeholder={'Room Name'}
-                                            />
-                                        </FormControl>
+                                        <TextField
+                                            fullWidth
+                                            id='outlined-adornment-amount'
+                                            value={roomName}
+                                            autoFocus={true}
+                                            helperText='Entrez le nom de la réunion'
+                                            onFocus={() => setInputName('roomName')}
+                                        />
                                     </Box>
                                 </div>
                             </div>
@@ -87,18 +90,17 @@ const JoinMeetingComponent: FunctionComponent = () => {
                                 <Button
                                     variant='contained'
                                     fullWidth={true}
-                                    onClick={goToLaunchRoom}
-                                    disabled={!inputs.roomName || !inputs.domain}
+                                    onClick={submitRoomChange}
+                                    disabled={roomName === '' || domain === ''}
                                 >
-                                    Join
+                                    Joindre la réunion
                                 </Button>
                             </div>
                         </div>
                         <div className='KeyboardContainer'>
                             <Keyboard
-                                //keyboardRef={(r: MutableRefObject<undefined>) => (keyboard.current = r.current)}
                                 inputName={inputName}
-                                layoutName={layout}
+                                layoutName={layoutName}
                                 className='Keyboard'
                                 excludeFromLayout={{
                                     default: ['?', '&', '"', "'", '%', '#'],
@@ -108,6 +110,11 @@ const JoinMeetingComponent: FunctionComponent = () => {
                                 onKeyPress={onKeyPress}
                             />
                         </div>
+                    </div>
+                    <div className='CloseButton'>
+                        <Button aria-label='close' onClick={props.close}>
+                            <HighlightOffIcon style={{ height: '50px', width: '50px' }} />
+                        </Button>
                     </div>
                 </div>
             }

@@ -23,7 +23,7 @@ const ConnectionComponent: FunctionComponent<ConnectionProps> = ({ close: close 
                             setServiceChosen('');
                         }}
                     >
-                        <ArrowBackRoundedIcon style={{ height: '35px', width: '35px' }} />
+                        <ArrowBackRoundedIcon style={{ height: '50px', width: '50px' }} />
                     </Button>
                 </div>
             )}
@@ -96,7 +96,7 @@ const ConnectionComponent: FunctionComponent<ConnectionProps> = ({ close: close 
             )}
             <div className='CloseButton'>
                 <Button aria-label='close' onClick={close}>
-                    <HighlightOffIcon style={{ height: '35px', width: '35px' }} />
+                    <HighlightOffIcon style={{ height: '50px', width: '50px' }} />
                 </Button>
             </div>
         </div>

@@ -1,20 +1,15 @@
 import React, { useState, FunctionComponent } from 'react';
-import { useLocation } from 'react-router-dom';
 import '../css/CreateMeetingComponent.css';
 import JitsiComponent from './JitsiComponent';
 import PopupComponent from './PopupComponent';
 
 const CreateMeetingComponent: FunctionComponent = () => {
-    const data = useLocation();
-
-    const [roomName] = useState(data.state && data.state.roomName ? data.state.roomName : 'dty');
-    const [domain] = useState(data.state && data.state.domain ? data.state.domain : 'meeting.education');
+    const [roomName, setRoomName] = useState<string>('dty');
+    const [domain, setDomain] = useState<string>('meeting.education');
 
     return (
         <div className='CreateMeetingComponent'>
-            <div>
-                <PopupComponent domain={domain} roomName={roomName} />
-            </div>
+            <PopupComponent domain={domain} roomName={roomName} setRoomName={setRoomName} setDomain={setDomain} />
             <div className='CreateMeetingContainer'>
                 <div className='JitsiComponent'>
                     <JitsiComponent room={roomName} domain={domain} />

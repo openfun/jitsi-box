@@ -13,9 +13,11 @@ import QrCodeComponent from './QrCodeComponent';
 interface roomProps {
     domain: string;
     roomName: string;
+    setRoomName: (value: string) => void;
+    setDomain: (value: string) => void;
 }
 
-const PopupComponent: FunctionComponent<roomProps> = ({ domain: domain, roomName: roomName }: roomProps) => {
+const PopupComponent: FunctionComponent<roomProps> = (props: roomProps) => {
     const [detailsShowed, setDetailsShowed] = useState<boolean>(true);
     const [joinMeetingDisplayed, setJoinMeetingDisplayed] = useState<boolean>(false);
     const [qrCodeDisplayed, setQrCodeDisplayed] = useState<boolean>(false);
@@ -74,7 +76,7 @@ const PopupComponent: FunctionComponent<roomProps> = ({ domain: domain, roomName
                         >
                             <h4>
                                 {!joinMeetingDisplayed
-                                    ? `https://${domain}/${roomName}`
+                                    ? `https://${props.domain}/${props.roomName}`
                                     : 'Saisissez le domaine et le nom de la rencontre'}
                             </h4>
                         </Button>
@@ -124,8 +126,18 @@ const PopupComponent: FunctionComponent<roomProps> = ({ domain: domain, roomName
                     },
                 }}
             >
-                {popNumber === 1 ? <JoinMeetingComponent /> : null}
-                {popNumber === 2 ? <QrCodeComponent close={handleClose} domain={domain} roomName={roomName} /> : null}
+                {popNumber === 1 ? (
+                    <JoinMeetingComponent
+                        close={handleClose}
+                        setRoomName={props.setRoomName}
+                        setDomain={props.setDomain}
+                        domain={props.domain}
+                        roomName={props.roomName}
+                    />
+                ) : null}
+                {popNumber === 2 ? (
+                    <QrCodeComponent close={handleClose} domain={props.domain} roomName={props.roomName} />
+                ) : null}
                 {popNumber === 3 ? <ConnectionComponent close={handleClose} /> : null}
             </Popover>
         </div>

@@ -9,6 +9,7 @@
     flex-direction: column;
     justify-content: center;
     flex-grow: 1;
+    margin-top: 1%;
 }
 
 .JoinMessage {
@@ -24,7 +25,7 @@
     margin-right: 5%;
     margin-left: 5%;
     margin-top: 5%;
-    margin-bottom: 4%;
+    margin-bottom: 3%;
 }
 
 .RoomInput {
@@ -50,13 +51,18 @@
 .JoinButton {
     display: flex;
     width: 100%;
+    height: 10vh;
     flex-grow: 1;
     align-items: center;
     justify-content: center;
-
+}
+.JoinButton Button {
+    height: 100%;
+    width: 100%;
 }
 
-.KeyboardContainer, .Keyboard {
+.KeyboardContainer,
+.Keyboard {
     display: flex;
     flex-grow: 1;
     align-items: stretch;
