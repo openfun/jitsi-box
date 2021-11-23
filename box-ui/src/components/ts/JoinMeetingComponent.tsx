@@ -1,14 +1,13 @@
 import { Box, Button } from '@mui/material';
 import React, { FunctionComponent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
-import FormControl from '@mui/material/FormControl';
 import { StyledEngineProvider } from '@mui/material/styles';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import '../css/JoinMeetingComponent.css';
+
 interface InputRoom {
     domain: string;
     roomName: string;
@@ -20,6 +19,7 @@ interface JoinMeetingProps {
     setRoomName: (value: string) => void;
     setDomain: (value: string) => void;
 }
+const REGEX = new RegExp(/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/);
 
 const JoinMeetingComponent: FunctionComponent<JoinMeetingProps> = (props: JoinMeetingProps) => {
     const [domain, setDomain] = useState<string>(props.domain);
@@ -40,7 +40,6 @@ const JoinMeetingComponent: FunctionComponent<JoinMeetingProps> = (props: JoinMe
         if (button === '{shift}' || button === '{lock}') handleShift();
     };
     const onChangeAll = (inputRoom: InputRoom) => {
-        //console.log('inputs');
         if (inputName === 'domain') {
             setDomain(inputRoom.domain);
         } else {
@@ -64,6 +63,7 @@ const JoinMeetingComponent: FunctionComponent<JoinMeetingProps> = (props: JoinMe
                                             helperText='Entrez un nom de domaine jitsi valide'
                                             onFocus={() => setInputName('domain')}
                                             sx={{ input: { color: '#235dbc' } }}
+                                            variant='filled'
                                             InputProps={{
                                                 startAdornment: (
                                                     <InputAdornment position='start'>https://</InputAdornment>
@@ -91,7 +91,7 @@ const JoinMeetingComponent: FunctionComponent<JoinMeetingProps> = (props: JoinMe
                                     variant='contained'
                                     fullWidth={true}
                                     onClick={submitRoomChange}
-                                    disabled={roomName === '' || domain === ''}
+                                    disabled={roomName === '' || !REGEX.test(domain)}
                                 >
                                     Joindre la réunion
                                 </Button>

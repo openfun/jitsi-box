@@ -5,7 +5,15 @@ import JoinMeetingComponent from '../ts/JoinMeetingComponent';
 test('renders learn react link', () => {
     render(
         <JoinMeetingComponent
+            domain='meeting.education'
             close={() => {
+                return;
+            }}
+            roomName='dty'
+            setRoomName={() => {
+                return;
+            }}
+            setDomain={() => {
                 return;
             }}
         />,
