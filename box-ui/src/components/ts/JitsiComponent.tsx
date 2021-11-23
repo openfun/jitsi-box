@@ -2,18 +2,25 @@ import React, { useEffect, FunctionComponent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../css/JitsiComponent.css';
 interface InputRoomProps {
-    domain: string;
-    roomName: string;
+    information: {
+        domain: string;
+        roomName: string;
+    };
+    returnHome: boolean;
 }
 
 const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomProps) => {
     const navigate = useNavigate();
-    const [meetLaunched, setMeetLaunched] = useState<boolean>(false);
-    const startConference = (): void => {
-        if (!meetLaunched) {
+
+    console.log('props');
+    console.log(props);
+    useEffect(() => {
+        // verify the JitsiMeetExternalAPI constructor is added to the global..
+        // @ts-expect-error js to ts error
+        if (window.JitsiMeetExternalAPI) {
             try {
                 const options = {
-                    roomName: props.roomName,
+                    roomName: props.information.roomName,
                     parentNode: document.getElementById('jitsi-container'),
                     userInfo: {
                         email: '',
@@ -47,30 +54,31 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
                     },
                 };
                 // @ts-expect-error js to ts error
-                const api = new window.JitsiMeetExternalAPI(props.domain, options);
-                setMeetLaunched(true);
+                const api = new window.JitsiMeetExternalAPI(props.information.domain, options);
+                console.log('props.returnHome');
+                console.log(props.returnHome);
+
                 api.addListener('videoConferenceLeft', () => {
-                    navigate(
-                        { pathname: '/' },
-                        {
-                            replace: true,
-                            state: { count: 10 },
-                        },
-                    );
+                    console.log(props.returnHome);
+                    if (props.returnHome) {
+                        navigate(
+                            { pathname: '/' },
+                            {
+                                replace: true,
+                                state: { count: 10 },
+                            },
+                        );
+                    }
+                    api.dispose();
                 });
+                return () => {
+                    api.executeCommand('hangup');
+                };
             } catch (error) {
                 console.error('Failed to load Jitsi API', error);
             }
-        }
-    };
-
-    useEffect(() => {
-        // verify the JitsiMeetExternalAPI constructor is added to the global..
-        // @ts-expect-error js to ts error
-        if (window.JitsiMeetExternalAPI) {
-            startConference();
         } else alert('Jitsi Meet API script not loaded');
-    }, [props]);
+    }, [props.information]);
 
     return <div id='jitsi-container' className='jitsiContainer' />;
 };
