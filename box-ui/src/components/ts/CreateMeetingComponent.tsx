@@ -10,9 +10,10 @@ const CreateMeetingComponent: FunctionComponent = () => {
         roomName: data.state && data.state.roomName ? data.state.roomName : 'dty',
         domain: data.state && data.state.domain ? data.state.domain : 'meeting.education',
     });
-    const [returnHome, setReturnHome] = useState<boolean>(true);
+    const [returnHome, setReturnHome] = useState<boolean>(
+        data.state && data.state.returnHome ? data.state.returnHome : true,
+    );
 
-    console.log(information);
     return (
         <div className='CreateMeetingComponent'>
             <PopupComponent
@@ -23,7 +24,7 @@ const CreateMeetingComponent: FunctionComponent = () => {
             />
             <div className='CreateMeetingContainer'>
                 <div className='JitsiComponent'>
-                    <JitsiComponent information={information} returnHome={returnHome} />
+                    <JitsiComponent information={information} />
                 </div>
             </div>
         </div>
