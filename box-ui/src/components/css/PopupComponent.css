@@ -65,3 +65,7 @@
     top: 0;
     left: 0;
 }
+
+.MuiPopover-paper {
+    max-height: calc(90% - 32px);
+}
