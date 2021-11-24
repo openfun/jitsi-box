@@ -55,3 +55,13 @@
 .Popover {
     margin-top: 2%;
 }
+.CloseButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.ReturnButton {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
