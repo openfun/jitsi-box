@@ -2,3 +2,14 @@
     width: 100%;
     height: 100%;
 }
+.hangupButton {
+    position: absolute;
+    right: 2%;
+    bottom: 5%;
+    border-radius: 25px;
+    color: #fff;
+    height: 48px;
+    width: 48px;
+
+    background: #dd3849;
+}
