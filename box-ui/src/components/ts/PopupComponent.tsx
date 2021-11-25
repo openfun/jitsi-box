@@ -10,14 +10,16 @@ import JoinMeetingComponent from './JoinMeetingComponent';
 import ConnectionComponent from './ConnectionComponent';
 import QrCodeComponent from './QrCodeComponent';
 
-interface roomProps {
+interface Information {
     domain: string;
     roomName: string;
-    setRoomName: (value: string) => void;
-    setDomain: (value: string) => void;
+}
+interface RoomProps {
+    information: Information;
+    setInformation: (value: Information) => void;
 }
 
-const PopupComponent: FunctionComponent<roomProps> = (props: roomProps) => {
+const PopupComponent: FunctionComponent<RoomProps> = (props: RoomProps) => {
     const [detailsShowed, setDetailsShowed] = useState<boolean>(true);
     const [joinMeetingDisplayed, setJoinMeetingDisplayed] = useState<boolean>(false);
     const [qrCodeDisplayed, setQrCodeDisplayed] = useState<boolean>(false);
@@ -76,7 +78,7 @@ const PopupComponent: FunctionComponent<roomProps> = (props: roomProps) => {
                         >
                             <h4>
                                 {!joinMeetingDisplayed
-                                    ? `https://${props.domain}/${props.roomName}`
+                                    ? `https://${props.information.domain}/${props.information.roomName}`
                                     : 'Saisissez le domaine et le nom de la rencontre'}
                             </h4>
                         </Button>
@@ -129,14 +131,16 @@ const PopupComponent: FunctionComponent<roomProps> = (props: roomProps) => {
                 {popNumber === 1 ? (
                     <JoinMeetingComponent
                         close={handleClose}
-                        setRoomName={props.setRoomName}
-                        setDomain={props.setDomain}
-                        domain={props.domain}
-                        roomName={props.roomName}
+                        setInformation={props.setInformation}
+                        information={props.information}
                     />
                 ) : null}
                 {popNumber === 2 ? (
-                    <QrCodeComponent close={handleClose} domain={props.domain} roomName={props.roomName} />
+                    <QrCodeComponent
+                        close={handleClose}
+                        domain={props.information.domain}
+                        roomName={props.information.roomName}
+                    />
                 ) : null}
                 {popNumber === 3 ? <ConnectionComponent close={handleClose} /> : null}
             </Popover>

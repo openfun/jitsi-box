@@ -12,24 +12,22 @@ interface InputRoom {
     domain: string;
     roomName: string;
 }
-interface JoinMeetingProps {
+
+interface RoomProps {
+    information: InputRoom;
+    setInformation: (value: InputRoom) => void;
     close: () => void;
-    domain: string;
-    roomName: string;
-    setRoomName: (value: string) => void;
-    setDomain: (value: string) => void;
 }
 const REGEX = new RegExp(/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/);
 
-const JoinMeetingComponent: FunctionComponent<JoinMeetingProps> = (props: JoinMeetingProps) => {
-    const [domain, setDomain] = useState<string>(props.domain);
+const JoinMeetingComponent: FunctionComponent<RoomProps> = (props: RoomProps) => {
+    const [domain, setDomain] = useState<string>(props.information.domain);
     const [roomName, setRoomName] = useState<string>('');
     const [layoutName, setLayoutName] = useState('default');
     const [inputName, setInputName] = useState('default');
 
     const submitRoomChange = (): void => {
-        props.setDomain(domain);
-        props.setRoomName(roomName);
+        props.setInformation({ domain: domain, roomName: roomName });
         props.close();
     };
     const handleShift = () => {

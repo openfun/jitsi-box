@@ -1,19 +1,34 @@
-import React, { useEffect, FunctionComponent, useState } from 'react';
+import React, { useEffect, FunctionComponent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { IconButton } from '@mui/material';
+import CallEndIcon from '@mui/icons-material/CallEnd';
 import '../css/JitsiComponent.css';
+
 interface InputRoomProps {
-    domain: string;
-    roomName: string;
+    information: {
+        domain: string;
+        roomName: string;
+    };
 }
 
 const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomProps) => {
     const navigate = useNavigate();
-    const [meetLaunched, setMeetLaunched] = useState<boolean>(false);
-    const startConference = (): void => {
-        if (!meetLaunched) {
+    const returnHomePage = () => {
+        navigate(
+            { pathname: '/' },
+            {
+                replace: true,
+                state: { count: 10, roomName: props.information.roomName, domain: props.information.domain },
+            },
+        );
+    };
+    useEffect(() => {
+        // verify the JitsiMeetExternalAPI constructor is added to the global..
+        // @ts-expect-error js to ts error
+        if (window.JitsiMeetExternalAPI) {
             try {
                 const options = {
-                    roomName: props.roomName,
+                    roomName: props.information.roomName,
                     parentNode: document.getElementById('jitsi-container'),
                     userInfo: {
                         email: '',
@@ -26,13 +41,11 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
                         TOOLBAR_BUTTONS: [
                             'microphone',
                             'camera',
-                            'chat',
                             'recording',
                             'videoquality',
                             'fodeviceselection',
                             'raisehand',
                             'tileview',
-                            'hangup',
                         ],
                         TOOLBAR_ALWAYS_VISIBLE: true,
                     },
@@ -47,32 +60,29 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
                     },
                 };
                 // @ts-expect-error js to ts error
-                const api = new window.JitsiMeetExternalAPI(props.domain, options);
-                setMeetLaunched(true);
+                const api = new window.JitsiMeetExternalAPI(props.information.domain, options);
                 api.addListener('videoConferenceLeft', () => {
-                    navigate(
-                        { pathname: '/' },
-                        {
-                            replace: true,
-                            state: { count: 10 },
-                        },
-                    );
+                    api.dispose();
                 });
+                return () => {
+                    api.executeCommand('hangup');
+                };
             } catch (error) {
                 console.error('Failed to load Jitsi API', error);
             }
-        }
-    };
-
-    useEffect(() => {
-        // verify the JitsiMeetExternalAPI constructor is added to the global..
-        // @ts-expect-error js to ts error
-        if (window.JitsiMeetExternalAPI) {
-            startConference();
         } else alert('Jitsi Meet API script not loaded');
-    }, [props]);
+    }, [props.information]);
 
-    return <div id='jitsi-container' className='jitsiContainer' />;
+    return (
+        <div style={{ height: '100%' }}>
+            <div id='jitsi-container' className='jitsiContainer' />
+            <div className='hangupButton'>
+                <IconButton color='inherit' size='large' onClick={returnHomePage}>
+                    <CallEndIcon />
+                </IconButton>
+            </div>
+        </div>
+    );
 };
 
 export default JitsiMeetComponent;

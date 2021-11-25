@@ -11,7 +11,7 @@ import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 interface ConnectionProps {
     close: () => void;
 }
-const ConnectionComponent: FunctionComponent<ConnectionProps> = ({ close: close }: ConnectionProps) => {
+const ConnectionComponent: FunctionComponent<ConnectionProps> = (props: ConnectionProps) => {
     const [serviceChosen, setServiceChosen] = useState<string>('');
 
     return (
@@ -95,7 +95,7 @@ const ConnectionComponent: FunctionComponent<ConnectionProps> = ({ close: close 
                 </>
             )}
             <div className='CloseButton'>
-                <Button aria-label='close' onClick={close}>
+                <Button aria-label='close' onClick={props.close}>
                     <HighlightOffIcon style={{ height: '50px', width: '50px' }} />
                 </Button>
             </div>

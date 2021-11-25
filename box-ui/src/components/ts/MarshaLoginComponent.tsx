@@ -19,6 +19,7 @@ const MarshaLoginComponent: FunctionComponent = () => {
         }
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async function fetchMarsha(config: AxiosRequestConfig<any>): Promise<string> {
         // Ask marsha API if the code is known, and retrieve the corresponding link
         return axios(config)

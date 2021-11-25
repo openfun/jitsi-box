@@ -11,6 +11,7 @@
 #ReturnToMeetingButton {
     height: 17vh;
     width: 60vw;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 #counter {
