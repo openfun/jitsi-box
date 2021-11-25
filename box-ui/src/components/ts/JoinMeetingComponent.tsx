@@ -16,8 +16,6 @@ interface InputRoom {
 interface RoomProps {
     information: InputRoom;
     setInformation: (value: InputRoom) => void;
-    setReturnHome: (value: boolean) => void;
-    returnHome: boolean;
     close: () => void;
 }
 const REGEX = new RegExp(/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/);
@@ -29,7 +27,6 @@ const JoinMeetingComponent: FunctionComponent<RoomProps> = (props: RoomProps) =>
     const [inputName, setInputName] = useState('default');
 
     const submitRoomChange = (): void => {
-        props.setReturnHome(false);
         props.setInformation({ domain: domain, roomName: roomName });
         props.close();
     };

@@ -17,8 +17,6 @@ interface Information {
 interface RoomProps {
     information: Information;
     setInformation: (value: Information) => void;
-    setReturnHome: (value: boolean) => void;
-    returnHome: boolean;
 }
 
 const PopupComponent: FunctionComponent<RoomProps> = (props: RoomProps) => {
@@ -135,8 +133,6 @@ const PopupComponent: FunctionComponent<RoomProps> = (props: RoomProps) => {
                         close={handleClose}
                         setInformation={props.setInformation}
                         information={props.information}
-                        returnHome={props.returnHome}
-                        setReturnHome={props.setReturnHome}
                     />
                 ) : null}
                 {popNumber === 2 ? (

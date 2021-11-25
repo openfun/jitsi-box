@@ -5,14 +5,14 @@ import JitsiBoxLogo from '../../logo/jitsibox.svg';
 import { useLocation } from 'react-router-dom';
 
 const HomeComponent: FunctionComponent = () => {
-    const [counter, setCounter] = useState(0);
-
-    const { state } = useLocation();
-    const { count } = state != null ? state : 0;
-
-    useEffect(() => {
-        setCounter(count);
-    }, [count]);
+    const data = useLocation();
+    const [counter, setCounter] = useState(data.state && data.state.count ? data.state.count : 0);
+    console.log(data.state);
+    const [information] = useState({
+        roomName: data.state && data.state.roomName ? data.state.roomName : '',
+        domain: data.state && data.state.domain ? data.state.domain : '',
+    });
+    console.log(counter);
 
     useEffect(() => {
         counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
@@ -23,7 +23,7 @@ const HomeComponent: FunctionComponent = () => {
             <div className='LogoContainer'>
                 <img src={JitsiBoxLogo} alt='logo de la jitsi-box' className='logo' />
             </div>
-            <HomeButtonsComponent counter={counter} />
+            <HomeButtonsComponent counter={counter} roomName={information.roomName} domain={information.domain} />
         </div>
     );
 };

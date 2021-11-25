@@ -1,12 +1,14 @@
 import React, { FunctionComponent } from 'react';
 import Button from '@mui/material/Button';
 import '../css/HomeButtonsComponent.css';
-import { Link } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
+import { useNavigate } from 'react-router-dom';
 
 interface CounterProps {
     counter: number;
+    domain: string;
+    roomName: string;
 }
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 10,
@@ -22,10 +24,29 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 }));
 
 const HomeButtonsComponent: FunctionComponent<CounterProps> = (props: CounterProps) => {
+    const navigate = useNavigate();
+    const launchLastMeeting = () => {
+        navigate(
+            { pathname: '/launch' },
+            {
+                replace: true,
+                state: { roomName: props.roomName, domain: props.domain },
+            },
+        );
+    };
+    const launchMeeting = () => {
+        navigate(
+            { pathname: '/launch' },
+            {
+                replace: true,
+                state: { roomName: '', domain: '' },
+            },
+        );
+    };
     return (
         <>
             <div className='ButtonContainer'>
-                <Button id='StartMeetingButton' variant='contained' className='Button' component={Link} to='/launch'>
+                <Button id='StartMeetingButton' variant='contained' className='Button' onClick={launchMeeting}>
                     Démarrer un Meeting
                 </Button>
             </div>
@@ -36,10 +57,9 @@ const HomeButtonsComponent: FunctionComponent<CounterProps> = (props: CounterPro
                             id='ReturnToMeetingButton'
                             variant='contained'
                             className='Button'
-                            component={Link}
-                            to='/launch'
+                            onClick={launchLastMeeting}
                         >
-                            Revenir dans le meeting
+                            Revenir dans le meeting (https://{props.domain}/{props.roomName})
                         </Button>
                     </div>
                     <div className='LinearProgress'>

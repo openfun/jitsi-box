@@ -13,17 +13,15 @@ interface InputRoomProps {
 
 const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomProps) => {
     const navigate = useNavigate();
-
     const returnHomePage = () => {
         navigate(
             { pathname: '/' },
             {
                 replace: true,
-                state: { count: 10 },
+                state: { count: 10, roomName: props.information.roomName, domain: props.information.domain },
             },
         );
     };
-
     useEffect(() => {
         // verify the JitsiMeetExternalAPI constructor is added to the global..
         // @ts-expect-error js to ts error
