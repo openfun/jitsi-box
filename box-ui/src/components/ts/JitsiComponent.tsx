@@ -38,6 +38,7 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
                         displayName: 'Raspi',
                     },
                     interfaceConfigOverwrite: {
+                        SHOW_JITSI_WATERMARK: true,
                         MOBILE_APP_PROMO: false,
                         filmStripOnly: false,
                         SHOW_CHROME_EXTENSION_BANNER: false,
@@ -60,14 +61,14 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
                         disableDeepLinking: true,
                         prejoinPageEnabled: false,
                         preferH264: true,
-                        startWithVideoMuted: false,
-                        startWithAudioMuted: false,
+                        startWithVideoMuted: true,
+                        startWithAudioMuted: true,
                         enableWelcomePage: false,
                     },
                 };
                 // @ts-expect-error js to ts error
                 const api = new window.JitsiMeetExternalAPI(props.information.domain, options);
-                delay(2000).then(() => {
+                delay(2500).then(() => {
                     setDisplayHangup(true);
                 });
                 api.addListener('videoConferenceLeft', () => {
