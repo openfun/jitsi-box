@@ -23,7 +23,6 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
             },
         );
     };
-    console.log(displayHangup);
     useEffect(() => {
         // verify the JitsiMeetExternalAPI constructor is added to the global..
         // @ts-expect-error js to ts error
@@ -38,7 +37,6 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
                         displayName: 'Raspi',
                     },
                     interfaceConfigOverwrite: {
-                        SHOW_JITSI_WATERMARK: true,
                         MOBILE_APP_PROMO: false,
                         filmStripOnly: false,
                         SHOW_CHROME_EXTENSION_BANNER: false,
@@ -61,7 +59,7 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
                         disableDeepLinking: true,
                         prejoinPageEnabled: false,
                         preferH264: true,
-                        startWithVideoMuted: true,
+                        startWithVideoMuted: false,
                         startWithAudioMuted: true,
                         enableWelcomePage: false,
                     },
