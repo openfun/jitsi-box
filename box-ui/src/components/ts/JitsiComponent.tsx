@@ -12,7 +12,7 @@ interface InputRoomProps {
 }
 
 const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomProps) => {
-    const [displayHangup, setDisplayHangup] = useState(false);
+    const [displayHangup, setDisplayHangup] = useState<boolean>();
     const navigate = useNavigate();
     const returnHomePage = () => {
         navigate(
@@ -29,6 +29,7 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
         // @ts-expect-error js to ts error
         if (window.JitsiMeetExternalAPI) {
             try {
+                setDisplayHangup(false);
                 const options = {
                     roomName: props.information.roomName,
                     parentNode: document.getElementById('jitsi-container'),
@@ -51,9 +52,12 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
                             'tileview',
                         ],
                         TOOLBAR_ALWAYS_VISIBLE: true,
+                        DISABLE_JOIN_LEAVE_NOTIFICATIONS: true,
+                        SHOW_DEEP_LINKING_IMAGE: false,
                     },
                     configOverwrite: {
                         disableSimulcast: false,
+                        disableDeepLinking: true,
                         prejoinPageEnabled: false,
                         preferH264: true,
                         startWithVideoMuted: false,
@@ -63,7 +67,9 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
                 };
                 // @ts-expect-error js to ts error
                 const api = new window.JitsiMeetExternalAPI(props.information.domain, options);
-
+                delay(2000).then(() => {
+                    setDisplayHangup(true);
+                });
                 api.addListener('videoConferenceLeft', () => {
                     api.dispose();
                 });
@@ -76,7 +82,11 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
         } else {
             alert('Jitsi Meet API script not loaded');
         }
-    }, [props.information]);
+    }, [props.information, setDisplayHangup]);
+
+    const delay = (ms: number): Promise<unknown> => {
+        return new Promise((resolve) => setTimeout(resolve, ms));
+    };
 
     return (
         <div style={{ height: '100%' }}>
