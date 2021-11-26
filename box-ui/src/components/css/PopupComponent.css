@@ -1,7 +1,7 @@
 .HeaderContainer {
     display: flex;
     flex-direction: row;
-    height: 55px;
+    height: 50px;
 }
 .meetingUrl {
     height: 100%;
@@ -12,13 +12,11 @@
     text-transform: none;
 }
 .QrcodeButton {
-    height: 55px;
     width: 11vw;
 }
 .OpenTopBarButton {
     border: 1px solid rgb(3, 92, 205);
     border-radius: 6px;
-    height: 55px;
     width: 11vw;
 }
 .CloseButton {

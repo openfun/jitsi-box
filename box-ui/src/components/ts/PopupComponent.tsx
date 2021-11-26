@@ -74,14 +74,14 @@ const PopupComponent: FunctionComponent<RoomProps> = (props: RoomProps) => {
                     variant={qrCodeDisplayed ? 'contained' : 'outlined'}
                     onClick={(event: MouseEvent<HTMLButtonElement>) => handleClick(event, 2)}
                 >
-                    <QrCodeIcon style={{ height: '40px', width: '40px' }} />
+                    <QrCodeIcon style={{ height: '30px', width: '30px' }} />
                 </Button>
                 <Button
                     className='OpenTopBarButton'
                     variant={antennaDisplayed ? 'contained' : 'outlined'}
                     onClick={(event: MouseEvent<HTMLButtonElement>) => handleClick(event, 3)}
                 >
-                    <SettingsInputAntennaIcon style={{ height: '35px', width: '35px' }} />
+                    <SettingsInputAntennaIcon style={{ height: '30px', width: '30px' }} />
                 </Button>
             </ButtonGroup>
             <Popover

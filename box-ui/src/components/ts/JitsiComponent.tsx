@@ -1,4 +1,4 @@
-import React, { useEffect, FunctionComponent } from 'react';
+import React, { useEffect, useState, FunctionComponent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IconButton } from '@mui/material';
 import CallEndIcon from '@mui/icons-material/CallEnd';
@@ -12,6 +12,7 @@ interface InputRoomProps {
 }
 
 const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomProps) => {
+    const [displayHangup, setDisplayHangup] = useState(false);
     const navigate = useNavigate();
     const returnHomePage = () => {
         navigate(
@@ -22,6 +23,7 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
             },
         );
     };
+    console.log(displayHangup);
     useEffect(() => {
         // verify the JitsiMeetExternalAPI constructor is added to the global..
         // @ts-expect-error js to ts error
@@ -37,6 +39,7 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
                     interfaceConfigOverwrite: {
                         MOBILE_APP_PROMO: false,
                         filmStripOnly: false,
+                        SHOW_CHROME_EXTENSION_BANNER: false,
                         DISPLAY_WELCOME_PAGE_CONTENT: false,
                         TOOLBAR_BUTTONS: [
                             'microphone',
@@ -52,7 +55,6 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
                     configOverwrite: {
                         disableSimulcast: false,
                         prejoinPageEnabled: false,
-                        doNotStoreRoom: true,
                         preferH264: true,
                         startWithVideoMuted: false,
                         startWithAudioMuted: false,
@@ -61,6 +63,7 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
                 };
                 // @ts-expect-error js to ts error
                 const api = new window.JitsiMeetExternalAPI(props.information.domain, options);
+
                 api.addListener('videoConferenceLeft', () => {
                     api.dispose();
                 });
@@ -78,11 +81,13 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
     return (
         <div style={{ height: '100%' }}>
             <div id='jitsi-container' className='jitsiContainer' />
-            <div className='hangupButton'>
-                <IconButton color='inherit' size='large' onClick={returnHomePage}>
-                    <CallEndIcon />
-                </IconButton>
-            </div>
+            {displayHangup ? (
+                <div className='hangupButton'>
+                    <IconButton color='inherit' size='large' onClick={returnHomePage}>
+                        <CallEndIcon />
+                    </IconButton>
+                </div>
+            ) : null}
         </div>
     );
 };
