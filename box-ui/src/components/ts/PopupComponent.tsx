@@ -1,14 +1,13 @@
 import React, { useState, MouseEvent, FunctionComponent } from 'react';
 import Popover from '@mui/material/Popover';
 import { Button } from '@mui/material';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import QrCodeIcon from '@mui/icons-material/QrCode';
 import SettingsInputAntennaIcon from '@mui/icons-material/SettingsInputAntenna';
 import '../css/PopupComponent.css';
 import JoinMeetingComponent from './JoinMeetingComponent';
 import ConnectionComponent from './ConnectionComponent';
 import QrCodeComponent from './QrCodeComponent';
+import ButtonGroup from '@mui/material/ButtonGroup';
 
 interface Information {
     domain: string;
@@ -20,7 +19,6 @@ interface RoomProps {
 }
 
 const PopupComponent: FunctionComponent<RoomProps> = (props: RoomProps) => {
-    const [detailsShowed, setDetailsShowed] = useState<boolean>(true);
     const [joinMeetingDisplayed, setJoinMeetingDisplayed] = useState<boolean>(false);
     const [qrCodeDisplayed, setQrCodeDisplayed] = useState<boolean>(false);
     const [antennaDisplayed, setAntennaDisplayed] = useState<boolean>(false);
@@ -52,63 +50,40 @@ const PopupComponent: FunctionComponent<RoomProps> = (props: RoomProps) => {
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
 
-    const switchDetailsShowed = () => {
-        setDetailsShowed(!detailsShowed);
-    };
-
     return (
         <div className='HeaderContainer'>
-            <div className='TopBarContainer'>
-                <div>
-                    <Button className='OpenTopBarButton' variant='outlined' onClick={switchDetailsShowed}>
-                        {detailsShowed ? <ArrowBackIosNewIcon /> : <ArrowForwardIosIcon />}
-                    </Button>
-                </div>
-                {detailsShowed ? (
-                    <div className='urlContainer'>
-                        <Button
-                            className='meetingUrl'
-                            style={{
-                                justifyContent: joinMeetingDisplayed ? 'center' : 'flex-start',
-                                color: '#035ccd',
-                                backgroundColor: '#D9E7F7',
-                            }}
-                            variant='outlined'
-                            onClick={(event: MouseEvent<HTMLButtonElement>) => handleClick(event, 1)}
-                        >
-                            <h4>
-                                {!joinMeetingDisplayed
-                                    ? `https://${props.information.domain}/${props.information.roomName}`
-                                    : 'Saisissez le domaine et le nom de la rencontre'}
-                            </h4>
-                        </Button>
-                    </div>
-                ) : null}
-            </div>
-            <div className='ButtonElementContainer'>
-                {detailsShowed ? (
-                    <div className='QrcodeItem'>
-                        <Button
-                            className='QrcodeButton'
-                            variant={qrCodeDisplayed ? 'contained' : 'outlined'}
-                            onClick={(event: MouseEvent<HTMLButtonElement>) => handleClick(event, 2)}
-                        >
-                            <QrCodeIcon style={{ height: '30px', width: '30px' }} />
-                        </Button>
-                    </div>
-                ) : null}
-                {detailsShowed ? (
-                    <div className='ConnectionItem'>
-                        <Button
-                            className='OpenTopBarButton'
-                            variant={antennaDisplayed ? 'contained' : 'outlined'}
-                            onClick={(event: MouseEvent<HTMLButtonElement>) => handleClick(event, 3)}
-                        >
-                            <SettingsInputAntennaIcon />
-                        </Button>
-                    </div>
-                ) : null}
-            </div>
+            <ButtonGroup aria-label='outlined primary button group' size='large'>
+                <Button
+                    className='meetingUrl'
+                    style={{
+                        justifyContent: joinMeetingDisplayed ? 'center' : 'flex-start',
+                        color: '#035ccd',
+                        backgroundColor: '#D9E7F7',
+                    }}
+                    variant='outlined'
+                    onClick={(event: MouseEvent<HTMLButtonElement>) => handleClick(event, 1)}
+                >
+                    <h4>
+                        {!joinMeetingDisplayed
+                            ? `https://${props.information.domain}/${props.information.roomName}`
+                            : 'Saisissez le domaine et le nom de la rencontre'}
+                    </h4>
+                </Button>
+                <Button
+                    className='QrcodeButton'
+                    variant={qrCodeDisplayed ? 'contained' : 'outlined'}
+                    onClick={(event: MouseEvent<HTMLButtonElement>) => handleClick(event, 2)}
+                >
+                    <QrCodeIcon style={{ height: '40px', width: '40px' }} />
+                </Button>
+                <Button
+                    className='OpenTopBarButton'
+                    variant={antennaDisplayed ? 'contained' : 'outlined'}
+                    onClick={(event: MouseEvent<HTMLButtonElement>) => handleClick(event, 3)}
+                >
+                    <SettingsInputAntennaIcon style={{ height: '35px', width: '35px' }} />
+                </Button>
+            </ButtonGroup>
             <Popover
                 id={id}
                 open={open}

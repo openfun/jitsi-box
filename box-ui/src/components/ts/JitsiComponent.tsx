@@ -70,7 +70,9 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
             } catch (error) {
                 console.error('Failed to load Jitsi API', error);
             }
-        } else alert('Jitsi Meet API script not loaded');
+        } else {
+            alert('Jitsi Meet API script not loaded');
+        }
     }, [props.information]);
 
     return (
