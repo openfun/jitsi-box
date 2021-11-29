@@ -31,8 +31,6 @@
 }
 .ParagraphItem {
     margin-left: 5%;
-    margin-top: -3%;
-    width: 60%;
-    height: 132px;
+    height: 100%;
     letter-spacing: 0.46px;
 }
