@@ -59,6 +59,9 @@ const PopupComponent: FunctionComponent<RoomProps> = (props: RoomProps) => {
                         justifyContent: joinMeetingDisplayed ? 'center' : 'flex-start',
                         color: '#035ccd',
                         backgroundColor: '#D9E7F7',
+                        overflowWrap: 'break-word',
+                        overflowX: 'visible',
+                        overflowY: 'hidden',
                     }}
                     variant='outlined'
                     onClick={(event: MouseEvent<HTMLButtonElement>) => handleClick(event, 1)}
