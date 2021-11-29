@@ -40,7 +40,7 @@ const HomeButtonsComponent: FunctionComponent<CounterProps> = (props: CounterPro
             { pathname: '/launch' },
             {
                 replace: true,
-                state: { roomName: GenerateRandomFrenchRoomName(), domain: '' },
+                state: { roomName: GenerateRandomFrenchRoomName(), domain: 'meeting.education' },
             },
         );
     };
