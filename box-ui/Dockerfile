@@ -5,7 +5,8 @@ WORKDIR /app
 
 # Separate npm install and npm build to make the best of Docker cache
 COPY package.json /app/package.json
-RUN npm install
+# Legacy peer deps for the QR code scanner
+RUN npm install --legacy-peer-deps
 
 COPY . /app/
 
