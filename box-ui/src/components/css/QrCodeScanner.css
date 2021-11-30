@@ -1,0 +1,14 @@
+.JoinMeetingButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+.qrScanContained {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    width: 50%;
+    gap: 15px;
+}
