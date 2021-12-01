@@ -24,7 +24,7 @@ server {
     index index.html index.htm;
     client_max_body_size 10M;
 
-    location /marsha {
+    location /api {
         proxy_pass http://marsha;
     }
 
