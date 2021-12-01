@@ -67,7 +67,9 @@ const HomeButtonsComponent: FunctionComponent<CounterProps> = (props: CounterPro
                             onClick={launchLastMeeting}
                             style={{ overflowWrap: 'break-word', overflowX: 'visible', overflowY: 'hidden' }}
                         >
-                            Revenir dans le meeting (https://{props.domain}/{props.roomName})
+                            Revenir dans le meeting
+                            <br />
+                            {props.roomName}
                         </Button>
                     </div>
                     <div className='LinearProgress'>
