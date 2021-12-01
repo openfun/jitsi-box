@@ -50,7 +50,8 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 # Deployment
 
-This web app is intendend to be deployed on a server to be served by a web server.
+This web app is intendend to be deployed on a server to be served by a web server.\
+Since there is no backend, the static files can also be put on a CDN, or hosted on any Cloud Provider for fewer costs (deploying a new bare machine just for one webiste is completely overkilled). 
 
 ## `.env` file
 You must create a `.env` file (copy the `.env.template`), and fill it with the correct values.

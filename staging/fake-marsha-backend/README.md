@@ -9,21 +9,19 @@ LINK=https://your.jitsi.meet.com/yourRoom
 ```
 
 # Setup
-The `app.js` file sets a node server, listening for a post on route `/marsha/login`.
+The `app.js` file sets a node server, listening for a post on route `/api/video/pairing-challenge`.
 
-The body of the request must contain a `code` key, with a string value.
+The body of the request must contain a `secret` key and a `box_id` key, both strings.
 
 If code is `111111`, response will be `200 Success`
 ```javascript
 {
-    "success": true,
     "link": "link.defined.in.env"
 }
 ```
-else the response will be `404 Error`
+else the response will be `404 Error` if wrong code, or `422 Unprocessable Entity` if a parameter is missing.
 ```javascript
 {
-    "success": false,
     "link": null
 }
 ```
