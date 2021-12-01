@@ -17,16 +17,18 @@ app.use(express.urlencoded({
 app.use(cors());
 
 // Check-code route
-app.post('/marsha/login', (req, res) => {
-  if (req.body.code == '111111') {
+app.post('/api/video/pairing-challenge', (req, res) => {
+  if (!req.body.box_id || !req.body.secret) {
+    res.status(422).json({
+      jitsi_url: null,
+    })
+  } else if (req.body.secret == '111111') {
     res.status(200).json({
-      success: true,
-      link: process.env.LINK,
+      jitsi_url: process.env.LINK,
     })
   } else {
     res.status(404).json({
-      success: false,
-      link: null,
+      jitsi_url: null,
     })
   }
 })
