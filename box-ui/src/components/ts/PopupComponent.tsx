@@ -8,15 +8,7 @@ import JoinMeetingComponent from './JoinMeetingComponent';
 import ConnectionComponent from './ConnectionComponent';
 import QrCodeComponent from './QrCodeComponent';
 import ButtonGroup from '@mui/material/ButtonGroup';
-
-interface Information {
-    domain: string;
-    roomName: string;
-}
-interface RoomProps {
-    information: Information;
-    setInformation: (value: Information) => void;
-}
+import { RoomProps } from '../../types';
 
 const PopupComponent: FunctionComponent<RoomProps> = (props: RoomProps) => {
     const [joinMeetingDisplayed, setJoinMeetingDisplayed] = useState<boolean>(false);

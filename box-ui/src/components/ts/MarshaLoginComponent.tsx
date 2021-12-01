@@ -4,15 +4,7 @@ import { Alert, Box, Button, Grid, IconButton, Snackbar } from '@mui/material';
 import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
 import { StyledEngineProvider } from '@mui/material/styles';
 import '../css/MarshaLoginComponent.css';
-
-interface InputRoom {
-    domain: string;
-    roomName: string;
-}
-interface ConnectionProps {
-    close: () => void;
-    setInformation: (value: InputRoom) => void;
-}
+import { ConnectionProps } from '../../types';
 
 const MarshaLoginComponent: FunctionComponent<ConnectionProps> = (props: ConnectionProps) => {
     const [code, setCode] = useState<Array<number>>([]);
