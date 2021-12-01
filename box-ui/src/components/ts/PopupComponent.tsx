@@ -120,7 +120,9 @@ const PopupComponent: FunctionComponent<RoomProps> = (props: RoomProps) => {
                         roomName={props.information.roomName}
                     />
                 ) : null}
-                {popNumber === 3 ? <ConnectionComponent close={handleClose} /> : null}
+                {popNumber === 3 ? (
+                    <ConnectionComponent close={handleClose} setInformation={props.setInformation} />
+                ) : null}
             </Popover>
         </div>
     );

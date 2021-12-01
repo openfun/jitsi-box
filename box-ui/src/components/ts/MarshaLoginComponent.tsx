@@ -1,15 +1,22 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios, { AxiosResponse, AxiosRequestConfig, Method } from 'axios';
 import { Alert, Box, Button, Grid, IconButton, Snackbar } from '@mui/material';
 import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
 import { StyledEngineProvider } from '@mui/material/styles';
 import '../css/MarshaLoginComponent.css';
 
-const MarshaLoginComponent: FunctionComponent = () => {
+interface InputRoom {
+    domain: string;
+    roomName: string;
+}
+interface ConnectionProps {
+    close: () => void;
+    setInformation: (value: InputRoom) => void;
+}
+
+const MarshaLoginComponent: FunctionComponent<ConnectionProps> = (props: ConnectionProps) => {
     const [code, setCode] = useState<Array<number>>([]);
     const [isAlert, setAlert] = useState<boolean>(false);
-    const navigate = useNavigate();
 
     const onButtonPress = (button: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         if (button.currentTarget.value !== 'return') {
@@ -25,7 +32,7 @@ const MarshaLoginComponent: FunctionComponent = () => {
         return axios(config)
             .then((response: AxiosResponse) => {
                 // Success
-                return response.data.link;
+                return response.data.jitsi_url;
             })
             .catch((error) => {
                 // Error
@@ -89,29 +96,26 @@ const MarshaLoginComponent: FunctionComponent = () => {
         if (code.length === 6) {
             const method: Method = 'POST';
             const options = {
-                url: `${process.env.REACT_APP_MARSHA_URL}/login`,
+                url: `${process.env.REACT_APP_MARSHA_URL}`,
                 method: method,
                 headers: {
                     'Content-Type': 'application/json;charset=UTF-8',
                 },
                 data: {
-                    code: code.join(''),
+                    box_id: process.env.REACT_APP_BOX_UUID,
+                    secret: code.join(''),
                 },
             };
-            let link;
             const waitMarshaResponse = async () => {
-                link = await fetchMarsha(options);
+                const link = await fetchMarsha(options);
                 if (link) {
                     const linkAsURL = new URL(link);
                     const domain = linkAsURL.host;
-                    const roomName = linkAsURL.pathname;
-                    navigate(
-                        { pathname: '/launch' },
-                        {
-                            state: { roomName: roomName, domain: domain },
-                            replace: true,
-                        },
-                    );
+                    const roomName = linkAsURL.pathname.substring(1);
+                    console.log(domain);
+                    console.log(roomName);
+                    props.setInformation({ domain, roomName });
+                    props.close();
                 } else {
                     setAlert(true);
                 }

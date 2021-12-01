@@ -1,5 +1,4 @@
 // Adjectives
-import { stringify } from 'querystring';
 import { adjFemFR } from './adjectives_fem.fr';
 import { adjMascFR } from './adjectives_masc.fr';
 import { adjNeutralFR } from './adjectives_neutral.fr';
