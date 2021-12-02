@@ -22,7 +22,7 @@ const MarshaLoginComponent: FunctionComponent<ConnectionProps> = (props: Connect
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async function fetchMarsha(
         config: AxiosRequestConfig<any>,
-    ): Promise<{ success: boolean; link?: string; err?: string } | undefined> {
+    ): Promise<{ success: boolean; link?: string; err?: string }> {
         // Ask marsha API if the code is known, and retrieve the corresponding link
         return axios(config)
             .then((response: AxiosResponse) => {
@@ -55,6 +55,11 @@ const MarshaLoginComponent: FunctionComponent<ConnectionProps> = (props: Connect
                         return {
                             success: false,
                             err: 'Wrong code',
+                        };
+                    } else {
+                        return {
+                            success: false,
+                            err: 'Error in retrieved response',
                         };
                     }
                 } else if (axios.isAxiosError(error) && error.request) {
@@ -140,7 +145,7 @@ const MarshaLoginComponent: FunctionComponent<ConnectionProps> = (props: Connect
                     console.log(roomName);
                     props.setInformation({ domain, roomName });
                     props.close();
-                } else if (response && !response.success && response.err) {
+                } else if (!response.success && response.err) {
                     setAlertMessage(response.err);
                 } else {
                     setAlertMessage('Unknown Error');
