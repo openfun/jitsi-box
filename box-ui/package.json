@@ -28,6 +28,7 @@
     "react-simple-keyboard": "^3.3.26",
     "reactjs-popup": "^2.0.5",
     "typescript": "^4.1.2",
+    "uuid": "^8.3.2",
     "web-vitals": "^1.0.1",
     "workbox-background-sync": "^5.1.3",
     "workbox-broadcast-update": "^5.1.3",
@@ -70,6 +71,7 @@
   },
   "typings": "./src/types.d.ts",
   "devDependencies": {
+    "@types/uuid": "^8.3.3",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.4.1"

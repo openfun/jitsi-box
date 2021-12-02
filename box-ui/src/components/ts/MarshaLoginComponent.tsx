@@ -1,14 +1,15 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
-import axios, { AxiosResponse, AxiosRequestConfig, Method } from 'axios';
+import axios, { AxiosResponse, AxiosRequestConfig, Method, AxiosError } from 'axios';
 import { Alert, Box, Button, Grid, IconButton, Snackbar } from '@mui/material';
 import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
 import { StyledEngineProvider } from '@mui/material/styles';
+import { v4 as uuidv4 } from 'uuid';
 import '../css/MarshaLoginComponent.css';
 import { ConnectionProps } from '../../types';
 
 const MarshaLoginComponent: FunctionComponent<ConnectionProps> = (props: ConnectionProps) => {
     const [code, setCode] = useState<Array<number>>([]);
-    const [isAlert, setAlert] = useState<boolean>(false);
+    const [alertMessage, setAlertMessage] = useState<string>('');
 
     const onButtonPress = (button: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         if (button.currentTarget.value !== 'return') {
@@ -19,35 +20,64 @@ const MarshaLoginComponent: FunctionComponent<ConnectionProps> = (props: Connect
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async function fetchMarsha(config: AxiosRequestConfig<any>): Promise<string> {
+    async function fetchMarsha(
+        config: AxiosRequestConfig<any>,
+    ): Promise<{ success: boolean; link?: string; err?: string }> {
         // Ask marsha API if the code is known, and retrieve the corresponding link
         return axios(config)
             .then((response: AxiosResponse) => {
                 // Success
-                return response.data.jitsi_url;
+                if (response.data.jitsi_url) {
+                    return {
+                        success: true,
+                        link: response.data.jitsi_url as string,
+                    };
+                } else {
+                    return {
+                        success: false,
+                        err: 'Response obtained, but no link was provided',
+                    };
+                }
             })
-            .catch((error) => {
+            .catch((error: AxiosError | Error) => {
                 // Error
-                if (error.response) {
+                if (axios.isAxiosError(error) && error.response) {
                     /*
                      * The request was made and the server responded with a
                      * status code that falls out of the range of 2xx
                      */
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
-                } else if (error.request) {
+                    if (error.response.status == 429) {
+                        return {
+                            success: false,
+                            err: 'Too much requests. Please wait 1 minute brefore retrying',
+                        };
+                    } else if (error.response.status == 404) {
+                        return {
+                            success: false,
+                            err: 'Wrong code',
+                        };
+                    } else {
+                        return {
+                            success: false,
+                            err: 'Error in retrieved response',
+                        };
+                    }
+                } else if (axios.isAxiosError(error) && error.request) {
                     /*
                      * The request was made but no response was received, `error.request`
                      * is an instance of XMLHttpRequest in the browser and an instance
                      * of http.ClientRequest in Node.js
                      */
-                    console.log(error.request);
+                    return {
+                        success: false,
+                        err: 'Error sending secret code',
+                    };
                 } else {
-                    // Something happened in setting up the request and triggered an Error
-                    console.log('Error', error.message);
+                    return {
+                        success: false,
+                        err: 'Unknown error',
+                    };
                 }
-                console.log(error.config);
             });
     }
 
@@ -85,6 +115,13 @@ const MarshaLoginComponent: FunctionComponent<ConnectionProps> = (props: Connect
     };
 
     useEffect(() => {
+        // Check if box already as an uuid
+        const boxStorage = window.localStorage;
+
+        if (!boxStorage.getItem('box_id')) {
+            boxStorage.setItem('box_id', uuidv4());
+        }
+
         if (code.length === 6) {
             const method: Method = 'POST';
             const options = {
@@ -94,22 +131,22 @@ const MarshaLoginComponent: FunctionComponent<ConnectionProps> = (props: Connect
                     'Content-Type': 'application/json;charset=UTF-8',
                 },
                 data: {
-                    box_id: process.env.REACT_APP_BOX_UUID,
+                    box_id: boxStorage.getItem('box_id'),
                     secret: code.join(''),
                 },
             };
             const waitMarshaResponse = async () => {
-                const link = await fetchMarsha(options);
-                if (link) {
-                    const linkAsURL = new URL(link);
+                const response = await fetchMarsha(options);
+                if (response && response.success && response.link) {
+                    const linkAsURL = new URL(response.link);
                     const domain = linkAsURL.host;
                     const roomName = linkAsURL.pathname.substring(1);
-                    console.log(domain);
-                    console.log(roomName);
                     props.setInformation({ domain, roomName });
                     props.close();
+                } else if (!response.success && response.err) {
+                    setAlertMessage(response.err);
                 } else {
-                    setAlert(true);
+                    setAlertMessage('Unknown Error');
                 }
             };
             waitMarshaResponse();
@@ -129,13 +166,18 @@ const MarshaLoginComponent: FunctionComponent<ConnectionProps> = (props: Connect
                     <div>
                         <Snackbar
                             anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                            open={isAlert}
-                            autoHideDuration={6000}
-                            onClose={() => setAlert(false)}
+                            open={alertMessage !== ''}
+                            autoHideDuration={60000}
+                            onClose={() => setAlertMessage('')}
                             key={'marshaLoginAlert'}
                         >
-                            <Alert severity='error' sx={{ width: '100%' }} variant='filled'>
-                                {'Wrong code'}
+                            <Alert
+                                severity='error'
+                                sx={{ width: '100%', color: '#fff' }}
+                                color='warning'
+                                variant='filled'
+                            >
+                                {alertMessage}
                             </Alert>
                         </Snackbar>
                     </div>

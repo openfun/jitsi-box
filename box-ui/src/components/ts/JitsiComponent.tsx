@@ -74,7 +74,7 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
             }
         } else {
             alert('Jitsi Meet API script not loaded');
-            navigate({ pathname: '/' })
+            navigate({ pathname: '/' });
         }
     }, [props.information, setDisplayHangup]);
 
