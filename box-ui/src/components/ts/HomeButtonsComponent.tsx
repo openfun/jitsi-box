@@ -50,7 +50,7 @@ const HomeButtonsComponent: FunctionComponent<CounterProps> = (props: CounterPro
                     onClick={launchMeeting}
                     style={{ overflowWrap: 'break-word', overflowX: 'visible', overflowY: 'hidden' }}
                 >
-                    Démarrer un Meeting
+                    Launch a meeting
                 </Button>
             </div>
             {props.counter > 0 ? (
@@ -63,7 +63,7 @@ const HomeButtonsComponent: FunctionComponent<CounterProps> = (props: CounterPro
                             onClick={launchLastMeeting}
                             style={{ overflowWrap: 'break-word', overflowX: 'visible', overflowY: 'hidden' }}
                         >
-                            Revenir dans le meeting
+                            Go back to the meeting
                             <br />
                             {props.roomName}
                         </Button>
@@ -71,7 +71,7 @@ const HomeButtonsComponent: FunctionComponent<CounterProps> = (props: CounterPro
                     <div className='LinearProgress'>
                         <BorderLinearProgress variant='determinate' value={props.counter * 10} />
                     </div>
-                    <div id='counter'>Disparaît dans {props.counter} secondes</div>
+                    <div id='counter'>Disappear in {props.counter} seconds!</div>
                 </div>
             ) : null}
         </>

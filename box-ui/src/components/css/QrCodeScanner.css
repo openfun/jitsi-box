@@ -4,11 +4,16 @@
     justify-content: center;
     align-content: center;
 }
-.qrScanContained {
+.QrScanContained {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
     width: 50%;
     gap: 15px;
+    margin-right: 2%;
+}
+.QrCodeScannerComponent {
+    height: 80vh;
+    width: 100vw;
 }
