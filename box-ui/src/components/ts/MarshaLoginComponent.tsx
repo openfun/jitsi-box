@@ -141,7 +141,6 @@ const MarshaLoginComponent: FunctionComponent<ConnectionProps> = (props: Connect
                     const linkAsURL = new URL(response.link);
                     const domain = linkAsURL.host;
                     const roomName = linkAsURL.pathname.substring(1);
-                    console.log(roomName);
                     props.setInformation({ domain, roomName });
                     props.close();
                 } else if (!response.success && response.err) {
