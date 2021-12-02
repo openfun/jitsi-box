@@ -1,4 +1,4 @@
-upstream marsha {
+upstream api {
     server marsha-mimic:{{ marsha-mimicking-port }};
 }
 
@@ -24,8 +24,8 @@ server {
     index index.html index.htm;
     client_max_body_size 10M;
 
-    location /marsha {
-        proxy_pass http://marsha;
+    location /api {
+        proxy_pass http://api;
     }
 
     location / {

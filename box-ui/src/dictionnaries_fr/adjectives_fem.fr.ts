@@ -214,7 +214,7 @@ export const adjFemFR: Array<string> = [
     'Petites',
     'Pliantes',
     'Pointues',
-    'Polis',
+    'Polies',
     'Positives',
     'Premieres',
     'Prestigieuses',
