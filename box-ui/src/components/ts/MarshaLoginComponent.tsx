@@ -169,11 +169,16 @@ const MarshaLoginComponent: FunctionComponent<ConnectionProps> = (props: Connect
                         <Snackbar
                             anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
                             open={alertMessage !== ''}
-                            autoHideDuration={6000}
+                            autoHideDuration={60000}
                             onClose={() => setAlertMessage('')}
                             key={'marshaLoginAlert'}
                         >
-                            <Alert severity='error' sx={{ width: '100%' }} variant='filled'>
+                            <Alert
+                                severity='error'
+                                sx={{ width: '100%', color: '#fff' }}
+                                color='warning'
+                                variant='filled'
+                            >
                                 {alertMessage}
                             </Alert>
                         </Snackbar>

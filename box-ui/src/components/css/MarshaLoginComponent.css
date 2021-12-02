@@ -33,6 +33,7 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    color: #035ccd;
 }
 
 .MarshaLoginInputDiv {

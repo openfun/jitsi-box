@@ -19,9 +19,7 @@
 .TitleContainer h2 {
     color: #035ccd;
 }
-div {
-    color: #035ccd;
-}
+
 .FirstLineButton {
     height: 40%;
     width: 100%;
@@ -58,4 +56,5 @@ div {
 }
 .TitleButton {
     margin-top: 10%;
+    color: #035ccd;
 }
