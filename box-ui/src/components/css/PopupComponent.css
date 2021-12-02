@@ -5,7 +5,7 @@
 }
 .meetingUrl {
     height: 100%;
-    width: 79vw;
+    width: 68vw;
     justify-content: flex-start;
 }
 .meetingUrl h4 {
@@ -28,4 +28,7 @@
     position: absolute;
     top: 0;
     left: 0;
+}
+.QrcodeScannerButton {
+    width: 11vw;
 }

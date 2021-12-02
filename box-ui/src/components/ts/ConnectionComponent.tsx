@@ -77,10 +77,10 @@ const ConnectionComponent: FunctionComponent<ConnectionProps> = (props: Connecti
                     </div>
                     <div className='TitleContainer'>
                         <div>
-                            <h2>Comment ça marche ?</h2>
+                            <h2>How it works ?</h2>
                         </div>
                         <div className='Paragraph'>
-                            <p>Choisissez le service à utiliser. Saisissez le code à 6 chiffres.</p>
+                            <p>Choose the service to connect to.</p> <p>Enter the code.</p>
                         </div>
                     </div>
                 </>

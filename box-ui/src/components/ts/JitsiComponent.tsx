@@ -57,12 +57,12 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
                         startWithAudioMuted: true,
                         enableWelcomePage: false,
                     },
+                    onload: () => {
+                        setDisplayHangup(true);
+                    },
                 };
                 // @ts-expect-error js to ts error
                 const api = new window.JitsiMeetExternalAPI(props.information.domain, options);
-                delay(2500).then(() => {
-                    setDisplayHangup(true);
-                });
                 api.addListener('videoConferenceLeft', () => {
                     api.dispose();
                 });
@@ -77,10 +77,6 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
             navigate({ pathname: '/' });
         }
     }, [props.information, setDisplayHangup]);
-
-    const delay = (ms: number): Promise<unknown> => {
-        return new Promise((resolve) => setTimeout(resolve, ms));
-    };
 
     return (
         <div style={{ height: '100%' }}>

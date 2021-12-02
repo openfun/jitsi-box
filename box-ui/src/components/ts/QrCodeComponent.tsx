@@ -32,8 +32,8 @@ const QrCodeComponent: FunctionComponent<InputRoomWithClose> = (props: InputRoom
                     </div>
                     <div className='ParagraphItem'>
                         <p>
-                            <strong>Astuce:</strong> pensez à utiliser votre smartphone pour le Chat ou pour partager le
-                            QR code
+                            <strong>Tip:</strong> pensez à utiliser votre smartphone pour le Chat ou pour partager le QR
+                            code
                         </p>
                     </div>
                 </div>

@@ -1,18 +1,21 @@
 import React, { useState, MouseEvent, FunctionComponent } from 'react';
 import Popover from '@mui/material/Popover';
 import { Button } from '@mui/material';
-import QrCodeIcon from '@mui/icons-material/QrCode';
+import ScreenShareRoundedIcon from '@mui/icons-material/ScreenShareRounded';
 import SettingsInputAntennaIcon from '@mui/icons-material/SettingsInputAntenna';
+import QrCodeScannerRoundedIcon from '@mui/icons-material/QrCodeScannerRounded';
 import '../css/PopupComponent.css';
-import JoinMeetingComponent from './JoinMeetingComponent';
 import ConnectionComponent from './ConnectionComponent';
 import QrCodeComponent from './QrCodeComponent';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import { RoomProps } from '../../types';
+import FormJoinMeeting from './FormJoinMeeting';
+import QrCodeScanner from './QrCodeScanner';
 
 const PopupComponent: FunctionComponent<RoomProps> = (props: RoomProps) => {
     const [joinMeetingDisplayed, setJoinMeetingDisplayed] = useState<boolean>(false);
     const [qrCodeDisplayed, setQrCodeDisplayed] = useState<boolean>(false);
+    const [qrCodeScannerDisplayed, setQrCodeScannedDisplayed] = useState<boolean>(false);
     const [antennaDisplayed, setAntennaDisplayed] = useState<boolean>(false);
 
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -23,9 +26,12 @@ const PopupComponent: FunctionComponent<RoomProps> = (props: RoomProps) => {
             setJoinMeetingDisplayed(true);
         }
         if (position === 2) {
-            setQrCodeDisplayed(true);
+            setQrCodeScannedDisplayed(true);
         }
         if (position === 3) {
+            setQrCodeDisplayed(true);
+        }
+        if (position === 4) {
             setAntennaDisplayed(true);
         }
         setAnchorEl(event.currentTarget);
@@ -35,6 +41,7 @@ const PopupComponent: FunctionComponent<RoomProps> = (props: RoomProps) => {
     const handleClose = () => {
         setAnchorEl(null);
         setPopNumber(-1);
+        setQrCodeScannedDisplayed(false);
         setJoinMeetingDisplayed(false);
         setQrCodeDisplayed(false);
         setAntennaDisplayed(false);
@@ -61,20 +68,27 @@ const PopupComponent: FunctionComponent<RoomProps> = (props: RoomProps) => {
                     <h4>
                         {!joinMeetingDisplayed
                             ? `https://${props.information.domain}/${props.information.roomName}`
-                            : 'Saisissez le domaine et le nom de la rencontre'}
+                            : 'Enter the name of the room and its domain.'}
                     </h4>
+                </Button>
+                <Button
+                    className='QrcodeScannerButton'
+                    variant={qrCodeScannerDisplayed ? 'contained' : 'outlined'}
+                    onClick={(event: MouseEvent<HTMLButtonElement>) => handleClick(event, 2)}
+                >
+                    <QrCodeScannerRoundedIcon style={{ height: '30px', width: '30px' }} />
                 </Button>
                 <Button
                     className='QrcodeButton'
                     variant={qrCodeDisplayed ? 'contained' : 'outlined'}
-                    onClick={(event: MouseEvent<HTMLButtonElement>) => handleClick(event, 2)}
+                    onClick={(event: MouseEvent<HTMLButtonElement>) => handleClick(event, 3)}
                 >
-                    <QrCodeIcon style={{ height: '30px', width: '30px' }} />
+                    <ScreenShareRoundedIcon style={{ height: '30px', width: '30px' }} />
                 </Button>
                 <Button
                     className='OpenTopBarButton'
                     variant={antennaDisplayed ? 'contained' : 'outlined'}
-                    onClick={(event: MouseEvent<HTMLButtonElement>) => handleClick(event, 3)}
+                    onClick={(event: MouseEvent<HTMLButtonElement>) => handleClick(event, 4)}
                 >
                     <SettingsInputAntennaIcon style={{ height: '30px', width: '30px' }} />
                 </Button>
@@ -99,20 +113,21 @@ const PopupComponent: FunctionComponent<RoomProps> = (props: RoomProps) => {
                 }}
             >
                 {popNumber === 1 ? (
-                    <JoinMeetingComponent
+                    <FormJoinMeeting
                         close={handleClose}
                         setInformation={props.setInformation}
                         information={props.information}
                     />
                 ) : null}
-                {popNumber === 2 ? (
+                {popNumber === 2 ? <QrCodeScanner close={handleClose} setInformation={props.setInformation} /> : null}
+                {popNumber === 3 ? (
                     <QrCodeComponent
                         close={handleClose}
                         domain={props.information.domain}
                         roomName={props.information.roomName}
                     />
                 ) : null}
-                {popNumber === 3 ? (
+                {popNumber === 4 ? (
                     <ConnectionComponent close={handleClose} setInformation={props.setInformation} />
                 ) : null}
             </Popover>

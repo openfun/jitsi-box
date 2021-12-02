@@ -4,6 +4,7 @@ import CallMissedOutgoingRoundedIcon from '@mui/icons-material/CallMissedOutgoin
 import { styled } from '@mui/material/styles';
 import MuiGrid from '@mui/material/Grid';
 import { Button } from '@mui/material';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import '../css/QrCodeScanner.css';
 import { ConnectionProps } from '../../types';
 
@@ -19,7 +20,6 @@ const QrCodeScanner: FunctionComponent<ConnectionProps> = (props: ConnectionProp
     const [qrCodeScannedValue, setQrCodeScannedValue] = useState('');
     // QR Code Tab
     const handleScan = (data: string | null) => {
-        console.log(data);
         if (data) setQrCodeScannedValue(data);
     };
     const handleError = (err: Error) => {
@@ -31,12 +31,12 @@ const QrCodeScanner: FunctionComponent<ConnectionProps> = (props: ConnectionProp
         props.close();
     };
     return (
-        <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
-            <div style={{ width: '50%' }}>
-                <QrReader delay={300} onError={handleError} onScan={handleScan} />
-            </div>
-            {qrCodeScannedValue.length > 0 ? (
-                <div className='qrScanContained'>
+        <div className='QrCodeScannerComponent'>
+            <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', width: '100%', height: '100%' }}>
+                <div style={{ width: '50%', marginLeft: '2%', marginTop: '2%' }}>
+                    <QrReader delay={300} onError={handleError} onScan={handleScan} />
+                </div>
+                <div className='QrScanContained'>
                     <div>
                         <Grid container style={{ border: '1px solid ', borderRadius: '15px' }}>
                             <Grid item>
@@ -48,7 +48,8 @@ const QrCodeScanner: FunctionComponent<ConnectionProps> = (props: ConnectionProp
                                         fontSize: '25px',
                                     }}
                                 >
-                                    <strong>Domaine:</strong> {qrCodeScannedValue.split('/')[2]}
+                                    <strong>Domain:</strong>{' '}
+                                    {qrCodeScannedValue.length > 0 ? <>{qrCodeScannedValue.split('/')[2]} </> : null}
                                 </p>
                             </Grid>
                             <Grid item>
@@ -60,7 +61,8 @@ const QrCodeScanner: FunctionComponent<ConnectionProps> = (props: ConnectionProp
                                         fontSize: '25px',
                                     }}
                                 >
-                                    <strong>Nom:</strong> {qrCodeScannedValue.split('/')[3]}{' '}
+                                    <strong>Name:</strong>{' '}
+                                    {qrCodeScannedValue.length > 0 ? <>{qrCodeScannedValue.split('/')[3]} </> : null}
                                 </p>
                             </Grid>
                         </Grid>
@@ -71,12 +73,18 @@ const QrCodeScanner: FunctionComponent<ConnectionProps> = (props: ConnectionProp
                             variant='contained'
                             onClick={submitRoomChangeFromQRCode}
                             startIcon={<CallMissedOutgoingRoundedIcon />}
+                            disabled={qrCodeScannedValue.length === 0}
                         >
-                            Joindre la réunion
+                            Join the room
                         </Button>
                     </div>
                 </div>
-            ) : null}
+            </div>
+            <div className='CloseButton'>
+                <Button aria-label='close' onClick={props.close}>
+                    <HighlightOffIcon style={{ height: '50px', width: '50px' }} />
+                </Button>
+            </div>
         </div>
     );
 };
