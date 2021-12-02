@@ -7,12 +7,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import QrCodeScanner from './QrCodeScanner';
 import FormJoinMeeting from './FormJoinMeeting';
-
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
-}
+import { InformationProps, TabPanelProps } from '../../types';
 
 const TabPanel = (props: TabPanelProps) => {
     const { children, value, index, ...other } = props;
@@ -36,17 +31,8 @@ const a11yProps = (index: number) => {
         'aria-controls': `vertical-tabpanel-${index}`,
     };
 };
-interface InputRoom {
-    domain: string;
-    roomName: string;
-}
-interface RoomProps {
-    information: InputRoom;
-    setInformation: (value: InputRoom) => void;
-    close: () => void;
-}
 
-const JoinMeetingComponent: FunctionComponent<RoomProps> = (props: RoomProps) => {
+const JoinMeetingComponent: FunctionComponent<InformationProps> = (props: InformationProps) => {
     const [tabActivate, setTabActive] = React.useState<number>(0);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {

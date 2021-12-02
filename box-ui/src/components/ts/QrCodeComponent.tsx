@@ -6,22 +6,13 @@ import QrCodeIcon from '@mui/icons-material/QrCode';
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Button } from '@mui/material';
+import { InputRoomWithClose } from '../../types';
 
-interface InputRoom {
-    domain: string;
-    roomName: string;
-    close: () => void;
-}
-
-const QrCodeComponent: FunctionComponent<InputRoom> = ({
-    domain: domain,
-    roomName: roomName,
-    close: close,
-}: InputRoom) => {
+const QrCodeComponent: FunctionComponent<InputRoomWithClose> = (props: InputRoomWithClose) => {
     return (
         <div className='qrCodeContainer'>
             <div className='QRItem'>
-                <QRCode value={`https://${domain}/${roomName}`} size={210} />
+                <QRCode value={`https://${props.domain}/${props.roomName}`} size={210} />
             </div>
             <div className='DetailsContainer'>
                 <div className='ParagraphContainer'>
@@ -48,7 +39,7 @@ const QrCodeComponent: FunctionComponent<InputRoom> = ({
                 </div>
             </div>
             <div className='CloseButton'>
-                <Button aria-label='close' onClick={close}>
+                <Button aria-label='close' onClick={props.close}>
                     <HighlightOffIcon style={{ height: '50px', width: '50px' }} />
                 </Button>
             </div>

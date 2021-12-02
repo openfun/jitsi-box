@@ -3,13 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { IconButton } from '@mui/material';
 import CallEndIcon from '@mui/icons-material/CallEnd';
 import '../css/JitsiComponent.css';
-
-interface InputRoomProps {
-    information: {
-        domain: string;
-        roomName: string;
-    };
-}
+import { InputRoomProps } from '../../types';
 
 const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomProps) => {
     const [displayHangup, setDisplayHangup] = useState<boolean>();

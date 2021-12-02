@@ -8,15 +8,7 @@ import MarshaLoginComponent from './MarshaLoginComponent';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Button } from '@mui/material';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
-
-interface InputRoom {
-    domain: string;
-    roomName: string;
-}
-interface ConnectionProps {
-    close: () => void;
-    setInformation: (value: InputRoom) => void;
-}
+import { ConnectionProps } from '../../types';
 
 const ConnectionComponent: FunctionComponent<ConnectionProps> = (props: ConnectionProps) => {
     const [serviceChosen, setServiceChosen] = useState<string>('');

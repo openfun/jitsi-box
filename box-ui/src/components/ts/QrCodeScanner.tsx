@@ -5,6 +5,8 @@ import { styled } from '@mui/material/styles';
 import MuiGrid from '@mui/material/Grid';
 import { Button } from '@mui/material';
 import '../css/QrCodeScanner.css';
+import { ConnectionProps } from '../../types';
+
 const Grid = styled(MuiGrid)(({ theme }) => ({
     width: '100%',
     ...theme.typography.body2,
@@ -12,14 +14,12 @@ const Grid = styled(MuiGrid)(({ theme }) => ({
         margin: theme.spacing(0, 2),
     },
 }));
-interface QrScannerProps {
-    setInformation: (value: { domain: string; roomName: string }) => void;
-    close: () => void;
-}
-const QrCodeScanner: FunctionComponent<QrScannerProps> = (props: QrScannerProps) => {
+
+const QrCodeScanner: FunctionComponent<ConnectionProps> = (props: ConnectionProps) => {
     const [qrCodeScannedValue, setQrCodeScannedValue] = useState('');
     // QR Code Tab
     const handleScan = (data: string | null) => {
+        console.log(data);
         if (data) setQrCodeScannedValue(data);
     };
     const handleError = (err: Error) => {

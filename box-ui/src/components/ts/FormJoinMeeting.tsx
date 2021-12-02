@@ -4,20 +4,12 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { Box, Button } from '@mui/material';
 import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
-import InputRoom from './JoinMeetingComponent';
 import '../css/FormJoinMeeting.css';
-interface InputRoom {
-    domain: string;
-    roomName: string;
-}
-interface FormJoinMeetingProps {
-    setInformation: (value: { domain: string; roomName: string }) => void;
-    close: () => void;
-    information: InputRoom;
-}
+import { Information, InformationProps } from '../../types';
+
 const REGEX = new RegExp(/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/);
 
-const FormJoinMeeting: FunctionComponent<FormJoinMeetingProps> = (props: FormJoinMeetingProps) => {
+const FormJoinMeeting: FunctionComponent<InformationProps> = (props: InformationProps) => {
     const [domain, setDomain] = useState<string>(props.information.domain);
     const [roomName, setRoomName] = useState<string>('');
     const [layoutName, setLayoutName] = useState('default');
@@ -35,7 +27,7 @@ const FormJoinMeeting: FunctionComponent<FormJoinMeetingProps> = (props: FormJoi
     const onKeyPress = (button: string): void => {
         if (button === '{shift}' || button === '{lock}') handleShift();
     };
-    const onChangeAll = (inputRoom: InputRoom) => {
+    const onChangeAll = (inputRoom: Information) => {
         if (inputName === 'domain') {
             setDomain(inputRoom.domain);
         } else {
