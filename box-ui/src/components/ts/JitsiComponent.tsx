@@ -74,7 +74,6 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
             }
         } else {
             alert('Jitsi Meet API script not loaded');
-            console.log('after alert');
             // @ts-expect-error js to ts error
             if (window.reload_js) {
                 // @ts-expect-error js to ts error
