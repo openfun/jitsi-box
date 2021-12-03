@@ -16,6 +16,7 @@
     />
     <link rel="apple-touch-icon" href="logo192.png" />
     <link rel="manifest" href="manifest.json" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Jitsi Box</title>
   </head>
   <body>
@@ -23,5 +24,15 @@
     <div id="root">        
     </div>
     <script src='https://meet.jit.si/external_api.js'></script>
+    <script>
+      function reload_js(src) {
+        console.log(`reloading ${src}`);
+        document.querySelector('script[src="' + src + '"]').remove();
+        const newScript = document.createElement('script');
+        newScript.setAttribute('src', src);
+        document.body.appendChild(newScript);
+      }
+  </script>
+  
   </body>
 </html>
