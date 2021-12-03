@@ -7,9 +7,8 @@ import { availableLanguages } from '../../i18n';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import { useTranslation } from 'react-i18next';
-import { makeStyles } from '@mui/material';
 
 const HomeComponent: FunctionComponent = () => {
     const { t, i18n } = useTranslation();
