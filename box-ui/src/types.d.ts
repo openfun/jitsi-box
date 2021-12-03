@@ -3,10 +3,12 @@ export type InputRoomWithClose = {
     roomName: string;
     close: () => void;
 };
+
 export type Information = {
     domain: string;
     roomName: string;
 };
+
 export type RoomProps = {
     information: Information;
     setInformation: (value: Information) => void;
@@ -28,9 +30,11 @@ interface InformationProps {
     setInformation: (value: Information) => void;
     close: () => void;
 }
+
 export type InputRoomProps = {
     information: Information;
 };
+
 export type CounterProps = {
     counter: number;
     domain: string;
