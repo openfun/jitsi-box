@@ -38,12 +38,13 @@ const HomeComponent: FunctionComponent = () => {
                         value={i18n.language}
                         defaultValue={i18n.language}
                         onChange={(e) => {
-                            console.log(i18n.language);
-                            i18n.changeLanguage(e.target.value);
+                            i18n.changeLanguage(e.target.value as string);
                         }}
                     >
                         {availableLanguages.map((language) => (
-                            <MenuItem key={language}>{language}</MenuItem>
+                            <MenuItem value={language} key={language}>
+                                {language}
+                            </MenuItem>
                         ))}
                     </Select>
                 </FormControl>
