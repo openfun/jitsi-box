@@ -6,7 +6,7 @@ import MuiGrid from '@mui/material/Grid';
 import { Button } from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import '../css/QrCodeScanner.css';
-import { ConnectionProps } from '../../types';
+import { ConnectionProps } from '../../utils/Props';
 
 const Grid = styled(MuiGrid)(({ theme }) => ({
     width: '100%',

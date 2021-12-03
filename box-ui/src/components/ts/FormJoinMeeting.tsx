@@ -7,7 +7,7 @@ import { Box, Button } from '@mui/material';
 import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
 import '../css/FormJoinMeeting.css';
-import { Information, InformationProps } from '../../types';
+import { Information, InformationProps } from '../../utils/Props';
 
 const REGEX = new RegExp(/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/);
 const FormJoinMeeting: FunctionComponent<InformationProps> = (props: InformationProps) => {

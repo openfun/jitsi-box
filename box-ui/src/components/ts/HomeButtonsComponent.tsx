@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { useNavigate } from 'react-router-dom';
 import GenerateRandomFrenchRoomName from '../../dictionnaries_fr';
-import { CounterProps } from '../../types';
+import { CounterProps } from '../../utils/Props';
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 10,

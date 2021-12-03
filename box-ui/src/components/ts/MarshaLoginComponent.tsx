@@ -5,7 +5,7 @@ import BackspaceOutlinedIcon from '@mui/icons-material/BackspaceOutlined';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { v4 as uuidv4 } from 'uuid';
 import '../css/MarshaLoginComponent.css';
-import { ConnectionProps } from '../../types';
+import { ConnectionProps } from '../../utils/Props';
 
 const MarshaLoginComponent: FunctionComponent<ConnectionProps> = (props: ConnectionProps) => {
     const [code, setCode] = useState<Array<number>>([]);

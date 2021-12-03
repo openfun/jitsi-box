@@ -8,7 +8,7 @@ import MarshaLoginComponent from './MarshaLoginComponent';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Button } from '@mui/material';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
-import { ConnectionProps } from '../../types';
+import { ConnectionProps } from '../../utils/Props';
 
 const ConnectionComponent: FunctionComponent<ConnectionProps> = (props: ConnectionProps) => {
     const [serviceChosen, setServiceChosen] = useState<string>('');
