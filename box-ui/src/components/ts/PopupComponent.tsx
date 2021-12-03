@@ -8,7 +8,7 @@ import '../css/PopupComponent.css';
 import ConnectionComponent from './ConnectionComponent';
 import QrCodeComponent from './QrCodeComponent';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import { RoomProps } from '../../types';
+import { RoomProps } from '../../utils/Props';
 import FormJoinMeeting from './FormJoinMeeting';
 import QrCodeScanner from './QrCodeScanner';
 

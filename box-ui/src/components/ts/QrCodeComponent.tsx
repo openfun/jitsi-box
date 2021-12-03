@@ -6,7 +6,7 @@ import QrCodeIcon from '@mui/icons-material/QrCode';
 import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Button } from '@mui/material';
-import { InputRoomWithClose } from '../../types';
+import { InputRoomWithClose } from '../../utils/Props';
 
 const QrCodeComponent: FunctionComponent<InputRoomWithClose> = (props: InputRoomWithClose) => {
     return (

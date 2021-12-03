@@ -69,7 +69,6 @@
       "last 1 safari version"
     ]
   },
-  "typings": "./src/types.d.ts",
   "devDependencies": {
     "@types/uuid": "^8.3.3",
     "eslint-config-prettier": "^8.3.0",
