@@ -22,16 +22,5 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root">        
     </div>
-    <script src='https://meet.jit.si/external_api.js'></script>
-    <script>
-      function reload_js(src) {
-        console.log(`reloading ${src}`);
-        document.querySelector('script[src="' + src + '"]').remove();
-        const newScript = document.createElement('script');
-        newScript.setAttribute('src', src);
-        document.body.appendChild(newScript);
-      }
-  </script>
-  
   </body>
 </html>
