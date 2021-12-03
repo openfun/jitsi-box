@@ -47,7 +47,7 @@ const MarshaLoginComponent: FunctionComponent<ConnectionProps> = (props: Connect
                     if (error.response.status == 429) {
                         return {
                             success: false,
-                            err: 'Too much requests. Please wait 1 minute brefore retrying',
+                            err: 'Too much requests. Please wait 1 minute before retrying',
                         };
                     } else if (error.response.status == 404) {
                         return {
