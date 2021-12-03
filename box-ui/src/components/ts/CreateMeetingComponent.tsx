@@ -28,7 +28,7 @@ const CreateMeetingComponent: FunctionComponent = () => {
                 </div>
             </div>
             <div className='LanguageSupport'>
-                <FormControl variant='standard' sx={{ m: 1, minWidth: 120 }}>
+                <FormControl variant='filled' sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id='demo-simple-select-label'>{t('lang')}</InputLabel>
                     <Select
                         labelId='demo-simple-select-label'
@@ -41,7 +41,7 @@ const CreateMeetingComponent: FunctionComponent = () => {
                     >
                         {availableLanguages.map((language) => (
                             <MenuItem value={language} key={language}>
-                                {language}
+                                {language === 'fr' ? 'Français' : 'English'}
                             </MenuItem>
                         ))}
                     </Select>
