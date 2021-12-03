@@ -6,11 +6,12 @@ import { StyledEngineProvider } from '@mui/material/styles';
 import { v4 as uuidv4 } from 'uuid';
 import '../css/MarshaLoginComponent.css';
 import { ConnectionProps } from '../../utils/Props';
+import { useTranslation } from 'react-i18next';
 
 const MarshaLoginComponent: FunctionComponent<ConnectionProps> = (props: ConnectionProps) => {
+    const { t } = useTranslation();
     const [code, setCode] = useState<Array<number>>([]);
     const [alertMessage, setAlertMessage] = useState<string>('');
-
     const onButtonPress = (button: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
         if (button.currentTarget.value !== 'return') {
             setCode([...code, parseInt(button.currentTarget.value)]);
@@ -18,7 +19,6 @@ const MarshaLoginComponent: FunctionComponent<ConnectionProps> = (props: Connect
             setCode([...code.slice(0, -1)]);
         }
     };
-
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async function fetchMarsha(config: AxiosRequestConfig): Promise<{ success: boolean; link?: string; err?: string }> {
         // Ask marsha API if the code is known, and retrieve the corresponding link
@@ -144,7 +144,7 @@ const MarshaLoginComponent: FunctionComponent<ConnectionProps> = (props: Connect
                 } else if (!response.success && response.err) {
                     setAlertMessage(response.err);
                 } else {
-                    setAlertMessage('Unknown Error');
+                    setAlertMessage(t('unknownError'));
                 }
             };
             waitMarshaResponse();

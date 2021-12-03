@@ -11,8 +11,11 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import { RoomProps } from '../../utils/Props';
 import FormJoinMeeting from './FormJoinMeeting';
 import QrCodeScanner from './QrCodeScanner';
+import { useTranslation } from 'react-i18next';
 
 const PopupComponent: FunctionComponent<RoomProps> = (props: RoomProps) => {
+    const { t } = useTranslation();
+
     const [joinMeetingDisplayed, setJoinMeetingDisplayed] = useState<boolean>(false);
     const [qrCodeDisplayed, setQrCodeDisplayed] = useState<boolean>(false);
     const [qrCodeScannerDisplayed, setQrCodeScannedDisplayed] = useState<boolean>(false);
@@ -68,7 +71,7 @@ const PopupComponent: FunctionComponent<RoomProps> = (props: RoomProps) => {
                     <h4>
                         {!joinMeetingDisplayed
                             ? `https://${props.information.domain}/${props.information.roomName}`
-                            : 'Enter the name of the room and its domain.'}
+                            : t('editRoomAndDomain')}
                     </h4>
                 </Button>
                 <Button

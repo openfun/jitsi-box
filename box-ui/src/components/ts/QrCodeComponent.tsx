@@ -7,8 +7,10 @@ import PhoneIphoneIcon from '@mui/icons-material/PhoneIphone';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Button } from '@mui/material';
 import { InputRoomWithClose } from '../../utils/Props';
+import { useTranslation } from 'react-i18next';
 
 const QrCodeComponent: FunctionComponent<InputRoomWithClose> = (props: InputRoomWithClose) => {
+    const { t } = useTranslation();
     return (
         <div className='qrCodeContainer'>
             <div className='QRItem'>
@@ -20,10 +22,7 @@ const QrCodeComponent: FunctionComponent<InputRoomWithClose> = (props: InputRoom
                         <QrCodeIcon style={{ height: '35px', width: '35px' }} />
                     </div>
                     <div className='ParagraphItem'>
-                        <p>
-                            En flashant ce QR code, vous pouvez ajouter facilement une caméra à la conférence avec votre
-                            smartphone ou envoyer l&apos;adresse de la conférence à un participant.
-                        </p>
+                        <p>{t('qrCodeDescription')}</p>
                     </div>
                 </div>
                 <div className='ParagraphContainer'>
@@ -32,8 +31,7 @@ const QrCodeComponent: FunctionComponent<InputRoomWithClose> = (props: InputRoom
                     </div>
                     <div className='ParagraphItem'>
                         <p>
-                            <strong>Tip:</strong> pensez à utiliser votre smartphone pour le Chat ou pour partager le QR
-                            code
+                            <strong>{t('tip')}:</strong> {t('tipDescription')}
                         </p>
                     </div>
                 </div>

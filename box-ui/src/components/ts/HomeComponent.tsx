@@ -3,8 +3,17 @@ import HomeButtonsComponent from './HomeButtonsComponent';
 import '../css/HomeComponent.css';
 import JitsiBoxLogo from '../../logo/jitsibox.svg';
 import { useLocation } from 'react-router-dom';
+import { availableLanguages } from '../../i18n';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { useTranslation } from 'react-i18next';
+import { makeStyles } from '@mui/material';
 
 const HomeComponent: FunctionComponent = () => {
+    const { t, i18n } = useTranslation();
+
     const data = useLocation();
     const [counter, setCounter] = useState(data.state && data.state.count ? data.state.count : 0);
     const [information] = useState({
@@ -15,13 +24,31 @@ const HomeComponent: FunctionComponent = () => {
     useEffect(() => {
         counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
     }, [counter]);
-
     return (
         <div className='HomeButtonsContainer'>
             <div className='LogoContainer'>
                 <img src={JitsiBoxLogo} alt='logo de la jitsi-box' className='logo' />
             </div>
             <HomeButtonsComponent counter={counter} roomName={information.roomName} domain={information.domain} />
+            <div className='LanguageSupport'>
+                <FormControl variant='standard' sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id='demo-simple-select-label'>{t('lang')}</InputLabel>
+                    <Select
+                        labelId='demo-simple-select-label'
+                        id='demo-simple-select'
+                        value={i18n.language}
+                        defaultValue={i18n.language}
+                        onChange={(e) => {
+                            console.log(i18n.language);
+                            i18n.changeLanguage(e.target.value);
+                        }}
+                    >
+                        {availableLanguages.map((language) => (
+                            <MenuItem key={language}>{language}</MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+            </div>
         </div>
     );
 };

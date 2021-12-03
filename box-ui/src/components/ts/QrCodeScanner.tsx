@@ -7,6 +7,7 @@ import { Button } from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import '../css/QrCodeScanner.css';
 import { ConnectionProps } from '../../utils/Props';
+import { useTranslation } from 'react-i18next';
 
 const Grid = styled(MuiGrid)(({ theme }) => ({
     width: '100%',
@@ -17,6 +18,7 @@ const Grid = styled(MuiGrid)(({ theme }) => ({
 }));
 
 const QrCodeScanner: FunctionComponent<ConnectionProps> = (props: ConnectionProps) => {
+    const { t } = useTranslation();
     const [qrCodeScannedValue, setQrCodeScannedValue] = useState('');
     // QR Code Tab
     const handleScan = (data: string | null) => {
@@ -48,7 +50,7 @@ const QrCodeScanner: FunctionComponent<ConnectionProps> = (props: ConnectionProp
                                         fontSize: '25px',
                                     }}
                                 >
-                                    <strong>Domain:</strong>{' '}
+                                    <strong>{t('domain')}:</strong>{' '}
                                     {qrCodeScannedValue.length > 0 ? <>{qrCodeScannedValue.split('/')[2]} </> : null}
                                 </p>
                             </Grid>
@@ -61,7 +63,7 @@ const QrCodeScanner: FunctionComponent<ConnectionProps> = (props: ConnectionProp
                                         fontSize: '25px',
                                     }}
                                 >
-                                    <strong>Name:</strong>{' '}
+                                    <strong>{t('name')}:</strong>{' '}
                                     {qrCodeScannedValue.length > 0 ? <>{qrCodeScannedValue.split('/')[3]} </> : null}
                                 </p>
                             </Grid>
@@ -75,7 +77,7 @@ const QrCodeScanner: FunctionComponent<ConnectionProps> = (props: ConnectionProp
                             startIcon={<CallMissedOutgoingRoundedIcon />}
                             disabled={qrCodeScannedValue.length === 0}
                         >
-                            Join the room
+                            {t('join')}
                         </Button>
                     </div>
                 </div>
