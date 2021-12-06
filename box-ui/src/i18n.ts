@@ -9,8 +9,10 @@ const resources = {
     fr,
 };
 export const availableLanguages = Object.keys(resources);
+
 i18n.use(initReactI18next).use(LanguageDetector).init({
     resources,
     defaultNS: 'common',
     fallbackLng: 'en',
 });
+i18n.changeLanguage('en');

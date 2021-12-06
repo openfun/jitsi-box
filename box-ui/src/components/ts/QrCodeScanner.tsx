@@ -36,6 +36,7 @@ const QrCodeScanner: FunctionComponent<ConnectionProps> = (props: ConnectionProp
         <div className='QrCodeScannerComponent'>
             <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', width: '100%', height: '100%' }}>
                 <div style={{ width: '50%', marginLeft: '2%', marginTop: '2%' }}>
+                    <strong> {t('qrCodeScanner')}</strong>
                     <QrReader delay={300} onError={handleError} onScan={handleScan} />
                 </div>
                 <div className='QrScanContained'>
