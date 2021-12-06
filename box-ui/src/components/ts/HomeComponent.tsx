@@ -30,16 +30,17 @@ const HomeComponent: FunctionComponent = () => {
             </div>
             <HomeButtonsComponent counter={counter} roomName={information.roomName} domain={information.domain} />
             <div className='LanguageSupport'>
-                <FormControl variant='filled' sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id='demo-simple-select-label'>{t('lang')}</InputLabel>
+                <FormControl variant='filled' sx={{ m: 1, minWidth: 120 }} style={{ backgroundColor: '#1976D2' }}>
+                    <InputLabel id='demo-simple-select-label' style={{ color: 'white' }}>
+                        {t('lang')}
+                    </InputLabel>
                     <Select
-                        labelId='demo-simple-select-label'
-                        id='demo-simple-select'
                         value={i18n.language}
                         defaultValue={i18n.language}
                         onChange={(e) => {
                             i18n.changeLanguage(e.target.value as string);
                         }}
+                        style={{ color: 'white' }}
                     >
                         {availableLanguages.map((language) => (
                             <MenuItem value={language} key={language}>

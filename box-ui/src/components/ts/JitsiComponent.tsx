@@ -4,6 +4,7 @@ import { IconButton } from '@mui/material';
 import CallEndIcon from '@mui/icons-material/CallEnd';
 import '../css/JitsiComponent.css';
 import { InputRoomProps } from '../../utils/Props';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import JitsiMeetExternalAPI from '../../utils/JitsiMeetExternalAPI';
 
 const loadJitsiScript = () =>
