@@ -23,6 +23,7 @@ const HomeComponent: FunctionComponent = () => {
     useEffect(() => {
         counter > 0 && setTimeout(() => setCounter(counter - 1), 1000);
     }, [counter]);
+    console.log(i18n.language);
     return (
         <div className='HomeButtonsContainer'>
             <div className='LogoContainer'>
