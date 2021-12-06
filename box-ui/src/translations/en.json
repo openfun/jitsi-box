@@ -9,15 +9,15 @@
         "name": "Name",
         "domain": "Domain",
         "join": "Join the meeting",
-        "howItWorks": "How it works ?",
+        "howItWorks": "How does it works ?",
         "serviceToConnect": "Choose the service to connect to.",
         "typeCode": "Type the code.",
         "enterRoomName": "Type the name of the meeting",
         "enterValidDomain": "Type a valid domain",
         "editRoomAndDomain": "Type the name of the meeting and its domain.",
         "tip": "Tip",
-        "tipDescription": "Think to use your smartphone to see the chat and to share the meeting QR Code.",
-        "qrCodeDescription": "While scanning the QR Code with your smartphone, you can join the meeting or share the link.",
+        "tipDescription": "You can use your smartphone to see the chat and to share the meeting QR Code.",
+        "qrCodeDescription": "By scanning the QR Code with your smartphone, you can join the meeting or share the link.",
         "lang": "Language"
     }
   }

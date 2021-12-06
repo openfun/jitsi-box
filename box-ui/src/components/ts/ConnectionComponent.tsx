@@ -103,5 +103,4 @@ const ConnectionComponent: FunctionComponent<ConnectionProps> = (props: Connecti
         </div>
     );
 };
-
 export default ConnectionComponent;
