@@ -1,0 +1,23 @@
+{
+    "common": {
+      "learnReact": "Learn React",
+      "launchMeeting": "Lancer une réunion",
+      "goBackToMeeting": "Retourner à la dernière réunion",
+      "disappear": "Disparaît dans ",
+      "seconds": "seconde(s) ",
+      "name": "Nom",
+      "unknownError": "Erreur inconnue",
+      "domain": "Domaine",
+      "join": "Joindre la rencontre",
+      "howItWorks": "Comment ça marche ?",
+      "serviceToConnect": "Choisissez le service de connexion.",
+      "typeCode": "Entrez le code.",
+      "enterRoomName": "Entrez le nom de la réunion",
+      "enterValidDomain": "Entrez un domaine valide pour la réunion",
+      "editRoomAndDomain": "Entrez le nom de la réunion et son domaine.",
+      "tip": "Astuce",
+      "tipDescription": "Pensez à utiliser votre smartphone pour pouvoir lire le Chat ou pour partager lire le QR code de la réunion.",
+      "qrCodeDescription": "En flashant ce QR code, vous pouvez ajouter facilement une caméra à la conférence avec votre smartphone ou envoyer l'adresse de la conférence à un participant.",
+      "lang": "Langue"
+    }
+  }

@@ -6,6 +6,7 @@ import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgr
 import { useNavigate } from 'react-router-dom';
 import GenerateRandomFrenchRoomName from '../../dictionnaries_fr';
 import { CounterProps } from '../../utils/Props';
+import { useTranslation } from 'react-i18next';
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
     height: 10,
@@ -21,6 +22,8 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
 }));
 
 const HomeButtonsComponent: FunctionComponent<CounterProps> = (props: CounterProps) => {
+    const { t } = useTranslation();
+
     const navigate = useNavigate();
     const launchLastMeeting = () => {
         navigate(
@@ -50,7 +53,7 @@ const HomeButtonsComponent: FunctionComponent<CounterProps> = (props: CounterPro
                     onClick={launchMeeting}
                     style={{ overflowWrap: 'break-word', overflowX: 'visible', overflowY: 'hidden' }}
                 >
-                    Launch a meeting
+                    {t('launchMeeting')}
                 </Button>
             </div>
             {props.counter > 0 ? (
@@ -63,7 +66,7 @@ const HomeButtonsComponent: FunctionComponent<CounterProps> = (props: CounterPro
                             onClick={launchLastMeeting}
                             style={{ overflowWrap: 'break-word', overflowX: 'visible', overflowY: 'hidden' }}
                         >
-                            Go back to the meeting
+                            {t('goBackToMeeting')}
                             <br />
                             {props.roomName}
                         </Button>
@@ -71,7 +74,10 @@ const HomeButtonsComponent: FunctionComponent<CounterProps> = (props: CounterPro
                     <div className='LinearProgress'>
                         <BorderLinearProgress variant='determinate' value={props.counter * 10} />
                     </div>
-                    <div id='counter'>Disappear in {props.counter} seconds!</div>
+                    <div id='counter'>
+                        {t('disappear')}
+                        {props.counter} {t('seconds')}!
+                    </div>
                 </div>
             ) : null}
         </>

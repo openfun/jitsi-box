@@ -9,8 +9,10 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { Button } from '@mui/material';
 import ArrowBackRoundedIcon from '@mui/icons-material/ArrowBackRounded';
 import { ConnectionProps } from '../../utils/Props';
+import { useTranslation } from 'react-i18next';
 
 const ConnectionComponent: FunctionComponent<ConnectionProps> = (props: ConnectionProps) => {
+    const { t } = useTranslation();
     const [serviceChosen, setServiceChosen] = useState<string>('');
 
     return (
@@ -77,10 +79,10 @@ const ConnectionComponent: FunctionComponent<ConnectionProps> = (props: Connecti
                     </div>
                     <div className='TitleContainer'>
                         <div>
-                            <h2>How it works ?</h2>
+                            <h2>{t('howItWorks')}</h2>
                         </div>
                         <div className='Paragraph'>
-                            <p>Choose the service to connect to.</p> <p>Enter the code.</p>
+                            <p>{t('serviceToConnect')}</p> <p>{t('typeCode')}</p>
                         </div>
                     </div>
                 </>
@@ -101,5 +103,4 @@ const ConnectionComponent: FunctionComponent<ConnectionProps> = (props: Connecti
         </div>
     );
 };
-
 export default ConnectionComponent;

@@ -8,9 +8,12 @@ import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
 import '../css/FormJoinMeeting.css';
 import { Information, InformationProps } from '../../utils/Props';
+import { useTranslation } from 'react-i18next';
 
 const REGEX = new RegExp(/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/);
 const FormJoinMeeting: FunctionComponent<InformationProps> = (props: InformationProps) => {
+    const { t } = useTranslation();
+
     const [domain, setDomain] = useState<string>(props.information.domain);
     const [roomName, setRoomName] = useState<string>('');
     const [layoutName, setLayoutName] = useState('default');
@@ -48,7 +51,7 @@ const FormJoinMeeting: FunctionComponent<InformationProps> = (props: Information
                                             fullWidth
                                             id='outlined-adornment-amount'
                                             value={domain}
-                                            helperText='Enter a valid domain'
+                                            helperText={t('enterValidDomain')}
                                             onFocus={() => setInputName('domain')}
                                             sx={{ input: { color: '#235dbc' } }}
                                             variant='filled'
@@ -68,7 +71,7 @@ const FormJoinMeeting: FunctionComponent<InformationProps> = (props: Information
                                             id='outlined-adornment-amount'
                                             value={roomName}
                                             autoFocus={true}
-                                            helperText='Enter the name of the room'
+                                            helperText={t('enterRoomName')}
                                             onFocus={() => setInputName('roomName')}
                                         />
                                     </Box>
@@ -81,7 +84,7 @@ const FormJoinMeeting: FunctionComponent<InformationProps> = (props: Information
                                     onClick={submitRoomChange}
                                     disabled={roomName === '' || !REGEX.test(domain)}
                                 >
-                                    Join the meeting
+                                    {t('join')}
                                 </Button>
                             </div>
                         </div>

@@ -16,3 +16,10 @@
 .logo {
     display: flex;
 }
+.LanguageSupport {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-right: 2%;
+    margin-bottom: 2%;
+}
