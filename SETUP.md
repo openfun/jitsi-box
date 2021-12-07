@@ -134,3 +134,14 @@ and add at the end of the line
 ```bash
 video=DSI-1:800x480@60,rotate=180
 ```
+
+:warning: This will only reverse the display, but not the touch axes ! :warning:\
+To revert the touch axis, you must add a line to the boot confix file:
+Edit the boot command line file:
+```bash
+sudo nano /boot/config.txt
+```
+Under the line `dtoverlay=vc4-fkms-v3d` (or `dtoverlay=vc4-kms-v3d` if you did not change it), add the line:
+```bash
+dtoverlay=rpi-ft5406,touchscreen-inverted-x=1,touchscreen-inverted-y=1
+```
