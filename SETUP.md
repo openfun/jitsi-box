@@ -122,3 +122,15 @@ We faced some issues while setting the raspi:
 - To check if your microphone is detected, you can run the `arecord -l` command. You can also use `alsamixer` to check the detected sound cards (press `S`), and to change the the input volumes. You can also try to change the `/usr/share/alsa/alsa.conf` file, as explained [here](https://raspberrypi.stackexchange.com/questions/37177/best-way-to-setup-usb-mic-as-system-default-on-raspbian-jessie) (a bit outdated, be careful).
 
 - All microphones may not be recognized, you can find the list of tested devices [here](./Hardware_tested.md).
+
+### Screen orientation
+Your display may be upside-down, depending of the way it is fixed to a wall, or laying on a desk.\
+To fix the orientation, we follow the [official documentation](https://www.raspberrypi.com/documentation/accessories/display.html#screen-orientation):
+Edit the boot command line file:
+```bash
+sudo nano /boot/cmdline.txt
+```
+and add at the end of the line
+```bash
+video=DSI-1:800x480@60,rotate=180
+```
