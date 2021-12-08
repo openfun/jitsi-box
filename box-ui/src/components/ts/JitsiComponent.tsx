@@ -81,7 +81,7 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
             { pathname: '/' },
             {
                 replace: true,
-                state: { count: 10, roomName: props.information.roomName, domain: props.information.domain },
+                state: { count: 120, roomName: props.information.roomName, domain: props.information.domain },
             },
         );
     };
