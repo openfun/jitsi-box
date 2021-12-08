@@ -1,19 +1,10 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
 import QrReader from 'react-qr-reader';
-import axios from 'axios';
 import { Button } from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import '../css/QrCodeScanner.css';
 import { ConnectionProps } from '../../utils/Props';
 import { useTranslation } from 'react-i18next';
-
-const verifyJitsiScript = (url: string) =>
-    new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.src = url;
-        script.onload = resolve;
-        script.onerror = reject;
-    });
 
 const QrCodeScanner: FunctionComponent<ConnectionProps> = (props: ConnectionProps) => {
     const { t } = useTranslation();
@@ -25,22 +16,17 @@ const QrCodeScanner: FunctionComponent<ConnectionProps> = (props: ConnectionProp
     const handleError = (err: Error) => {
         console.error(err);
     };
+
     useEffect(() => {
         if (qrCodeScannedValue.length > 0) {
             const decomposedScannedValue = qrCodeScannedValue.split('/');
-            console.log(decomposedScannedValue);
-            verifyJitsiScript(`https://${decomposedScannedValue[2]}/external_api.js`)
-                .then((response) => {
-                    console.log('response');
-                    props.setInformation({ domain: decomposedScannedValue[2], roomName: decomposedScannedValue[3] });
-                    props.close();
-                })
-                .catch((err) => {
-                    console.log(err);
-                    setQrCodeScannedValue('');
-                });
+            props.setInformation({
+                domain: decomposedScannedValue[2],
+                roomName: decomposedScannedValue[3],
+            });
+            props.close();
         }
-    }, [qrCodeScannedValue, setQrCodeScannedValue]);
+    }, [qrCodeScannedValue]);
     return (
         <div className='QrCodeScannerComponent'>
             <div
