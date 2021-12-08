@@ -1,0 +1,15 @@
+.jitsiContainer {
+    width: 100%;
+    height: 100%;
+}
+.hangupButton {
+    position: absolute;
+    bottom: 23px;
+    left: 73%;
+    border-radius: 5px;
+    color: #fff;
+    height: 48px;
+    width: 48px;
+
+    background: #dd3849;
+}

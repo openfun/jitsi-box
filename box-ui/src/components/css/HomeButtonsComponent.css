@@ -1,0 +1,26 @@
+.ButtonContainer {
+    padding-top: 4%;
+}
+
+#StartMeetingButton {
+    height: 17vh;
+    width: 60vw;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#ReturnToMeetingButton {
+    height: 17vh;
+    width: 60vw;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#counter {
+    color: azure;
+    margin-top: 1%;
+}
+.LinearProgress {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -1%;
+}

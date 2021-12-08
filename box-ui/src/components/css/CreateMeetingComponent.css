@@ -1,0 +1,31 @@
+.CreateMeetingComponent {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100vh;
+    width: 100vw;
+}
+.CreateMessage {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-right: 1%;
+    margin-left: 1%;
+}
+.CreateMeetingContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    text-align: center;
+    height: 100%;
+    width: 100%;
+}
+.CreateButtonContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+.JitsiComponent {
+    flex-grow: 3;
+}
