@@ -2,7 +2,6 @@ import React, { FunctionComponent, useState } from 'react';
 import '../css/ConnectionComponent.css';
 import 'react-simple-keyboard/build/css/index.css';
 import LogoMarsha from '../../logo/LogoMarsha.svg';
-import LogoUbicast from '../../logo/LogoUbicast.svg';
 import LogoPod from '../../logo/LogoPod.svg';
 import MarshaLoginComponent from './MarshaLoginComponent';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -32,20 +31,22 @@ const ConnectionComponent: FunctionComponent<ConnectionProps> = (props: Connecti
                 <>
                     <div className='Partners'>
                         <div className='FirstLineButton'>
-                            <div style={{ width: '100%' }}>
+                            <div style={{ width: '50%' }}>
                                 <Button
                                     variant='contained'
                                     className='MediumButton'
                                     style={{ backgroundColor: '#EFF5FC' }}
-                                    disabled
+                                    onClick={() => {
+                                        setServiceChosen('Marsha');
+                                    }}
                                 >
-                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                        <img src={LogoUbicast} height='80%' />
-                                        <strong className='TitleButton'> Ubicast </strong>
+                                    <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                                        <img src={LogoMarsha} />
+                                        <strong className='TitleButton'> Marsha </strong>
                                     </div>
                                 </Button>
                             </div>
-                            <div style={{ width: '100%' }}>
+                            <div style={{ width: '50%' }}>
                                 <Button
                                     variant='contained'
                                     className='MediumButton'
@@ -53,28 +54,11 @@ const ConnectionComponent: FunctionComponent<ConnectionProps> = (props: Connecti
                                     disabled
                                 >
                                     <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                        <img src={LogoPod} height='80%' />
+                                        <img src={LogoPod} />
                                         <strong className='TitleButton'> Pod </strong>
                                     </div>
                                 </Button>
                             </div>
-                        </div>
-                        <div className='SecondLineButton'>
-                            <Button
-                                variant='contained'
-                                onClick={() => {
-                                    setServiceChosen('Marsha');
-                                }}
-                                style={{ backgroundColor: '#EFF5FC' }}
-                                className='MarshaButton'
-                            >
-                                <div>
-                                    <img src={LogoMarsha} height='60%' />
-                                    <div>
-                                        <strong className='TitleButton'> Marsha </strong>
-                                    </div>
-                                </div>
-                            </Button>
                         </div>
                     </div>
                     <div className='TitleContainer'>

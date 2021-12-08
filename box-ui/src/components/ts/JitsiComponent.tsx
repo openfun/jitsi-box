@@ -7,10 +7,10 @@ import { InputRoomProps } from '../../utils/Props';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import JitsiMeetExternalAPI from '../../utils/JitsiMeetExternalAPI';
 
-const loadJitsiScript = () =>
+const loadJitsiScript = (url: string) =>
     new Promise((resolve, reject) => {
         const script = document.createElement('script');
-        script.src = process.env.REACT_APP_JITSI_EXTERNAL_API_URL || 'https://meet.jit.si/external_api.js';
+        script.src = url;
         script.onload = resolve;
         script.onerror = reject;
         document.body.appendChild(script);
@@ -22,7 +22,7 @@ const instantiateJitsi = async (
     displayHangupFunction: React.Dispatch<React.SetStateAction<boolean | undefined>>,
 ) => {
     if (!window.JitsiMeetExternalAPI) {
-        await loadJitsiScript();
+        await loadJitsiScript(`https://${domainFromProps}/external_api.js`);
     }
     displayHangupFunction(false);
     const options = {
@@ -81,7 +81,7 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
             { pathname: '/' },
             {
                 replace: true,
-                state: { count: 10, roomName: props.information.roomName, domain: props.information.domain },
+                state: { count: 120, roomName: props.information.roomName, domain: props.information.domain },
             },
         );
     };

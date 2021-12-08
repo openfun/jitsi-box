@@ -72,7 +72,7 @@ const HomeButtonsComponent: FunctionComponent<CounterProps> = (props: CounterPro
                         </Button>
                     </div>
                     <div className='LinearProgress'>
-                        <BorderLinearProgress variant='determinate' value={props.counter * 10} />
+                        <BorderLinearProgress variant='determinate' value={(props.counter / 120) * 100} />
                     </div>
                     <div id='counter'>
                         {t('disappear')}
