@@ -7,16 +7,14 @@ import { InputRoomProps } from '../../utils/Props';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import JitsiMeetExternalAPI from '../../utils/JitsiMeetExternalAPI';
 
-const loadJitsiScript = (url: string) => {
-    console.log(url);
-    return new Promise((resolve, reject) => {
+const loadJitsiScript = (url: string) =>
+    new Promise((resolve, reject) => {
         const script = document.createElement('script');
         script.src = url;
         script.onload = resolve;
         script.onerror = reject;
         document.body.appendChild(script);
     });
-};
 
 const instantiateJitsi = async (
     roomNameFromProps: string,
@@ -89,7 +87,6 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
     };
     useEffect(() => {
         // verify the JitsiMeetExternalAPI constructor is added to the global..
-        console.log(props.information);
         try {
             const cleanupPromise = instantiateJitsi(
                 props.information.roomName,
@@ -100,7 +97,6 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
                 cleanupPromise.then((cleanup) => cleanup && cleanup());
             };
         } catch (error) {
-            console.log(error);
             alert('Error loading Jitsi Meet API');
             navigate({ pathname: '/' });
         }
