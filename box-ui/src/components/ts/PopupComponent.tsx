@@ -1,7 +1,7 @@
 import React, { useState, MouseEvent, FunctionComponent } from 'react';
 import Popover from '@mui/material/Popover';
 import { Button } from '@mui/material';
-import ScreenShareRoundedIcon from '@mui/icons-material/ScreenShareRounded';
+import ShareIcon from '@mui/icons-material/Share';
 import SettingsInputAntennaIcon from '@mui/icons-material/SettingsInputAntenna';
 import QrCodeScannerRoundedIcon from '@mui/icons-material/QrCodeScannerRounded';
 import '../css/PopupComponent.css';
@@ -86,7 +86,7 @@ const PopupComponent: FunctionComponent<RoomProps> = (props: RoomProps) => {
                     variant={qrCodeDisplayed ? 'contained' : 'outlined'}
                     onClick={(event: MouseEvent<HTMLButtonElement>) => handleClick(event, 3)}
                 >
-                    <ScreenShareRoundedIcon style={{ height: '30px', width: '30px' }} />
+                    <ShareIcon style={{ height: '30px', width: '30px' }} />
                 </Button>
                 <Button
                     className='OpenTopBarButton'
