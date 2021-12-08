@@ -11,7 +11,6 @@ const loadJitsiScript = (url: string) =>
     new Promise((resolve, reject) => {
         document.getElementById('jitsi-api-script')?.remove();
         const script = document.createElement('script');
-        script.setAttribute('id', 'jitsi-api-script');
         script.src = url;
         script.onload = resolve;
         script.onerror = reject;
@@ -23,7 +22,9 @@ const instantiateJitsi = async (
     domainFromProps: string,
     displayHangupFunction: React.Dispatch<React.SetStateAction<boolean | undefined>>,
 ) => {
-    await loadJitsiScript(`https://${domainFromProps}/external_api.js`);
+    if (!window.JitsiMeetExternalAPI) {
+        await loadJitsiScript(`https://${domainFromProps}/external_api.js`);
+    }
     displayHangupFunction(false);
     const options = {
         roomName: roomNameFromProps,
