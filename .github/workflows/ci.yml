@@ -2,7 +2,9 @@ name: Check Jitsi-Box UI
 
 on:
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
+      - develop
     paths:
       - 'box-ui/**'
 
