@@ -1,0 +1,62 @@
+name: Deploy Jitsi-Box UI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'box-ui/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./box-ui
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: npm
+        cache-dependency-path: ./box-ui/package.json
+
+    - name: Install dependencies
+      run: npm install --legacy-peer-deps # Allow QR code scanner to be installed
+
+    - name: Create the production build
+      run: npm run build --if-present
+      env:
+        REACT_APP_MARSHA_URL: please_complete_this_@sampaccoud
+
+    - name: Create the deployment directory, copy the git repo there & checkout the deployment branch
+      # We use ../.git instead of .git because we are using ./box-ui as working directory for run commands
+      run: |
+        mkdir ~/deployment
+        cp -R ../.git ~/deployment
+        cd ~/deployment
+        git fetch
+        git checkout pages-deployment
+
+    - name: Clean the deployment directory & copy the build results
+      run: |
+        rm -rf ~/deployment/*
+        cp -R build/* ~/deployment
+        echo jitsi-box.openfun.fr > ~/deployment/CNAME
+    
+    - name: Deploy the build artifact to Github Pages by pushing on the deployment branch
+      run: |
+        cd ~/deployment
+        git config user.email "funmoocbot@users.noreply.github.com"
+        git config user.name "FUN MOOC bot"
+        git add --all
+        git commit --allow-empty -m "Deploy to Github Pages"
+        git push origin pages-deployment
