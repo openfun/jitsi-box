@@ -50,7 +50,6 @@ const FormJoinMeeting: FunctionComponent<InformationProps> = (props: Information
                                         <TextField
                                             fullWidth
                                             id='outlined-adornment-amount'
-                                            defaultValue='meeting.education'
                                             placeholder='meeting.education'
                                             value={domain}
                                             helperText={t('enterValidDomain')}
