@@ -50,7 +50,7 @@ jobs:
       run: |
         rm -rf ~/deployment/*
         cp -R build/* ~/deployment
-        echo jitsi-box.openfun.fr > ~/deployment/CNAME
+        echo jitsi-box.com > ~/deployment/CNAME
     
     - name: Deploy the build artifact to Github Pages by pushing on the deployment branch
       run: |
