@@ -9,7 +9,9 @@ import JitsiMeetExternalAPI from '../../utils/JitsiMeetExternalAPI';
 
 const loadJitsiScript = (url: string) =>
     new Promise((resolve, reject) => {
+        document.getElementById('jitsi-api-script')?.remove();
         const script = document.createElement('script');
+        script.setAttribute('id', 'jitsi-api-script');
         script.src = url;
         script.onload = resolve;
         script.onerror = reject;
@@ -21,9 +23,7 @@ const instantiateJitsi = async (
     domainFromProps: string,
     displayHangupFunction: React.Dispatch<React.SetStateAction<boolean | undefined>>,
 ) => {
-    if (!window.JitsiMeetExternalAPI) {
-        await loadJitsiScript(`https://${domainFromProps}/external_api.js`);
-    }
+    await loadJitsiScript(`https://${domainFromProps}/external_api.js`);
     displayHangupFunction(false);
     const options = {
         roomName: roomNameFromProps,
@@ -87,19 +87,17 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
     };
     useEffect(() => {
         // verify the JitsiMeetExternalAPI constructor is added to the global..
-        try {
-            const cleanupPromise = instantiateJitsi(
-                props.information.roomName,
-                props.information.domain,
-                setDisplayHangup,
-            );
-            return () => {
-                cleanupPromise.then((cleanup) => cleanup && cleanup());
-            };
-        } catch (error) {
+        const cleanupPromise = instantiateJitsi(
+            props.information.roomName,
+            props.information.domain,
+            setDisplayHangup,
+        ).catch(() => {
             alert('Error loading Jitsi Meet API');
             navigate({ pathname: '/' });
-        }
+        });
+        return () => {
+            cleanupPromise.then((cleanup) => cleanup && cleanup());
+        };
     }, [props.information, setDisplayHangup]);
 
     return (
