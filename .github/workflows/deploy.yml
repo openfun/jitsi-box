@@ -2,9 +2,12 @@ name: Deploy Jitsi-Box UI
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - add_github_action
     paths:
       - 'box-ui/**'
+      - '.github/'
 
 jobs:
   deploy:
