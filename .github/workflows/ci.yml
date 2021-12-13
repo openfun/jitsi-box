@@ -35,4 +35,4 @@ jobs:
     
     - run: npm run lint
       env:
-        REACT_APP_MARSHA_URL: please_complete_this_@sampaccoud
+        REACT_APP_MARSHA_URL: https://marsha.education/api/video/pairing-challenge

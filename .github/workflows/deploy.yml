@@ -35,7 +35,7 @@ jobs:
     - name: Create the production build
       run: npm run build --if-present
       env:
-        REACT_APP_MARSHA_URL: please_complete_this_@sampaccoud
+        REACT_APP_MARSHA_URL: https://marsha.education/api/video/pairing-challenge
 
     - name: Create the deployment directory, copy the git repo there & checkout the deployment branch
       # We use ../.git instead of .git because we are using ./box-ui as working directory for run commands
