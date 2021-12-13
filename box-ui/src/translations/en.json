@@ -10,7 +10,7 @@
         "domain": "Domain",
         "join": "Join the meeting",
         "howItWorks": "How does it works ?",
-        "serviceToConnect": "Choose the service to connect to.",
+        "serviceToConnect": "Choose the broadcasting service to connect to.",
         "typeCode": "Enter the code provided by the external service.",
         "enterRoomName": "Type the name of the meeting",
         "enterValidDomain": "Type a valid domain",
