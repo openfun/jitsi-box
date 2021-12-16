@@ -83,7 +83,7 @@ Now reboot and enjoy :)
 ## Using our Image (WIP)
 
 ### Downloading and flashing
-There is an image which already contains all the above configuration, which you can download [here](https://www.youtube.com/watch?v=dQw4w9WgXcQ), and write on your SD card (on the Raspberry Pi Imager, choose "Custom Image" and choose the image previously downloaded)
+There is an image which already contains all the above configuration, which you can download [here]() (not available yet), and write on your SD card (on the Raspberry Pi Imager, choose "Custom Image" and choose the image previously downloaded)
 
 ### Configuration
 You will not have ssh access to this image, so when you boot your raspi, if you want to change anything, plug in a keyboard, press `ctrl` + `alt` + `F2` to open a new terminal, and log in with the default pi credentials.

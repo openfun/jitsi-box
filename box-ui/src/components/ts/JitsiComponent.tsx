@@ -7,10 +7,12 @@ import { InputRoomProps } from '../../utils/Props';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import JitsiMeetExternalAPI from '../../utils/JitsiMeetExternalAPI';
 
-const loadJitsiScript = () =>
+const loadJitsiScript = (url: string) =>
     new Promise((resolve, reject) => {
+        document.getElementById('jitsi-api-script')?.remove();
         const script = document.createElement('script');
-        script.src = process.env.REACT_APP_JITSI_EXTERNAL_API_URL || 'https://meet.jit.si/external_api.js';
+        script.setAttribute('id', 'jitsi-api-script');
+        script.src = url;
         script.onload = resolve;
         script.onerror = reject;
         document.body.appendChild(script);
@@ -21,9 +23,7 @@ const instantiateJitsi = async (
     domainFromProps: string,
     displayHangupFunction: React.Dispatch<React.SetStateAction<boolean | undefined>>,
 ) => {
-    if (!window.JitsiMeetExternalAPI) {
-        await loadJitsiScript();
-    }
+    await loadJitsiScript(`https://${domainFromProps}/external_api.js`);
     displayHangupFunction(false);
     const options = {
         roomName: roomNameFromProps,
@@ -37,15 +37,7 @@ const instantiateJitsi = async (
             filmStripOnly: false,
             SHOW_CHROME_EXTENSION_BANNER: false,
             DISPLAY_WELCOME_PAGE_CONTENT: false,
-            TOOLBAR_BUTTONS: [
-                'microphone',
-                'camera',
-                'recording',
-                'videoquality',
-                'fodeviceselection',
-                'raisehand',
-                'tileview',
-            ],
+            TOOLBAR_BUTTONS: ['microphone', 'camera', 'videoquality', 'fodeviceselection', 'raisehand', 'tileview'],
             TOOLBAR_ALWAYS_VISIBLE: true,
             DISABLE_JOIN_LEAVE_NOTIFICATIONS: true,
             SHOW_DEEP_LINKING_IMAGE: false,
@@ -81,25 +73,23 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
             { pathname: '/' },
             {
                 replace: true,
-                state: { count: 10, roomName: props.information.roomName, domain: props.information.domain },
+                state: { count: 120, roomName: props.information.roomName, domain: props.information.domain },
             },
         );
     };
     useEffect(() => {
         // verify the JitsiMeetExternalAPI constructor is added to the global..
-        try {
-            const cleanupPromise = instantiateJitsi(
-                props.information.roomName,
-                props.information.domain,
-                setDisplayHangup,
-            );
-            return () => {
-                cleanupPromise.then((cleanup) => cleanup && cleanup());
-            };
-        } catch (error) {
+        const cleanupPromise = instantiateJitsi(
+            props.information.roomName,
+            props.information.domain,
+            setDisplayHangup,
+        ).catch(() => {
             alert('Error loading Jitsi Meet API');
             navigate({ pathname: '/' });
-        }
+        });
+        return () => {
+            cleanupPromise.then((cleanup) => cleanup && cleanup());
+        };
     }, [props.information, setDisplayHangup]);
 
     return (

@@ -10,18 +10,18 @@ import '../css/FormJoinMeeting.css';
 import { Information, InformationProps } from '../../utils/Props';
 import { useTranslation } from 'react-i18next';
 
-const REGEX = new RegExp(/^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$/);
+const REGEX = new RegExp(/(^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$)|(^$)/);
 const FormJoinMeeting: FunctionComponent<InformationProps> = (props: InformationProps) => {
     const { t } = useTranslation();
 
-    const [domain, setDomain] = useState<string>(props.information.domain);
+    const [domain, setDomain] = useState<string>('');
     const [roomName, setRoomName] = useState<string>('');
     const [layoutName, setLayoutName] = useState('default');
     const [inputName, setInputName] = useState('default');
 
     // Input tab
     const submitRoomChange = (): void => {
-        props.setInformation({ domain: domain, roomName: roomName });
+        props.setInformation({ domain: domain.length > 0 ? domain : props.information.domain, roomName: roomName });
         props.close();
     };
     const handleShift = () => {
@@ -50,6 +50,7 @@ const FormJoinMeeting: FunctionComponent<InformationProps> = (props: Information
                                         <TextField
                                             fullWidth
                                             id='outlined-adornment-amount'
+                                            placeholder='meeting.education'
                                             value={domain}
                                             helperText={t('enterValidDomain')}
                                             onFocus={() => setInputName('domain')}

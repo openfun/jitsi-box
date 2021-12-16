@@ -38,6 +38,8 @@ const HomeComponent: FunctionComponent = () => {
                         value={i18n.language}
                         defaultValue={i18n.language}
                         onChange={(e) => {
+                            const boxStorage = window.localStorage;
+                            boxStorage.setItem('language', e.target.value as string);
                             i18n.changeLanguage(e.target.value as string);
                         }}
                         style={{ color: 'white' }}

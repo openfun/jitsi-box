@@ -21,18 +21,12 @@
 }
 
 .FirstLineButton {
-    height: 40%;
+    height: 50%;
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     gap: 10px;
-}
-.SecondLineButton {
-    display: flex;
-    justify-content: center;
-    height: 60%;
-    width: 100%;
 }
 .MediumButton {
     height: 100%;
