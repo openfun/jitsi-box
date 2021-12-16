@@ -22,7 +22,7 @@ In order to do that, the `Jitsi-Box` device can be placed in a classroom (on a w
 
 All of these outputs can be chosen by he/she who setups the jitsi-box in a room.
 
-A version of the application is available on https://jitsi-box-ui.cs-campus.fr/
+A version of the application is available on https://jitsi-box.com
 
 The application has been configured as a `Progressive Web App` and can therefore be installed on the desktop of any device.
 
