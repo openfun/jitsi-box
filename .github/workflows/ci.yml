@@ -32,7 +32,7 @@ jobs:
         cache-dependency-path: ./box-ui/package.json
 
     - run: npm install --legacy-peer-deps # Allow QR code scanner to be installed
-    
+
     - run: npm run lint
       env:
         REACT_APP_MARSHA_URL: https://marsha.education/api/video/pairing-challenge

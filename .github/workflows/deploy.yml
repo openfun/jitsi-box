@@ -51,7 +51,7 @@ jobs:
         rm -rf ~/deployment/*
         cp -R build/* ~/deployment
         echo jitsi-box-ui.cs-campus.fr > ~/deployment/CNAME
-    
+
     - name: Deploy the build artifact to Github Pages by pushing on the deployment branch
       run: |
         cd ~/deployment
