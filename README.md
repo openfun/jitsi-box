@@ -13,6 +13,10 @@ The `Jitsi-Box` is a case with an interface which allows teachers to connect the
 
 Ultimately, the idea is to ensure that online students feel as if they were actually in the classroom with easy interactions with their peers in the class and vice-versa.
 
+<p align="center">
+  <img src="./docs/images/jitsi-box-in-hybrid-classroom.jpg" width="500" alt="Jitsi Box in hybrid classroom"/>
+</p>
+
 In order to do that, the `Jitsi-Box` device can be placed in a classroom (on a wall or desk) and then connected to:
 
 - a sound system to render the sound of the people online
@@ -86,7 +90,7 @@ All we aim to do in this section is to present the hardware that we have selecte
 - **Camera & Microphone**: Webcam USB Chat Webcam 1080p Full HD (SANDBERG 134-15) (for now the microphone of the webcam doesn’t work) ~35€
 - **Speakers**: LOGITECH S120 Speaker (PC, stereo, S120)  ~15€
 
-Feel free to add your tested hardware **[here](./Hardware_tested.md)**
+Feel free to add your tested hardware **[here](./docs/hardware_tested.md)**
 
 
 ## Deployment
