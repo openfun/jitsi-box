@@ -64,7 +64,7 @@ A simplified tree of the app:
 
 For the setup, please see the following **[SETUP](./SETUP.md)**
 
-The `Raspberry pie` runs the latest Raspbian OS, based on Debian 11 Bullseye.
+The `Raspberry Pi` runs the latest Raspbian OS, based on Debian 11 Bullseye.
 
 Because Raspbian switched recently from Buster to Bullseye, there are still many bugs, especially regarding KMS drivers.
 
