@@ -1,17 +1,17 @@
 
-# Jitsi-Box, the all-in-one device designed to automate holding hybrid conferences with Jitsi 🎥 
+# Jitsi Box, an opensource device for hybrid classrooms and conferences
 
-****
-
-## Overview
-
-A **hybrid class** is a course that combines traditional, face-to-face teaching with online teaching. 
+A **hybrid classroom** combines traditional face-to-face teaching with online teaching.
 
 **Our ambition is to blend the virtual classroom with the real classroom through the use of a simple device called the `Jitsi-Box`**.
 
 The `Jitsi-Box` is a case with an interface which allows teachers to connect their physical classroom to their online teaching meeting. 
 
 Ultimately, the idea is to ensure that online students feel as if they were actually in the classroom with easy interactions with their peers in the class and vice-versa.
+
+<p align="center">
+  <img src="./docs/images/jitsi-box-in-hybrid-classroom.jpg" width="500" alt="Jitsi Box in hybrid classroom"/>
+</p>
 
 In order to do that, the `Jitsi-Box` device can be placed in a classroom (on a wall or desk) and then connected to:
 
@@ -64,7 +64,7 @@ A simplified tree of the app:
 
 For the setup, please see the following **[SETUP](./SETUP.md)**
 
-The `Raspberry` runs the latest Raspbian OS, based on Debian 11 Bullseye. 
+The `Raspberry Pi` runs the latest Raspbian OS, based on Debian 11 Bullseye.
 
 Because Raspbian switched recently from Buster to Bullseye, there are still many bugs, especially regarding KMS drivers.
 
@@ -76,7 +76,7 @@ The sound also seems to be a problem: when using a microphone attached to a webc
 
 ## Hardware
 
-Almost all of the hardware used in this project is exchangeable with any other that the users considers fit or easier to acquire.
+Almost all of the hardware used in this project is exchangeable with any other that the users consider fit or easier to acquire.
 
 All we aim to do in this section is to present the hardware that we have selected and tested in our prototype.
 
@@ -86,7 +86,7 @@ All we aim to do in this section is to present the hardware that we have selecte
 - **Camera & Microphone**: Webcam USB Chat Webcam 1080p Full HD (SANDBERG 134-15) (for now the microphone of the webcam doesn’t work) ~35€
 - **Speakers**: LOGITECH S120 Speaker (PC, stereo, S120)  ~15€
 
-Feel free to add your tested hardware **[here](./Hardware_tested.md)**
+Feel free to add your tested hardware **[here](./docs/hardware_tested.md)**
 
 
 ## Deployment
