@@ -91,7 +91,7 @@ Feel free to add your tested hardware **[here](./docs/hardware_tested.md)**
 
 ## Deployment
 
-For the deployment setup and launch, please see the following **[ReadMe](./staging/ReadMe.md)**
+For the deployment setup and launch, please see the following **[ReadMe](./staging/README.md)**
 
 ## Contributors
 
