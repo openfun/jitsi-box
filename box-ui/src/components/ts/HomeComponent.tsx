@@ -9,15 +9,16 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useTranslation } from 'react-i18next';
+import { LocationState } from '../../utils/State';
 
 const HomeComponent: FunctionComponent = () => {
     const { t, i18n } = useTranslation();
 
-    const data = useLocation();
-    const [counter, setCounter] = useState(data.state && data.state.count ? data.state.count : 0);
+    const state = useLocation().state as LocationState;
+    const [counter, setCounter] = useState(state && state.count ? state.count : 0);
     const [information] = useState({
-        roomName: data.state && data.state.roomName ? data.state.roomName : '',
-        domain: data.state && data.state.domain ? data.state.domain : '',
+        roomName: state && state.roomName ? state.roomName : '',
+        domain: state && state.domain ? state.domain : '',
     });
 
     useEffect(() => {
