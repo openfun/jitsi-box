@@ -8,6 +8,9 @@ test('renders learn react link', () => {
             close={() => {
                 return;
             }}
+            setInformation={() => {
+                return;
+            }}
         />,
     );
     const linkElement = screen.getByText(/learn react/i);
