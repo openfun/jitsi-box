@@ -3,12 +3,13 @@ import { useLocation } from 'react-router-dom';
 import '../css/CreateMeetingComponent.css';
 import JitsiComponent from './JitsiComponent';
 import PopupComponent from './PopupComponent';
+import { LocationState } from '../../utils/State';
 
 const CreateMeetingComponent: FunctionComponent = () => {
-    const data = useLocation();
+    const state = useLocation().state as LocationState;
     const [information, setInformation] = useState({
-        roomName: data.state && data.state.roomName ? data.state.roomName : 'dty',
-        domain: data.state && data.state.domain ? data.state.domain : 'meeting.education',
+        roomName: state && state.roomName ? state.roomName : 'dty',
+        domain: state && state.domain ? state.domain : 'meeting.education',
     });
 
     return (
