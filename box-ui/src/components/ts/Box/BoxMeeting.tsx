@@ -41,7 +41,12 @@ const BoxMeeting: FunctionComponent = () => {
     return (
         <div className='BoxMeeting'>
             <PopupComponent information={information} setInformation={setInformation} />
-            <div className='CreateMeetingContainer'>
+            <div
+                className='CreateMeetingContainer'
+                style={{
+                    backgroundColor: 'yellow',
+                }}
+            >
                 <div className='JitsiComponent'>
                     <JitsiFrame
                         information={information}
