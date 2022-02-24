@@ -28,4 +28,5 @@
 }
 .JitsiComponent {
     flex-grow: 3;
+    background-color: chartreuse;
 }
