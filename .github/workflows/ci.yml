@@ -25,9 +25,9 @@ jobs:
         with:
           node-version: 16
           cache: npm
-          cache-dependency-path: ./box-ui/package.json
+          cache-dependency-path: ./box-ui/package-lock.json
 
-      - run: npm install --legacy-peer-deps # Allow QR code scanner to be installed
+      - run: npm ci
 
       - run: npm run lint
         env:
