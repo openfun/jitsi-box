@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ImageCapture } from 'image-capture';
+import axios from 'axios';
+import { url } from 'inspector';
 
 const CaptureImage = (props: any) => {
     let imageCapturer = null;
@@ -7,18 +9,18 @@ const CaptureImage = (props: any) => {
     const intervalPhoto = () => {
         setInterval(start, 10 * 1000);
     };
-    const start = (camera: string) => {
-        console.log(camera);
+    const start = (props: any) => {
+        console.log(props.camera['deviceId']);
         navigator.mediaDevices
             .getUserMedia({
                 video: {
-                    deviceId: { exact: camera },
+                    deviceId: { exact: props.camera['deviceId'] },
                 },
             })
-            .then(takePhoto)
+            .then((mediastream: MediaStream) => takePhoto(mediastream, props.roomName))
             .catch((error: any) => console.log(error));
     };
-    const takePhoto = (mediastream: MediaStream) => {
+    const takePhoto = (mediastream: MediaStream, roomName: string) => {
         const videoTrack = mediastream.getVideoTracks()[0];
         imageCapturer = new ImageCapture(videoTrack);
         imageCapturer
@@ -30,7 +32,17 @@ const CaptureImage = (props: any) => {
                 link.download = 'Photo.png';
                 link.innerHTML = 'Click here to download the file';
                 document.body.appendChild(link);
-                console.log('Photo sent');
+                const address = `http://localhost:8070/getPolicy?customAddress=${roomName}`;
+                console.log(address);
+                axios.get(address).then((response: any) =>
+                    axios
+                        .post(response.data['url'], link)
+                        .then((response) => console.log('photo posted to: ', response.data['url']))
+                        .catch((error) => {
+                            console.log(response);
+                            console.error(error);
+                        }),
+                );
             })
             .catch((err: any) => {
                 console.error('takePhoto() failed: ', err);
@@ -38,7 +50,7 @@ const CaptureImage = (props: any) => {
     };
     return (
         <div className={props.camera['label']}>
-            <button onClick={() => start(props.camera['deviceId'])}>Take a photo with {props.camera['label']} </button>
+            <button onClick={() => start(props)}>Take a photo with {props.camera['label']} </button>
         </div>
     );
 };
