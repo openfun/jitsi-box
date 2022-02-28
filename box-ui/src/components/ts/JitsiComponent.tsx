@@ -104,7 +104,7 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
                 </div>
             ) : null}
             <div className='test'>
-                <CameraDetector />
+                <CameraDetector roomName={props.information.roomName} />
             </div>
         </div>
     );
