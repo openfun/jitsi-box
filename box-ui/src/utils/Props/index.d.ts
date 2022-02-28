@@ -9,7 +9,7 @@ export type Information = {
     roomName: string;
 };
 
-export type InformationOptionnal = {
+export type InformationOptional = {
     [Property in keyof Information]?: Type[Property];
 };
 
