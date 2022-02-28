@@ -32,7 +32,6 @@ const FormJoinMeeting: FunctionComponent<InformationProps> = (props: Information
         if (button === '{shift}' || button === '{lock}') handleShift();
     };
     const onChangeAll = (inputRoom: InformationOptionnal) => {
-        console.log(inputRoom);
         if (inputName === 'domain') {
             setDomain(inputRoom.domain || '');
         } else {
