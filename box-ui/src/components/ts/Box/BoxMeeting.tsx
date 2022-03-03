@@ -1,11 +1,11 @@
 import React, { useState, FunctionComponent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import '../css/CreateMeetingComponent.css';
-import PopupComponent from './PopupComponent';
-import { LocationState } from '../../utils/State';
-import JitsiFrame from './JitsiFrame';
+import '../../css/BoxMeeting.css';
+import PopupComponent from '../PopupComponent';
+import { LocationState } from '../../../utils/State';
+import JitsiFrame from '../JitsiFrame';
 
-const CreateMeetingComponent: FunctionComponent = () => {
+const BoxMeeting: FunctionComponent = () => {
     const navigate = useNavigate();
     const state = useLocation().state as LocationState;
     const [information, setInformation] = useState({
@@ -39,7 +39,7 @@ const CreateMeetingComponent: FunctionComponent = () => {
     };
 
     return (
-        <div className='CreateMeetingComponent'>
+        <div className='BoxMeeting'>
             <PopupComponent information={information} setInformation={setInformation} />
             <div className='CreateMeetingContainer'>
                 <div className='JitsiComponent'>
@@ -68,4 +68,4 @@ const CreateMeetingComponent: FunctionComponent = () => {
     );
 };
 
-export default CreateMeetingComponent;
+export default BoxMeeting;

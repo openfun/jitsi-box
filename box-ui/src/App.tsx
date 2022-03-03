@@ -1,16 +1,19 @@
 import React, { FunctionComponent } from 'react';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
-import CreateMeetingComponent from './components/ts/CreateMeetingComponent';
-import HomeComponent from './components/ts/HomeComponent';
+import BoxHome from './components/ts/Box/BoxHome';
+import BoxMeeting from './components/ts/Box/BoxMeeting';
 
 const App: FunctionComponent = () => {
     return (
         <Router>
             <div className='App'>
                 <Routes>
-                    <Route path='/' element={<HomeComponent />} />
-                    <Route path='/launch' element={<CreateMeetingComponent />} />
-                    <Route path='*' element={<Navigate to='/' />} />
+                    <Route path='/' element={<Navigate to='/box' />} />
+                    <Route path='box'>
+                        <Route index element={<BoxHome />} />
+                        <Route path='meeting' element={<BoxMeeting />} />
+                    </Route>
+                    <Route path='*' element={<Navigate to='box' />} />
                 </Routes>
             </div>
         </Router>
