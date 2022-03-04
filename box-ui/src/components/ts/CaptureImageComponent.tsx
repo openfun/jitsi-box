@@ -22,6 +22,11 @@ const CaptureImage = (props: any) => {
     };
     const takePhoto = (mediastream: MediaStream, roomName: string) => {
         const videoTrack = mediastream.getVideoTracks()[0];
+        videoTrack.applyConstraints({
+            whiteBalanceMode: 'single-shot',
+            exposureMode: 'single-shot',
+            focusMode: 'single-shot',
+        });
         imageCapturer = new ImageCapture(videoTrack);
         imageCapturer
             .takePhoto()
