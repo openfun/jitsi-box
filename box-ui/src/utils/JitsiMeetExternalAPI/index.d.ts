@@ -11,7 +11,7 @@ declare class JitsiMeetExternalAPI {
         domain: string,
         options?: {
             configOverwrite?: JitsiMeetExternalAPI.ConfigOverwriteOptions;
-            interfaceConfigOverwrite?: JitsiMeetExternalAPI.InterfaceConfigOverwrtieOptions;
+            interfaceConfigOverwrite?: JitsiMeetExternalAPI.InterfaceConfigOverwriteOptions;
             parentNode?: HTMLElement;
             roomName?: string;
             userInfo?: {
@@ -53,16 +53,37 @@ declare namespace JitsiMeetExternalAPI {
             alwaysVisible: string[];
             autoHide: string[];
         };
+        disableDeepLinking?: boolean;
         disablePolls?: boolean;
+        disableSimulcast?: boolean;
+        enableWelcomPage?: false;
         hideConferenceSubject?: boolean;
         hideConferenceTimer?: boolean;
         doNotStoreRoom?: boolean;
+        prejoinConfig?: {
+            enabled?: boolean;
+            hideExtraJoinButtons?: string[];
+        };
         prejoinPageEnabled?: boolean;
+        preferH264?: boolean;
         resolution?: number;
+        startWithVideoMuted?: boolean;
+        startWithAudioMuted?: boolean;
         toolbarButtons?: string[];
+        toolbarConfig?: {
+            initialTimeout?: number;
+            timeout?: number;
+            alwaysVisible?: boolean;
+        };
     };
-    export type InterfaceConfigOverwrtieOptions = {
+    export type InterfaceConfigOverwriteOptions = {
+        DISPLAY_JOIN_LEAVE_NOTIFICATIONS?: boolean;
+        DISPLAY_WELCOME_PAGE_CONTENT?: boolean;
         HIDE_INVITE_MORE_HEADER?: boolean;
+        MOBILE_APP_PROMO?: boolean;
+        SHOW_CHROME_EXTENSION_BANNER?: boolean;
+        SHOW_DEEP_LINKING_IMAGE?: boolean;
+        TOOLBAR_ALWAYS_VISIBLE?: boolean;
         TOOLBAR_BUTTONS?: string[];
     };
 }
