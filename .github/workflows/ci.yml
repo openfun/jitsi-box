@@ -1,0 +1,34 @@
+name: Check Jitsi-Box UI
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+    paths:
+      - "box-ui/**"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./box-ui
+
+    steps:
+      - name: Checkout repositories
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js 16
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+          cache: npm
+          cache-dependency-path: ./box-ui/package-lock.json
+
+      - run: npm ci
+
+      - run: npm run lint
+        env:
+          REACT_APP_MARSHA_URL: https://marsha.education/api/video/pairing-challenge
