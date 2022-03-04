@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ImageCapture } from 'image-capture';
 import axios from 'axios';
-import { url } from 'inspector';
+import FormData from 'form-data';
 
 const CaptureImage = (props: any) => {
     let imageCapturer = null;
@@ -26,22 +26,20 @@ const CaptureImage = (props: any) => {
         imageCapturer
             .takePhoto()
             .then((blob: Blob) => {
-                const blobURL = URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = blobURL;
-                link.download = 'Photo.png';
-                link.innerHTML = 'Click here to download the file';
-                document.body.appendChild(link);
-                const address = `http://localhost:8070/getPolicy?customAddress=${roomName}`;
-                console.log(address);
+                const data = new FormData();
+                data.append('name', 'image');
+                data.append('file', blob, `${roomName}.png`);
+                // const address = `http://localhost:8070/policy?custom_address=${roomName}`; use this if you need to upload pictures on different servers (depending on the meeting for instance)
+                const address = 'http://localhost:8070/policy';
                 axios.get(address).then((response: any) =>
                     axios
-                        .post(response.data['url'], link)
-                        .then((response) => console.log('photo posted to: ', response.data['url']))
-                        .catch((error) => {
-                            console.log(response);
-                            console.error(error);
-                        }),
+                        .post(response.data['url'], data, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                            },
+                        })
+                        .then((response) => console.log(response))
+                        .catch((error) => console.log(error)),
                 );
             })
             .catch((err: any) => {
