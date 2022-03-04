@@ -56,7 +56,7 @@ declare namespace JitsiMeetExternalAPI {
         disableDeepLinking?: boolean;
         disablePolls?: boolean;
         disableSimulcast?: boolean;
-        enableWelcomPage?: false;
+        enableWelcomePage?: false;
         hideConferenceSubject?: boolean;
         hideConferenceTimer?: boolean;
         doNotStoreRoom?: boolean;
@@ -77,7 +77,7 @@ declare namespace JitsiMeetExternalAPI {
         };
     };
     export type InterfaceConfigOverwriteOptions = {
-        DISPLAY_JOIN_LEAVE_NOTIFICATIONS?: boolean;
+        DISABLE_JOIN_LEAVE_NOTIFICATIONS?: boolean;
         DISPLAY_WELCOME_PAGE_CONTENT?: boolean;
         HIDE_INVITE_MORE_HEADER?: boolean;
         MOBILE_APP_PROMO?: boolean;
