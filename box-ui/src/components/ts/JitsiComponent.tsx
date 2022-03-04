@@ -22,7 +22,7 @@ const instantiateJitsi = async (
     overwriteOptions: ConstructorParameters<typeof JitsiMeetExternalAPI>[1] = {},
 ): Promise<JitsiMeetExternalAPI> => {
     await loadJitsiScript(`https://${domainFromProps}/external_api.js`);
-    const defaultOptions = {
+    const defaultOptions: ConstructorParameters<typeof JitsiMeetExternalAPI>[1] = {
         roomName: roomNameFromProps,
         parentNode: document.getElementById('jitsi-container') || undefined,
         userInfo: {
@@ -32,17 +32,11 @@ const instantiateJitsi = async (
         interfaceConfigOverwrite: {
             MOBILE_APP_PROMO: false,
             SHOW_CHROME_EXTENSION_BANNER: false,
-            DISPLAY_WELCOME_PAGE_CONTENT: false,
             DISABLE_JOIN_LEAVE_NOTIFICATIONS: true,
             SHOW_DEEP_LINKING_IMAGE: false,
         },
         configOverwrite: {
-            disableSimulcast: false,
             disableDeepLinking: true,
-            prejoinPageEnabled: false,
-            preferH264: true,
-            startWithVideoMuted: false,
-            startWithAudioMuted: true,
             enableWelcomePage: false,
         },
     };
@@ -66,13 +60,13 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
         );
     };
     useEffect(() => {
-        let apiPromise = instantiateJitsi(props.information.roomName, props.information.domain, {
+        const apiPromise = instantiateJitsi(props.information.roomName, props.information.domain, {
             userInfo: {
                 email: '',
                 displayName: 'Jitsi-Box',
             },
-            interfaceConfigOverwrite: {
-                TOOLBAR_BUTTONS: [
+            configOverwrite: {
+                toolbarButtons: [
                     'microphone',
                     'camera',
                     'videoquality',
@@ -81,7 +75,14 @@ const JitsiMeetComponent: FunctionComponent<InputRoomProps> = (props: InputRoomP
                     'tileview',
                     'hangup',
                 ],
-                TOOLBAR_ALWAYS_VISIBLE: true,
+                toolbarConfig: {
+                    alwaysVisible: true,
+                },
+                prejoinConfig: {
+                    enabled: false,
+                },
+                startWithVideoMuted: false,
+                startWithAudioMuted: true,
             },
         });
         apiPromise
