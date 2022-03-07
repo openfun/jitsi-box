@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ImageCapture } from 'image-capture';
 import { CaptureImageProps } from '../../utils/Props';
 import axios, { Axios, AxiosResponse } from 'axios';
-import FormData from 'form-data';
 
 const CaptureImage = (props: CaptureImageProps) => {
     let imageCapturer = null;
