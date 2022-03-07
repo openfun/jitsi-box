@@ -6,7 +6,7 @@ object-assign
 
 /*!
          * 
-         *   simple-keyboard v3.4.3
+         *   simple-keyboard v3.4.55
          *   https://github.com/hodgef/simple-keyboard
          *
          *   Copyright (c) Francisco Hodge (https://github.com/hodgef) and project contributors.
@@ -27,7 +27,7 @@ object-assign
  * @license MIT
  */
 
-/** @license MUI v5.4.1
+/** @license MUI v5.4.2
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
