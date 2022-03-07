@@ -66,7 +66,7 @@ const CreateMeetingComponent: FunctionComponent = () => {
                 </div>
             </div>
             <div className='CameraManagement'>
-                <CameraDetector />
+                <CameraDetector roomName={information.roomName} />
             </div>
         </div>
     );
