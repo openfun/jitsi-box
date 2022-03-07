@@ -1,8 +1,9 @@
 import { cardMediaClasses } from '@mui/material';
 import React, { useState, useEffect, useRef } from 'react';
+import { CameraDetectorProps } from '../../utils/Props';
 import CaptureImage from './CaptureImageComponent';
 
-const CameraDetector = () => {
+const CameraDetector = (props: CameraDetectorProps) => {
     const [cameraList, setCameraList] = useState([] as MediaDeviceInfo[]);
     const selectCamera = () => {
         navigator.mediaDevices.enumerateDevices().then((devices: Array<MediaDeviceInfo>) => {

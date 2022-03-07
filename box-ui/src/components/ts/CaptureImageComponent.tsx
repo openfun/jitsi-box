@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ImageCapture } from 'image-capture';
 import { CaptureImageProps } from '../../utils/Props';
-import axios from 'axios';
+import axios, { Axios, AxiosResponse } from 'axios';
 import FormData from 'form-data';
 
 const CaptureImage = (props: CaptureImageProps) => {
@@ -10,7 +10,7 @@ const CaptureImage = (props: CaptureImageProps) => {
     const intervalPhoto = () => {
         setInterval(start, 10 * 1000);
     };
-    const start = (camera: string) => {
+    const start = () => {
         navigator.mediaDevices
             .getUserMedia({
                 video: {
@@ -34,18 +34,20 @@ const CaptureImage = (props: CaptureImageProps) => {
                 const data = new FormData();
                 data.append('name', 'image');
                 data.append('file', blob, `${roomName}.png`);
-                // const address = `http://localhost:8070/policy?custom_address=${roomName}`; use this if you need to upload pictures on different servers (depending on the meeting for instance)
-                const address = 'http://localhost:8070/policy';
-                axios.get(address).then((response: any) =>
-                    axios
-                        .post(response.data['url'], data, {
-                            headers: {
-                                'Content-Type': 'multipart/form-data',
-                            },
-                        })
-                        .then((response) => console.log(response))
-                        .catch((error) => console.log(error)),
-                );
+                const address = process.env.REACT_APP_POLICY_ADDRESS;
+                if (address == undefined) {
+                    console.log('No policy server defined');
+                } else {
+                    axios.get(address).then((response: AxiosResponse) =>
+                        axios
+                            .post(response.data['url'], data, {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data',
+                                },
+                            })
+                            .catch((error) => console.log(error)),
+                    );
+                }
             })
             .catch((err: DOMException) => {
                 console.error('takePhoto() failed: ', err);
@@ -53,7 +55,7 @@ const CaptureImage = (props: CaptureImageProps) => {
     };
     return (
         <div className={props.camera['label']}>
-            <button onClick={() => start(props)}>Take a photo with {props.camera['label']} </button>
+            <button onClick={() => start()}>Take a photo with {props.camera['label']} </button>
         </div>
     );
 };
