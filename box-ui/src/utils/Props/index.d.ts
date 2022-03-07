@@ -31,8 +31,11 @@ interface InformationProps {
     close: () => void;
 }
 
-export type InputRoomProps = {
+export type JitsiFrameProps = {
     information: Information;
+    options: ConstructorParameters<typeof JitsiMeetExternalAPI>[1];
+    configure?: (api: JitsiMeetExternalAPI) => void;
+    onError?: () => void;
 };
 
 export type CounterProps = {
