@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ImageCapture } from 'image-capture';
+import { CaptureImageProps } from '../../utils/Props';
 
-const CaptureImage = (props: any) => {
+const CaptureImage = (props: CaptureImageProps) => {
     let imageCapturer = null;
 
     const intervalPhoto = () => {
         setInterval(start, 10 * 1000);
     };
     const start = (camera: string) => {
-        console.log(camera);
         navigator.mediaDevices
             .getUserMedia({
                 video: {
@@ -16,7 +16,7 @@ const CaptureImage = (props: any) => {
                 },
             })
             .then(takePhoto)
-            .catch((error: any) => console.log(error));
+            .catch((error: DOMException) => console.log(error));
     };
     const takePhoto = (mediastream: MediaStream) => {
         const videoTrack = mediastream.getVideoTracks()[0];
@@ -30,9 +30,8 @@ const CaptureImage = (props: any) => {
                 link.download = 'Photo.png';
                 link.innerHTML = 'Click here to download the file';
                 document.body.appendChild(link);
-                console.log('Photo sent');
             })
-            .catch((err: any) => {
+            .catch((err: DOMException) => {
                 console.error('takePhoto() failed: ', err);
             });
     };
