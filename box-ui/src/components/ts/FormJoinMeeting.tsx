@@ -7,7 +7,7 @@ import { Box, Button } from '@mui/material';
 import Keyboard from 'react-simple-keyboard';
 import 'react-simple-keyboard/build/css/index.css';
 import '../css/FormJoinMeeting.css';
-import { Information, InformationProps } from '../../utils/Props';
+import { InformationOptional, InformationProps } from '../../utils/Props';
 import { useTranslation } from 'react-i18next';
 
 const REGEX = new RegExp(/(^([a-z0-9]+(-[a-z0-9]+)*\.)+[a-z]{2,}$)|(^$)/);
@@ -31,11 +31,11 @@ const FormJoinMeeting: FunctionComponent<InformationProps> = (props: Information
     const onKeyPress = (button: string): void => {
         if (button === '{shift}' || button === '{lock}') handleShift();
     };
-    const onChangeAll = (inputRoom: Information) => {
+    const onChangeAll = (inputRoom: InformationOptional) => {
         if (inputName === 'domain') {
-            setDomain(inputRoom.domain);
+            setDomain(inputRoom.domain || '');
         } else {
-            setRoomName(inputRoom.roomName);
+            setRoomName(inputRoom.roomName || '');
         }
     };
     return (
