@@ -23,7 +23,7 @@ const CameraDetector = () => {
             {cameraList.map((element) => {
                 return (
                     <div className={element['label']} key={element['deviceId']}>
-                        <CaptureImage camera={element} />
+                        <CaptureImage camera={element} roomName={props.roomName} />
                     </div>
                 );
             })}
