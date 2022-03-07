@@ -42,6 +42,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ### `npm run lint`
 
 Launch the `eslint` linter with the `-fix` option: it will correct as much linter errors as it can, and the remaining ones must be fixed by yourself.
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
@@ -51,12 +52,18 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 # Deployment
 
 This web app is intendend to be deployed on a server to be served by a web server.\
-Since there is no backend, the static files can also be put on a CDN, or hosted on any Cloud Provider for fewer costs (deploying a new bare machine just for one webiste is completely overkilled). 
+Since there is no backend, the static files can also be put on a CDN, or hosted on any Cloud Provider for fewer costs (deploying a new bare machine just for one webiste is completely overkilled).
 
 ## `.env` file
+
 You must create a `.env` file (copy the `.env.template`), and fill it with the correct values.
 
 Env variables starting with `REACT_APP_` are automatically catched by react, so we do not need the `dotenv` package.
+
+At the moment 2 variables are used :
+
+-   `REACT_APP_MARSHA_URL` that set marsha's address
+-   `REACT_APP_POLICY_ADDRESS` that should be set to `[policy server | http://localhost:8070]/policy?custom_address=${roomName}` if you need to upload pictures on different servers (depending on the meeting for instance) otherwise you just need to go on /policy
 
 ## Dockerfile
 
@@ -74,6 +81,7 @@ COPY . /app/
 RUN cp src/config.js.template src/config.js && \
     npm run build
 ```
+
 The first part of the Dockerfile builds the frontend static files, from a node alpine image.
 
 ```Dockerfile
@@ -86,7 +94,9 @@ ARG front_files
 # Copy front files
 COPY --from=build /app/build ${front_files}
 ```
+
 The second part of the Dockerfile copy the builded files inside the official Nginx docker image. The Nginx configuration file is managed by the [docker-compose](../staging/docker-compose.yml).
 
 ## Run the app
+
 `docker-compose up`

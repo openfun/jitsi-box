@@ -36,7 +36,7 @@ export type JitsiFrameProps = {
     options: ConstructorParameters<typeof JitsiMeetExternalAPI>[1];
     configure?: (api: JitsiMeetExternalAPI) => void;
     onError?: () => void;
-};
+}; 
 
 export type CounterProps = {
     counter: number;
@@ -46,4 +46,9 @@ export type CounterProps = {
 
 export type CaptureImageProps = {
     camera: MediaDeviceInfo;
+    roomName: string;
+}
+
+export type CameraDetectorProps = {
+    roomName: string;
 }
