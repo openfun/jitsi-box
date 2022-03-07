@@ -9,6 +9,10 @@ export type Information = {
     roomName: string;
 };
 
+export type InformationOptional = {
+    [Property in keyof Information]?: Type[Property];
+};
+
 export type RoomProps = {
     information: Information;
     setInformation: (value: Information) => void;
