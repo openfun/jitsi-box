@@ -29,3 +29,21 @@
 .JitsiComponent {
     flex-grow: 3;
 }
+
+.flux {
+    border: 1px blue solid;
+}
+
+.container {
+    display: flex;
+    flex-wrap: nowrap;
+    background-color: black;
+}
+
+.sectionButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: black;
+    align-items: center;
+}
