@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FunctionComponent } from 'react';
+import React, { useRef, useState, useEffect, FunctionComponent } from 'react';
 import '../css/JitsiComponent.css';
 import { JitsiFrameProps } from '../../utils/Props';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -69,7 +69,7 @@ const JitsiFrame: FunctionComponent<JitsiFrameProps> = (props: JitsiFrameProps) 
 
     const [raised, setRaised] = useState(false);
     const [counter, setCounter] = useState(0);
-    const [idTo, setidTo] = useState<any>();
+    const TimeOutRef = useRef<NodeJS.Timeout>();
 
     function lowerHand() {
         setRaised(false);
@@ -98,8 +98,10 @@ const JitsiFrame: FunctionComponent<JitsiFrameProps> = (props: JitsiFrameProps) 
     }
     useEffect(() => {
         const id = setTimeout(lowerHand, 10000);
-        clearTimeout(idTo);
-        setidTo(id);
+        if (TimeOutRef.current) {
+            clearTimeout(TimeOutRef.current);
+        }
+        TimeOutRef.current = id;
         switchHand();
     }, [counter]);
 
