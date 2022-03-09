@@ -27,7 +27,7 @@ const HomeButtonsComponent: FunctionComponent<CounterProps> = (props: CounterPro
     const navigate = useNavigate();
     const launchLastMeeting = () => {
         navigate(
-            { pathname: '/launch' },
+            { pathname: '/box/meeting' },
             {
                 replace: true,
                 state: { roomName: props.roomName, domain: props.domain },
@@ -36,7 +36,7 @@ const HomeButtonsComponent: FunctionComponent<CounterProps> = (props: CounterPro
     };
     const launchMeeting = () => {
         navigate(
-            { pathname: '/launch' },
+            { pathname: '/box/meeting' },
             {
                 replace: true,
                 state: { roomName: GenerateRandomFrenchRoomName(), domain: 'meeting.education' },
