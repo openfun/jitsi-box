@@ -46,13 +46,7 @@ const HomeButtonsComponent: FunctionComponent<CounterProps> = (props: CounterPro
     return (
         <>
             <div className='ButtonContainer'>
-                <Button
-                    id='StartMeetingButton'
-                    variant='contained'
-                    className='Button'
-                    onClick={launchMeeting}
-                    style={{ overflowWrap: 'break-word', overflowX: 'visible', overflowY: 'hidden' }}
-                >
+                <Button id='StartMeetingButton' variant='contained' className='HomeButton' onClick={launchMeeting}>
                     {t('launchMeeting')}
                 </Button>
             </div>
@@ -62,9 +56,8 @@ const HomeButtonsComponent: FunctionComponent<CounterProps> = (props: CounterPro
                         <Button
                             id='ReturnToMeetingButton'
                             variant='contained'
-                            className='Button'
+                            className='HomeButton'
                             onClick={launchLastMeeting}
-                            style={{ overflowWrap: 'break-word', overflowX: 'visible', overflowY: 'hidden' }}
                         >
                             {t('goBackToMeeting')}
                             <br />
