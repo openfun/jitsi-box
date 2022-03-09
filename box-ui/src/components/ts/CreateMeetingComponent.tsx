@@ -9,6 +9,7 @@ import axios from 'axios';
 
 import image from './15.png';
 import { url } from 'inspector';
+import { height, width } from '@mui/system';
 
 const CreateMeetingComponent: FunctionComponent = () => {
     const state = useLocation().state as LocationState;
@@ -28,6 +29,8 @@ const CreateMeetingComponent: FunctionComponent = () => {
     const [img_ws, setImg_ws] = useState<string>('./15.png');
     const [img_click, setImg_click] = useState<string>('./15.png');
     const [show, setshow] = useState(false);
+    const [widthAff, setWidthAff] = useState(0);
+    const [heightAff, setHeightAff] = useState(0);
 
     useEffect(() => {
         if (carre) {
@@ -52,13 +55,30 @@ const CreateMeetingComponent: FunctionComponent = () => {
     }
 
     function validerSaisie() {
-        alert(coord);
         setTextBtn('Améliorer vue');
         setshow(false);
         setEndCarre(false);
-        setCoord([]);
         setCarre((old_carre) => !old_carre);
-        const article = { coord: 'test' };
+        let c: any[] = [];
+        const rapportx = width_img / widthAff;
+        const rapporty = height_img / heightAff;
+        for (let i = 0; i < 4; i++) {
+            const x = coord[i][0] * rapportx;
+            const y = coord[i][1] * rapporty;
+            c = [...c, [x, y]];
+        }
+
+        const bodyFormData = new FormData();
+
+        c.forEach((item) => {
+            bodyFormData.append('coord', item);
+        });
+        const article = { name: 'TTTTTTEST' };
+        alert(bodyFormData.getAll('coord'));
+        axios.post('http://localhost:8070/coord', { coord: c }).then(function (response) {
+            alert(response);
+            setCoord([]);
+        });
     }
 
     const getClickCoords = (event: { target: any; clientX: any; clientY: any }) => {
@@ -88,6 +108,10 @@ const CreateMeetingComponent: FunctionComponent = () => {
             const cnt = allCircles.length;
             if (cnt == 4) {
                 setEndCarre(true);
+                const e = event.target;
+                const dim = e.getBoundingClientRect();
+                setHeightAff(dim.bottom - dim.top);
+                setWidthAff(dim.right - dim.left);
             }
             // update 'circles'
             setCircles(allCircles);
@@ -96,10 +120,10 @@ const CreateMeetingComponent: FunctionComponent = () => {
 
     function cliqueMoi() {
         if (show) {
-            setImg_click(img_ws);
             setshow(false);
         } else {
             setshow(true);
+            setImg_click(img_ws);
         }
         setCarre((old_carre) => !old_carre);
     }
