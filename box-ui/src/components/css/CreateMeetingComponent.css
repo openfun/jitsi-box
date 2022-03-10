@@ -70,3 +70,17 @@
     justify-content: center;
     align-items: center;
 }
+
+.sectionClickSolo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.circularProgress {
+    position: absolute;
+    left: center;
+    top: center;
+    color: blue;
+}

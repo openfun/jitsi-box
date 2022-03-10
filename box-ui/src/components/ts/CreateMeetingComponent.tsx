@@ -3,9 +3,11 @@ import { useLocation } from 'react-router-dom';
 import '../css/CreateMeetingComponent.css';
 import JitsiComponent from './JitsiComponent';
 import PopupComponent from './PopupComponent';
+import CircularProgress from '@mui/material/CircularProgress';
 import { LocationState } from '../../utils/State';
 import styled from '@emotion/styled';
 import axios from 'axios';
+import DepWindow from './dep-window';
 
 const CreateMeetingComponent: FunctionComponent = () => {
     const state = useLocation().state as LocationState;
@@ -30,6 +32,9 @@ const CreateMeetingComponent: FunctionComponent = () => {
     const [show, setshow] = useState(false);
     const [widthAff, setWidthAff] = useState(0);
     const [heightAff, setHeightAff] = useState(0);
+    const [loading, setLoading] = useState(false);
+    const [textCircle, setTextCircle] = useState<string>('hide');
+    const [showWindowPortal, setShowWindowPortal] = useState(false);
 
     useEffect(() => {
         if (carre) {
@@ -44,6 +49,10 @@ const CreateMeetingComponent: FunctionComponent = () => {
             setCircles([]);
         }
     }, [carre]);
+
+    useEffect(() => {
+        setTextCircle('flex');
+    }, [loading]);
 
     useEffect(() => {
         getImgSize(img_ws, false);
@@ -72,9 +81,13 @@ const CreateMeetingComponent: FunctionComponent = () => {
         };
     }, []);
 
+    const closeWindowPortal = () => {
+        setShowWindowPortal(false);
+    };
+
     // function called on click to validate the coordinates entry
     function validerSaisie() {
-        setTextBtn('Recadrer');
+        setTextBtn('Chargement');
         setshow(false);
         setEndCarre(false);
         setCarre((old_carre) => !old_carre);
@@ -111,6 +124,10 @@ const CreateMeetingComponent: FunctionComponent = () => {
         return [x, y];
     };
 
+    const newWindow = () => {
+        alert('new vindow');
+    };
+
     const addCircle = (event: { target: any; clientX: any; clientY: any }) => {
         if (carre && !endCarre) {
             // get click coordinates
@@ -145,6 +162,7 @@ const CreateMeetingComponent: FunctionComponent = () => {
     function AmeliorerVue() {
         if (show) {
             setshow(false);
+            setLoading(false);
         } else {
             requestOriginalImage();
             setshow(true);
@@ -192,17 +210,24 @@ const CreateMeetingComponent: FunctionComponent = () => {
             const image_Slice = new Image();
             image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
             setImg_ws(image_Slice.src);
+            setLoading(false);
+            setTextBtn('Recadrer');
         });
     }
 
     //download the original image from the back
     function requestOriginalImage() {
+        setLoading(true);
         axios.get('http://localhost:8070/original_photo').then((resp) => {
             const arrayBuffer = resp.data;
             const image_Slice = new Image();
             image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
             setImg_click(image_Slice.src);
         });
+    }
+
+    function toggleWindowPortal() {
+        setShowWindowPortal(!showWindowPortal);
     }
 
     return (
@@ -216,10 +241,10 @@ const CreateMeetingComponent: FunctionComponent = () => {
             <div className='container'>
                 {!show && (
                     <Container>
-                        <div className='sectionClick'>
+                        <div className='sectionClickSolo'>
                             <ClickableSVG
                                 height={height_img.toString() + 'px'}
-                                width={ratio_img}
+                                //width={ratio_img}
                                 style={{
                                     backgroundImage: "url('" + img_ws + "')",
                                     backgroundRepeat: 'no-repeat',
@@ -228,6 +253,9 @@ const CreateMeetingComponent: FunctionComponent = () => {
                                     maxWidth: '95vw',
                                 }}
                             ></ClickableSVG>
+                            {loading && (
+                                <CircularProgress style={{ display: textCircle }} className='circularProgress' />
+                            )}
                         </div>
                     </Container>
                 )}
@@ -252,12 +280,11 @@ const CreateMeetingComponent: FunctionComponent = () => {
                         <div className='sectionClick'>
                             <ClickableSVG
                                 height='50vh'
-                                width={ratio_img}
                                 style={{
                                     backgroundImage: "url('" + img_ws + "')",
                                     backgroundRepeat: 'no-repeat',
                                     backgroundSize: 'contain',
-                                    maxWidth: '45vw',
+                                    maxWidth: '40vw',
                                 }}
                             ></ClickableSVG>
                         </div>
@@ -269,7 +296,20 @@ const CreateMeetingComponent: FunctionComponent = () => {
                     <button className='button' onClick={() => AmeliorerVue()}>
                         {textBtn}
                     </button>
+                    <button className='button' onClick={() => toggleWindowPortal()}>
+                        Nouvelle fenêtre
+                    </button>
                 </div>
+
+                {showWindowPortal && (
+                    <DepWindow closeWindowPortal={closeWindowPortal}>
+                        <h1> new window</h1>
+                        <p>Even though I render in a different window, I share state!</p>
+
+                        <button onClick={closeWindowPortal}>Close me!</button>
+                    </DepWindow>
+                )}
+
                 {endCarre && (
                     <div>
                         <button className='button' onClick={() => validerSaisie()}>
