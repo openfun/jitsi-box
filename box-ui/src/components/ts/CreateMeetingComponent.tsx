@@ -7,10 +7,6 @@ import { LocationState } from '../../utils/State';
 import styled from '@emotion/styled';
 import axios from 'axios';
 
-import image from './15.png';
-import { url } from 'inspector';
-import { height, width } from '@mui/system';
-
 const CreateMeetingComponent: FunctionComponent = () => {
     const state = useLocation().state as LocationState;
     const [information, setInformation] = useState({
@@ -22,10 +18,13 @@ const CreateMeetingComponent: FunctionComponent = () => {
     const [carre, setCarre] = useState<boolean>(false);
     const [circles, setCircles] = useState<any>([]);
     const [endCarre, setEndCarre] = useState<boolean>(false);
-    const [textBtn, setTextBtn] = useState('Ameliorer Vue');
+    const [textBtn, setTextBtn] = useState('Recadrer');
     const [width_img, setWidth] = useState(0);
     const [height_img, setHeight] = useState(0);
     const [ratio_img, setRatio] = useState('');
+    const [width_img_click, setWidthClick] = useState(0);
+    const [height_img_click, setHeightClick] = useState(0);
+    const [ratio_img_click, setRatioClick] = useState('');
     const [img_ws, setImg_ws] = useState<string>('./15.png');
     const [img_click, setImg_click] = useState<string>('./15.png');
     const [show, setshow] = useState(false);
@@ -39,7 +38,7 @@ const CreateMeetingComponent: FunctionComponent = () => {
                 setTextBtn('Annuler');
             }
         } else {
-            setTextBtn('Améliorer vue');
+            setTextBtn('Recadrer');
             setCoord([]);
             setEndCarre(false);
             setCircles([]);
@@ -47,21 +46,43 @@ const CreateMeetingComponent: FunctionComponent = () => {
     }, [carre]);
 
     useEffect(() => {
-        getImgSize(img_ws, bbb);
+        getImgSize(img_ws, false);
     }, [img_ws]);
 
-    function bbb(x: any, y: any) {
-        return [x, y];
-    }
+    useEffect(() => {
+        getImgSize(img_click, true);
+    }, [img_click]);
 
+    useEffect(() => {
+        const ws1 = new WebSocket('ws://localhost:8070/ws1');
+        ws1.onmessage = function (event) {
+            if (event.data == 'true') {
+                // if there is a new image availabe on the back
+                requestImage();
+            }
+        };
+        // ask to backend if there is a new photo to download
+        const interval = setInterval(() => {
+            ws1.send('photo?');
+        }, 1000);
+
+        return () => {
+            ws1.close;
+            clearInterval(interval);
+        };
+    }, []);
+
+    // function called on click to validate the coordinates entry
     function validerSaisie() {
-        setTextBtn('Améliorer vue');
+        setTextBtn('Recadrer');
         setshow(false);
         setEndCarre(false);
         setCarre((old_carre) => !old_carre);
         let c: any[] = [];
-        const rapportx = width_img / widthAff;
-        const rapporty = height_img / heightAff;
+
+        // operation to post the correct coordinates to the back
+        const rapportx = width_img_click / widthAff;
+        const rapporty = height_img_click / heightAff;
         for (let i = 0; i < 4; i++) {
             const x = coord[i][0] * rapportx;
             const y = coord[i][1] * rapporty;
@@ -73,14 +94,14 @@ const CreateMeetingComponent: FunctionComponent = () => {
         c.forEach((item) => {
             bodyFormData.append('coord', item);
         });
-        const article = { name: 'TTTTTTEST' };
-        alert(bodyFormData.getAll('coord'));
-        axios.post('http://localhost:8070/coord', { coord: c }).then(function (response) {
-            alert(response);
+        //alert(bodyFormData.getAll('coord'));
+        axios.post('http://localhost:8070/coord', { coord: c }).then(function () {
             setCoord([]);
+            setCircles([]);
         });
     }
 
+    // get relative coodinates of the click of the user
     const getClickCoords = (event: { target: any; clientX: any; clientY: any }) => {
         // from: https://stackoverflow.com/a/29296049/14198287
         const e = event.target;
@@ -98,7 +119,7 @@ const CreateMeetingComponent: FunctionComponent = () => {
             // make new svg circle element
             // more info here: https://www.w3schools.com/graphics/svg_circle.asp
             const newCircle = (
-                <circle key={circles.length + 1} cx={x} cy={y} r='5' stroke='black' strokeWidth='1' fill='blue' />
+                <circle key={circles.length + 1} cx={x} cy={y} r='6' stroke='white' strokeWidth='2' fill='blue' />
             );
 
             // update the array of circles; you HAVE to spread the current array
@@ -107,9 +128,11 @@ const CreateMeetingComponent: FunctionComponent = () => {
 
             const cnt = allCircles.length;
             if (cnt == 4) {
+                // if there are 4 coordinates, do not allow to click again
                 setEndCarre(true);
                 const e = event.target;
                 const dim = e.getBoundingClientRect();
+                // dimensions of the image displayed on screen
                 setHeightAff(dim.bottom - dim.top);
                 setWidthAff(dim.right - dim.left);
             }
@@ -118,67 +141,67 @@ const CreateMeetingComponent: FunctionComponent = () => {
         }
     };
 
-    function cliqueMoi() {
+    // function called on click of the button
+    function AmeliorerVue() {
         if (show) {
             setshow(false);
         } else {
+            requestOriginalImage();
             setshow(true);
-            setImg_click(img_ws);
         }
         setCarre((old_carre) => !old_carre);
     }
 
-    function getImgSize(imgSrc: string, callback: (arg0: number, arg1: number) => any) {
+    function getImgSize(imgSrc: string, original: boolean) {
         const newImg = new Image();
 
         newImg.onload = function () {
-            const height = newImg.height;
-            const width = newImg.width;
-            const ratio_img = ((width * 50) / height).toString() + 'vh';
-            setRatio(ratio_img);
-            setWidth(width);
-            setHeight(height);
+            if (original) {
+                const height = newImg.height;
+                const width = newImg.width;
+                const ratio_img = ((width * 50) / height).toString() + 'vh';
+                setRatioClick(ratio_img);
+                setWidthClick(width);
+                setHeightClick(height);
+            } else {
+                // dimensions of the original image, not of the image displayed on screen
+                let height = newImg.height;
+                const ViewportWidth = window.innerWidth * 0.9;
+                const ViewportHeight = window.innerHeight * 0.5;
+                const width = newImg.width;
+                const pot_height = (height / width) * ViewportWidth;
+                if (pot_height < ViewportHeight) {
+                    height = pot_height;
+                } else {
+                    height = ViewportHeight;
+                }
+                const ratio_img = ((width * 50) / height).toString() + 'vh';
+                setRatio(ratio_img);
+                setWidth(width);
+                setHeight(height);
+            }
         };
 
         newImg.src = imgSrc; // this must be done AFTER setting onload
     }
 
-    // definition of the web socket
-    useEffect(() => {
-        const ws1 = new WebSocket('ws://localhost:8070/ws1');
-        //ws1.binaryType = 'arraybuffer';
-
-        ws1.onmessage = function (event) {
-            if (event.data == 'true') {
-                requestImage();
-            }
-            //const arrayBuffer = event.data;
-            //const image_Slice = new Image();
-            //image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
-            //setImg_ws(image_Slice.src);
-        };
-
-        const interval = setInterval(() => {
-            ws1.send('photo?');
-        }, 1000);
-
-        return () => {
-            ws1.close;
-            clearInterval(interval);
-        };
-    }, []);
-    const mystyle = {
-        backgroundImage: "url('" + img_ws + "')",
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'contain',
-    };
-
+    // download the image (with the coordinates) from the back
     function requestImage() {
         axios.get('http://localhost:8070/photo').then((resp) => {
             const arrayBuffer = resp.data;
             const image_Slice = new Image();
             image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
             setImg_ws(image_Slice.src);
+        });
+    }
+
+    //download the original image from the back
+    function requestOriginalImage() {
+        axios.get('http://localhost:8070/original_photo').then((resp) => {
+            const arrayBuffer = resp.data;
+            const image_Slice = new Image();
+            image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
+            setImg_click(image_Slice.src);
         });
     }
 
@@ -190,57 +213,76 @@ const CreateMeetingComponent: FunctionComponent = () => {
                     <JitsiComponent information={information} />
                 </div>
             </div>
-
             <div className='container'>
-                <Container>
-                    <div className='sectionClick'>
-                        <ClickableSVG
-                            height='50vh'
-                            width={ratio_img}
-                            style={{
-                                backgroundImage: "url('" + img_ws + "')",
-                                backgroundRepeat: 'no-repeat',
-                                backgroundSize: 'contain',
-                            }}
-                        ></ClickableSVG>
-                    </div>
+                {!show && (
+                    <Container>
+                        <div className='sectionClick'>
+                            <ClickableSVG
+                                height={height_img.toString() + 'px'}
+                                width={ratio_img}
+                                style={{
+                                    backgroundImage: "url('" + img_ws + "')",
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundSize: 'contain',
+                                    backgroundPosition: 'center',
+                                    maxWidth: '95vw',
+                                }}
+                            ></ClickableSVG>
+                        </div>
+                    </Container>
+                )}
 
-                    {show && (
+                {show && (
+                    <Container>
                         <div className='flux'>
                             <ClickableSVG
                                 height='50vh'
-                                width={ratio_img}
+                                width={ratio_img_click}
                                 onClick={addCircle}
                                 style={{
                                     backgroundImage: "url('" + img_click + "')",
                                     backgroundRepeat: 'no-repeat',
                                     backgroundSize: 'contain',
+                                    maxWidth: '45vw',
                                 }}
                             >
                                 {circles}
                             </ClickableSVG>
                         </div>
-                    )}
-                </Container>
-                <div className='sectionButtons'>
-                    <div className='clickButton'>
-                        <button onClick={() => cliqueMoi()}> {textBtn} </button>
-                    </div>
-                    {carre && <div></div>}
-                    {endCarre && (
-                        <div>
-                            <button onClick={() => validerSaisie()}> Valider </button>
+                        <div className='sectionClick'>
+                            <ClickableSVG
+                                height='50vh'
+                                width={ratio_img}
+                                style={{
+                                    backgroundImage: "url('" + img_ws + "')",
+                                    backgroundRepeat: 'no-repeat',
+                                    backgroundSize: 'contain',
+                                    maxWidth: '45vw',
+                                }}
+                            ></ClickableSVG>
                         </div>
-                    )}
-                    <div>
-                        <button onClick={() => requestImage()}> Image </button>
-                    </div>
+                    </Container>
+                )}
+            </div>
+            <div className='sectionButtons'>
+                <div className='clickButton'>
+                    <button className='button' onClick={() => AmeliorerVue()}>
+                        {textBtn}
+                    </button>
                 </div>
+                {endCarre && (
+                    <div>
+                        <button className='button' onClick={() => validerSaisie()}>
+                            Valider
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );
 };
 
+// style of the component image to click on
 const ClickableSVG = styled.svg`
     background-repeat: no-repeat;
     background-size: contain;
@@ -251,6 +293,7 @@ const ClickableSVG = styled.svg`
     }
 `;
 
+// style of the container of the two images
 const Container = styled.div`
     width: 100%;
     hieght: 100%;
@@ -260,7 +303,6 @@ const Container = styled.div`
     justify-content: space-evenly;
     align-items: center;
     flex-wrap: nowrap;
-    flex-grow: 8;
 `;
 
 export default CreateMeetingComponent;

@@ -42,8 +42,31 @@
 
 .sectionButtons {
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+    flex-direction: row;
+    justify-content: center;
     background-color: black;
+    align-items: center;
+}
+
+.button {
+    color: white;
+    background-color: #141414;
+    border-radius: 8px;
+    font-weight: bold;
+    padding: 5px;
+    cursor: pointer;
+    margin: 10px;
+
+    border: solid white 1px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.button:hover {
+    background-color: rgb(54, 54, 54);
+}
+
+.sectionClick {
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
