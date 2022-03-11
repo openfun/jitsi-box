@@ -119,7 +119,7 @@ const CaptureImage = (props: CaptureImageProps) => {
                     detectCamera(), handleClick(event);
                 }}
             >
-                Dashboard
+                Select camera
             </Button>
             <Menu
                 id='menu'
