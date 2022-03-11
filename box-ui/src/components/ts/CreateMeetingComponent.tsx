@@ -4,7 +4,7 @@ import '../css/CreateMeetingComponent.css';
 import PopupComponent from './PopupComponent';
 import { LocationState } from '../../utils/State';
 import JitsiFrame from './JitsiFrame';
-import CaptureImage from './CaptureImageComponent';
+import CaptureImage from './CaptureImage';
 
 const CreateMeetingComponent: FunctionComponent = () => {
     const navigate = useNavigate();
