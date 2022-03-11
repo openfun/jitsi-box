@@ -8,6 +8,7 @@ import { LocationState } from '../../utils/State';
 import styled from '@emotion/styled';
 import axios from 'axios';
 import DepWindow from './dep-window';
+import NewWindow from 'react-new-window';
 
 const CreateMeetingComponent: FunctionComponent = () => {
     const state = useLocation().state as LocationState;
@@ -57,6 +58,10 @@ const CreateMeetingComponent: FunctionComponent = () => {
     useEffect(() => {
         getImgSize(img_ws, false);
     }, [img_ws]);
+
+    window.addEventListener('beforeunload', () => {
+        closeWindowPortal();
+    });
 
     useEffect(() => {
         getImgSize(img_click, true);
@@ -122,10 +127,6 @@ const CreateMeetingComponent: FunctionComponent = () => {
         const x = event.clientX - dim.left;
         const y = event.clientY - dim.top;
         return [x, y];
-    };
-
-    const newWindow = () => {
-        alert('new vindow');
     };
 
     const addCircle = (event: { target: any; clientX: any; clientY: any }) => {
@@ -227,7 +228,13 @@ const CreateMeetingComponent: FunctionComponent = () => {
     }
 
     function toggleWindowPortal() {
-        setShowWindowPortal(!showWindowPortal);
+        const newW = window.open('', '', 'width=600,height=400,left=200,top=200');
+        if (newW) {
+            newW.document.title = 'A React portal window';
+            const containerEl = document.createElement('div');
+            newW.document.body.appendChild(containerEl);
+            setShowWindowPortal(!showWindowPortal);
+        }
     }
 
     return (
@@ -291,6 +298,7 @@ const CreateMeetingComponent: FunctionComponent = () => {
                     </Container>
                 )}
             </div>
+
             <div className='sectionButtons'>
                 <div className='clickButton'>
                     <button className='button' onClick={() => AmeliorerVue()}>
@@ -300,16 +308,6 @@ const CreateMeetingComponent: FunctionComponent = () => {
                         Nouvelle fenêtre
                     </button>
                 </div>
-
-                {showWindowPortal && (
-                    <DepWindow closeWindowPortal={closeWindowPortal}>
-                        <h1> new window</h1>
-                        <p>Even though I render in a different window, I share state!</p>
-
-                        <button onClick={closeWindowPortal}>Close me!</button>
-                    </DepWindow>
-                )}
-
                 {endCarre && (
                     <div>
                         <button className='button' onClick={() => validerSaisie()}>
