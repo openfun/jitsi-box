@@ -16,10 +16,3 @@ i18n.use(initReactI18next).use(LanguageDetector).init({
     defaultNS: 'common',
     fallbackLng: 'en',
 });
-const boxStorage = window.localStorage;
-if (boxStorage.getItem('language') != null) {
-    const language = boxStorage.getItem('language') as string;
-    i18n.changeLanguage(language);
-} else {
-    i18n.changeLanguage('en');
-}
