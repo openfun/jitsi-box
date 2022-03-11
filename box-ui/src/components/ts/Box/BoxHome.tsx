@@ -1,17 +1,17 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
-import HomeButtonsComponent from './HomeButtonsComponent';
-import '../css/HomeComponent.css';
-import JitsiBoxLogo from '../../logo/jitsibox.svg';
+import HomeButtonsComponent from '../HomeButtonsComponent';
+import '../../css/BoxHome.css';
+import JitsiBoxLogo from '../../../logo/jitsibox.svg';
 import { useLocation } from 'react-router-dom';
-import { availableLanguages } from '../../i18n';
+import { availableLanguages } from '../../../i18n';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useTranslation } from 'react-i18next';
-import { LocationState } from '../../utils/State';
+import { LocationState } from '../../../utils/State';
 
-const HomeComponent: FunctionComponent = () => {
+const BoxHome: FunctionComponent = () => {
     const { t, i18n } = useTranslation();
 
     const state = useLocation().state as LocationState;
@@ -57,4 +57,4 @@ const HomeComponent: FunctionComponent = () => {
     );
 };
 
-export default HomeComponent;
+export default BoxHome;
