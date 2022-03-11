@@ -9,7 +9,7 @@ import '../css/CaptureImage.css';
 
 const CaptureImage = (props: CaptureImageProps) => {
     const [photoInterval, setPhotoInterval] = useState<NodeJS.Timeout>();
-    const [cameraList, setCameraList] = useState<MediaDeviceInfo[]>();
+    const [cameraList, setCameraList] = useState<MediaDeviceInfo[]>([]);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
@@ -96,24 +96,12 @@ const CaptureImage = (props: CaptureImageProps) => {
         };
     }, [photoInterval]);
 
-    useEffect(() => {
-        cameraList?.map((camera) => {
-            navigator.mediaDevices.getUserMedia({
-                video: {
-                    deviceId: {
-                        exact: camera['deviceId'],
-                    },
-                },
-            });
-        });
-    }, [cameraList]);
-
     return (
         <div className='popupCamera'>
             <Button
                 id='button'
                 aria-controls={open ? 'menu' : undefined}
-                aria-haspopup='true'
+                aria-haspopup='menu'
                 aria-expanded={open ? 'true' : undefined}
                 onClick={(event) => {
                     detectCamera(), handleClick(event);
@@ -136,7 +124,7 @@ const CaptureImage = (props: CaptureImageProps) => {
                     horizontal: 'left',
                 }}
             >
-                {cameraList?.map((camera, index) => {
+                {cameraList.map((camera, index) => {
                     return (
                         <div key={index}>
                             <MenuItem
