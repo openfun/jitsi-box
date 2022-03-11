@@ -45,10 +45,5 @@ export type CounterProps = {
 };
 
 export type CaptureImageProps = {
-    camera: MediaDeviceInfo;
-    roomName: string;
-}
-
-export type CameraDetectorProps = {
     roomName: string;
 }

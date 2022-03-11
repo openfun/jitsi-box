@@ -4,7 +4,7 @@ import '../css/CreateMeetingComponent.css';
 import PopupComponent from './PopupComponent';
 import { LocationState } from '../../utils/State';
 import JitsiFrame from './JitsiFrame';
-import CameraDetector from './CameraDetectorComponent';
+import CaptureImage from './CaptureImageComponent';
 
 const CreateMeetingComponent: FunctionComponent = () => {
     const navigate = useNavigate();
@@ -66,7 +66,7 @@ const CreateMeetingComponent: FunctionComponent = () => {
                 </div>
             </div>
             <div className='CameraManagement'>
-                <CameraDetector roomName={information.roomName} />
+                <CaptureImage roomName={information.roomName} />
             </div>
         </div>
     );
