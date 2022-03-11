@@ -8,9 +8,9 @@ import MenuItem from '@mui/material/MenuItem';
 import '../css/CaptureImage.css';
 
 const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageProps) => {
-    const photoInterval = useRef<NodeJS.Timeout>();
+    const [photoInterval, setPhotoInterval] = useState<ReturnType<typeof setTimeout>>();
     const [cameraList, setCameraList] = useState<MediaDeviceInfo[]>([]);
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -49,12 +49,11 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
                         : '5',
                 );
 
-                photoInterval.current = setInterval(
-                    () => takePhoto(imageCapturer, props.roomName),
-                    timeBetweenPictures * 1000,
+                setPhotoInterval(
+                    setInterval(() => takePhoto(imageCapturer, props.roomName), timeBetweenPictures * 1000),
                 );
             })
-            .catch((error: any) => {
+            .catch((error) => {
                 if (error?.name === 'OverconstrainedError') {
                     detectCamera();
                 } else {
@@ -85,15 +84,15 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
                     );
                 }
             })
-            .catch((err: DOMException) => {
-                console.error('takePhoto() failed: ', err);
+            .catch((error) => {
+                console.error('takePhoto() failed: ', error);
             });
     };
 
     useEffect(() => {
         return () => {
-            if (photoInterval.current !== undefined) {
-                clearInterval(photoInterval.current);
+            if (photoInterval !== undefined) {
+                clearInterval(photoInterval);
             }
         };
     }, [photoInterval]);

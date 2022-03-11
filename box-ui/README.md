@@ -60,7 +60,7 @@ You must create a `.env` file (copy the `.env.template`), and fill it with the c
 
 Env variables starting with `REACT_APP_` are automatically catched by react, so we do not need the `dotenv` package.
 
-At the moment 2 variables are used :
+At the moment 3 variables are used :
 
 -   `REACT_APP_MARSHA_URL` that set marsha's address
 -   `REACT_APP_POLICY_ADDRESS` that should be set to `[policy server | http://localhost:8070]/policy?custom_address=${roomName}` if you need to upload pictures on different servers (depending on the meeting for instance) otherwise you just need to go on /policy
