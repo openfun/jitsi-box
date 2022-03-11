@@ -36,7 +36,7 @@ export type JitsiFrameProps = {
     options: ConstructorParameters<typeof JitsiMeetExternalAPI>[1];
     configure?: (api: JitsiMeetExternalAPI) => void;
     onError?: () => void;
-}; 
+};
 
 export type CounterProps = {
     counter: number;

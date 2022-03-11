@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FunctionComponent, useRef } from 'react';
 import { ImageCapture } from 'image-capture';
 import { CaptureImageProps } from '../../utils/Props';
 import axios, { AxiosResponse } from 'axios';
@@ -7,8 +7,8 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import '../css/CaptureImage.css';
 
-const CaptureImage = (props: CaptureImageProps) => {
-    const [photoInterval, setPhotoInterval] = useState<NodeJS.Timeout>();
+const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageProps) => {
+    const photoInterval = useRef<NodeJS.Timeout>();
     const [cameraList, setCameraList] = useState<MediaDeviceInfo[]>([]);
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -43,13 +43,15 @@ const CaptureImage = (props: CaptureImageProps) => {
                     focusMode: 'single-shot',
                 });
                 const imageCapturer = new ImageCapture(videoTrack);
-                const time_between_pictures = parseInt(
+                const timeBetweenPictures = parseInt(
                     process.env.REACT_APP_TIME_BETWEEN_PICTURES !== undefined
                         ? process.env.REACT_APP_TIME_BETWEEN_PICTURES
                         : '5',
                 );
-                setPhotoInterval(
-                    setInterval(() => takePhoto(imageCapturer, props.roomName), time_between_pictures * 1000),
+
+                photoInterval.current = setInterval(
+                    () => takePhoto(imageCapturer, props.roomName),
+                    timeBetweenPictures * 1000,
                 );
             })
             .catch((error: any) => {
@@ -90,11 +92,16 @@ const CaptureImage = (props: CaptureImageProps) => {
 
     useEffect(() => {
         return () => {
-            if (photoInterval !== undefined) {
-                clearInterval(photoInterval);
+            if (photoInterval.current !== undefined) {
+                clearInterval(photoInterval.current);
             }
         };
     }, [photoInterval]);
+
+    useEffect(() => {
+        navigator.mediaDevices.addEventListener('devicechange', detectCamera);
+        return () => navigator.mediaDevices.removeEventListener('devicechange', detectCamera);
+    }, []);
 
     return (
         <div className='popupCamera'>
