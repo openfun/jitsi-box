@@ -1,4 +1,4 @@
-import React, { useEffect, FunctionComponent } from 'react';
+import React, { useRef, useState, useEffect, FunctionComponent } from 'react';
 import '../css/JitsiComponent.css';
 import { JitsiFrameProps } from '../../utils/Props';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -50,6 +50,10 @@ const JitsiFrame: FunctionComponent<JitsiFrameProps> = (props: JitsiFrameProps) 
                 api.addListener('videoConferenceLeft', () => {
                     api.dispose();
                 });
+                api.addListener('raiseHandUpdated', (res) => {
+                    const timeRaised = res.handRaised;
+                    updateCounter(timeRaised);
+                });
                 props.configure?.(api);
             })
             .catch(() => {
@@ -63,8 +67,54 @@ const JitsiFrame: FunctionComponent<JitsiFrameProps> = (props: JitsiFrameProps) 
         };
     }, [props.information, props.options, props.configure, props.onError]);
 
+    const ShowYellowbg = props.showYellowbg;
+    const [raised, setRaised] = useState(false);
+    const [counter, setCounter] = useState(0);
+    const TimeOutRef = useRef<NodeJS.Timeout>();
+
+    function lowerHand() {
+        setRaised(false);
+        setCounter(0);
+    }
+
+    const updateCounter = (timeRaised: number) => {
+        if (timeRaised > 0) {
+            setCounter((counter) => counter + 1);
+        }
+        if (timeRaised == 0) {
+            setCounter((counter) => Math.max(0, counter - 1));
+        }
+    };
+
+    function switchHand() {
+        let stop = false;
+        if (counter > 0) {
+            stop = true;
+        }
+        if (stop) {
+            setRaised(true);
+        } else {
+            setRaised(false);
+        }
+    }
+    useEffect(() => {
+        const id = setTimeout(lowerHand, 10000);
+        if (TimeOutRef.current) {
+            clearTimeout(TimeOutRef.current);
+        }
+        TimeOutRef.current = id;
+        switchHand();
+    }, [counter]);
+
     return (
         <div style={{ height: '100%' }}>
+            <div
+                className='overlay'
+                style={{
+                    backgroundColor: 'yellow',
+                    opacity: raised && ShowYellowbg ? '0.5' : '0',
+                }}
+            />
             <div id='jitsi-container' className='jitsiContainer' />
         </div>
     );
