@@ -12,7 +12,7 @@ import { Button, Menu, MenuItem } from '@mui/material';
 const StudentMeeting: FunctionComponent = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const processes = ['process1', 'process2', 'process3', 'process4'];
+    const processes = ['Color', 'B&W', 'Contrast', 'original'];
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
