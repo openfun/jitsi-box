@@ -1,5 +1,6 @@
 import React, { useState, FunctionComponent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import CaptureImage from '../CaptureImage';
 import '../../css/BoxMeeting.css';
 import PopupComponent from '../PopupComponent';
 import { LocationState } from '../../../utils/State';
@@ -63,6 +64,9 @@ const BoxMeeting: FunctionComponent = () => {
                         }}
                     />
                 </div>
+            </div>
+            <div className='CameraManagement'>
+                <CaptureImage roomName={information.roomName} />
             </div>
         </div>
     );
