@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import Button from '@mui/material/Button';
+import HomeButton from './HomeButton';
 import '../css/HomeButtonsComponent.css';
 import { styled } from '@mui/material/styles';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
@@ -34,35 +34,17 @@ const HomeButtonsComponent: FunctionComponent<CounterProps> = (props: CounterPro
             },
         );
     };
-    const launchMeeting = () => {
-        navigate(
-            { pathname: '/box/meeting' },
-            {
-                replace: true,
-                state: { roomName: GenerateRandomFrenchRoomName(), domain: 'meeting.education' },
-            },
-        );
-    };
+
     return (
         <>
-            <div className='ButtonContainer'>
-                <Button id='StartMeetingButton' variant='contained' className='HomeButton' onClick={launchMeeting}>
-                    {t('launchMeeting')}
-                </Button>
-            </div>
             {props.counter > 0 ? (
                 <div>
                     <div className='ButtonContainer'>
-                        <Button
-                            id='ReturnToMeetingButton'
-                            variant='contained'
-                            className='HomeButton'
-                            onClick={launchLastMeeting}
-                        >
+                        <HomeButton id='ReturnToMeetingButton' onClick={launchLastMeeting} variant='contained'>
                             {t('goBackToMeeting')}
                             <br />
                             {props.roomName}
-                        </Button>
+                        </HomeButton>
                     </div>
                     <div className='LinearProgress'>
                         <BorderLinearProgress variant='determinate' value={(props.counter / 120) * 100} />
