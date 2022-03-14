@@ -2,8 +2,8 @@ import React, { FunctionComponent } from 'react';
 import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import BoxHome from './components/ts/Box/BoxHome';
 import BoxMeeting from './components/ts/Box/BoxMeeting';
-import StudentHome from './components/ts/Student/StudentMeeting';
-import StudentMeeting from './components/ts/Student/StudentHome';
+import StudentMeeting from './components/ts/Student/StudentMeeting';
+import StudentHome from './components/ts/Student/StudentHome';
 import TeacherHome from './components/ts/Teacher/TeacherHome';
 import TeacherMeeting from './components/ts/Teacher/TeacherMeeting';
 
