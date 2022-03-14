@@ -1,6 +1,6 @@
 import React, { useState, FunctionComponent, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import '../../css/BoxHome.css';
+import '../../css/StudentMeeting.css';
 import PopupComponent from '../PopupComponent';
 import CircularProgress from '@mui/material/CircularProgress';
 import { LocationState } from '../../../utils/State';
@@ -26,11 +26,10 @@ const StudentMeeting: FunctionComponent = () => {
     });
 
     const [selectCoord, setSelectCoord] = useState<boolean>(false);
-    const [coord, setCoord] = useState<Array<Array<number>>>([]);
+    const [coord, setCoord] = useState<[number, number][]>([]);
 
     //circle : svg element to display on click on the image
     const [circles, setCircles] = useState<React.SVGProps<SVGCircleElement>[]>([]);
-    const [endCarre, setEndCarre] = useState<boolean>(false);
     const [textBtn, setTextBtn] = useState<string>('Recadrer');
 
     // img : downloaded from back, potentially cropped
@@ -52,13 +51,12 @@ const StudentMeeting: FunctionComponent = () => {
 
     useEffect(() => {
         if (selectCoord) {
-            if (!endCarre) {
+            if (!(coord.length == 4)) {
                 setTextBtn('Annuler');
             }
         } else {
             setTextBtn('Recadrer');
             setCoord([]);
-            setEndCarre(false);
             setCircles([]);
         }
     }, [selectCoord]);
@@ -97,26 +95,15 @@ const StudentMeeting: FunctionComponent = () => {
     // function called on click to validate the coordinates entry
     function validerSaisie() {
         setSelectCoord(false);
-        setEndCarre(false);
-        let c: any[] = [];
+        let coordinatesList: any[] = [];
 
         // operation to send the correct coordinates to the back
         const rapportx = width_img_original / widthAff;
         const rapporty = height_img_original / heightAff;
-        for (let i = 0; i < 4; i++) {
-            const x = coord[i][0] * rapportx;
-            const y = coord[i][1] * rapporty;
-            c = [...c, [x, y]];
-        }
-
-        const bodyFormData = new FormData();
+        coordinatesList = coord.map((point) => [point[0] * rapportx, point[1] * rapporty]);
         const address = process.env.REACT_APP_COORD;
-        c.forEach((item) => {
-            bodyFormData.append('coord', item);
-        });
-        //bodyFormData.append('roomName', information.roomName);
         if (address) {
-            axios.post(address, { roomName: information.roomName, coord: c }).then(function () {
+            axios.post(address, { roomName: information.roomName, coord: coordinatesList }).then(function () {
                 setCoord([]);
                 setCircles([]);
             });
@@ -127,15 +114,14 @@ const StudentMeeting: FunctionComponent = () => {
 
     // get relative coodinates of the click of the user
     const getClickCoords = (event: { target: any; clientX: number; clientY: number }) => {
-        const e = event.target;
-        const dim = e.getBoundingClientRect();
+        const dim = event.target.getBoundingClientRect();
         const x = event.clientX - dim.left;
         const y = event.clientY - dim.top;
         return [x, y];
     };
 
     const addCircle = (event: { target: any; clientX: number; clientY: number }) => {
-        if (selectCoord && !endCarre) {
+        if (selectCoord && !(coord.length == 4)) {
             // get click coordinates
             const [x, y] = getClickCoords(event);
             setCoord([...coord, [x, y]]);
@@ -151,9 +137,7 @@ const StudentMeeting: FunctionComponent = () => {
             const cnt = allCircles.length;
             if (cnt == 4) {
                 // if there are 4 coordinates, do not allow to click again
-                setEndCarre(true);
-                const e = event.target;
-                const dim = e.getBoundingClientRect();
+                const dim = event.target.getBoundingClientRect();
                 // dimensions of the image displayed on screen
                 setHeightAff(dim.bottom - dim.top);
                 setWidthAff(dim.right - dim.left);
@@ -178,19 +162,18 @@ const StudentMeeting: FunctionComponent = () => {
         const newImg = new Image();
 
         newImg.onload = function () {
+            const width = newImg.width;
+            let height = newImg.height;
             if (original) {
-                const height = newImg.height;
-                const width = newImg.width;
                 const ratio_img = ((width * 50) / height).toString() + 'vh';
                 setRatioOriginal(ratio_img);
                 setWidthOriginal(width);
                 setHeightOriginal(height);
             } else {
                 // dimensions of the original image, not of the image displayed on screen
-                let height = newImg.height;
                 const ViewportWidth = window.innerWidth * 0.9;
                 const ViewportHeight = window.innerHeight * 0.5;
-                const width = newImg.width;
+
                 const pot_height = (height / width) * ViewportWidth;
                 if (pot_height < ViewportHeight) {
                     height = pot_height;
@@ -243,7 +226,7 @@ const StudentMeeting: FunctionComponent = () => {
             </div>
             <div className='containerStudent'>
                 {!selectCoord && (
-                    <Container>
+                    <div className='containerImgStudent'>
                         <div className='sectionClickSolo'>
                             <ClickableSVG
                                 height={height_img.toString() + 'px'}
@@ -258,11 +241,11 @@ const StudentMeeting: FunctionComponent = () => {
                             ></ClickableSVG>
                             {loading && <CircularProgress className='circularProgress' />}
                         </div>
-                    </Container>
+                    </div>
                 )}
 
                 {selectCoord && (
-                    <Container>
+                    <div className='containerImgStudent'>
                         <div>
                             <ClickableSVG
                                 height='50vh'
@@ -290,7 +273,7 @@ const StudentMeeting: FunctionComponent = () => {
                                 }}
                             ></ClickableSVG>
                         </div>
-                    </Container>
+                    </div>
                 )}
             </div>
 
@@ -300,7 +283,7 @@ const StudentMeeting: FunctionComponent = () => {
                         {textBtn}
                     </button>
                 </div>
-                {endCarre && (
+                {coord.length == 4 && (
                     <div>
                         <button className='buttonStudent' onClick={() => validerSaisie()}>
                             Valider
@@ -321,18 +304,6 @@ const ClickableSVG = styled.svg`
         /* Block your circles from triggering 'add circle' */
         pointer-events: none;
     }
-`;
-
-// style of the container of the two images
-const Container = styled.div`
-    width: 100%;
-    hieght: 100%;
-    background-color: black;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: nowrap;
 `;
 
 export default StudentMeeting;
