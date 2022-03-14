@@ -1,6 +1,6 @@
 import React, { useState, FunctionComponent, useEffect, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import '../../css/BoxHome.css';
+import '../../css/BoxMeeting.css';
 import PopupComponent from '../PopupComponent';
 import CircularProgress from '@mui/material/CircularProgress';
 import { LocationState } from '../../../utils/State';
@@ -312,42 +312,43 @@ const StudentMeeting: FunctionComponent = () => {
                         </button>
                     </div>
                 )}
-            </div>
-            <div className='selectProcess'>
-                <Button
-                    id='button'
-                    aria-controls={open ? 'menu' : undefined}
-                    aria-haspopup='menu'
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={(event) => {
-                        handleClick(event);
-                    }}
-                >
-                    Select process for image
-                </Button>
-                <Menu
-                    id='menu'
-                    aria-labelledby='button'
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                    }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
-                    }}
-                >
-                    {processes.map((element, index) => {
-                        return (
-                            <MenuItem onClick={() => requestProcessedImage(element)} key={index}>
-                                select {element}
-                            </MenuItem>
-                        );
-                    })}
-                </Menu>
+                <div className='selectProcess'>
+                    <button
+                        // id='button'
+                        className='buttonStudent'
+                        aria-controls={open ? 'menu' : undefined}
+                        aria-haspopup='menu'
+                        aria-expanded={open ? 'true' : undefined}
+                        onClick={(event) => {
+                            handleClick(event);
+                        }}
+                    >
+                        Select Filter
+                    </button>
+                    <Menu
+                        id='menu'
+                        aria-labelledby='button'
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                    >
+                        {processes.map((element, index) => {
+                            return (
+                                <MenuItem onClick={() => requestProcessedImage(element)} key={index}>
+                                    select {element}
+                                </MenuItem>
+                            );
+                        })}
+                    </Menu>
+                </div>
             </div>
         </div>
     );
