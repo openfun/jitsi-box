@@ -68,7 +68,7 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
             .then((blob: Blob) => {
                 const data = new FormData();
                 data.append('name', 'image');
-                data.append('file', blob, `${roomName}.png`);
+                data.append('file', blob, `${roomName}.jpg`);
                 const address = process.env.REACT_APP_POLICY_ADDRESS;
                 if (address == undefined) {
                     alert('No policy server defined');
