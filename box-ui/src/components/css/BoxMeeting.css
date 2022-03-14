@@ -29,3 +29,61 @@
 .JitsiComponent {
     flex-grow: 3;
 }
+
+.containerStudent {
+    display: flex;
+    flex-wrap: nowrap;
+    background-color: black;
+}
+
+.sectionButtonsStudent {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: black;
+    align-items: center;
+}
+
+.buttonStudent {
+    color: white;
+    background-color: #141414;
+    border-radius: 8px;
+    font-weight: bold;
+    padding: 5px;
+    cursor: pointer;
+    margin: 10px;
+
+    border: solid white 1px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.buttonStudent:hover {
+    background-color: rgb(54, 54, 54);
+}
+
+.buttonAmeliorerVue {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sectionClickSolo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.sectionClick {
+    display: flex;
+    background-color: red;
+    justify-content: center;
+    align-items: center;
+}
+
+.circularProgress {
+    position: absolute;
+    left: center;
+    top: center;
+    color: blue;
+}
