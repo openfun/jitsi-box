@@ -37,7 +37,7 @@ interface InformationProps {
 
 export type JitsiFrameProps = {
     information: Information;
-    showYellowbg : boolean;
+    isBox : boolean;
     options: ConstructorParameters<typeof JitsiMeetExternalAPI>[1];
     configure?: (api: JitsiMeetExternalAPI) => void;
     onError?: () => void;

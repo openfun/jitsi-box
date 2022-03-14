@@ -48,7 +48,7 @@ const BoxMeeting: FunctionComponent = () => {
                 <div className='JitsiComponent'>
                     <JitsiFrame
                         information={information}
-                        showYellowbg={true}
+                        isBox={true}
                         options={meetingOptions}
                         configure={(api) => {
                             api.addListener('videoConferenceLeft', () => {

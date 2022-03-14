@@ -67,7 +67,7 @@ const JitsiFrame: FunctionComponent<JitsiFrameProps> = (props: JitsiFrameProps) 
         };
     }, [props.information, props.options, props.configure, props.onError]);
 
-    const ShowYellowbg = props.showYellowbg;
+    const ShowYellowbg = props.isBox;
     const [raised, setRaised] = useState(false);
     const [counter, setCounter] = useState(0);
     const TimeOutRef = useRef<NodeJS.Timeout>();
@@ -87,15 +87,7 @@ const JitsiFrame: FunctionComponent<JitsiFrameProps> = (props: JitsiFrameProps) 
     };
 
     function switchHand() {
-        let stop = false;
-        if (counter > 0) {
-            stop = true;
-        }
-        if (stop) {
-            setRaised(true);
-        } else {
-            setRaised(false);
-        }
+        setRaised(counter > 0);
     }
     useEffect(() => {
         const id = setTimeout(lowerHand, 10000);
