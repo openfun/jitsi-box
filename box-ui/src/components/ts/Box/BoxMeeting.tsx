@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent } from 'react';
+import React, { useRef, useState, useEffect, useMemo, useCallback, FunctionComponent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CaptureImage from '../CaptureImage';
 import '../../css/BoxMeeting.css';
@@ -13,31 +13,34 @@ const BoxMeeting: FunctionComponent = () => {
         roomName: state && state.roomName ? state.roomName : 'dty',
         domain: state && state.domain ? state.domain : 'meeting.education',
     });
-    const meetingOptions = {
-        userInfo: {
-            email: '',
-            displayName: 'Jitsi-Box',
-        },
-        configOverwrite: {
-            toolbarButtons: [
-                'microphone',
-                'camera',
-                'videoquality',
-                'fodeviceselection',
-                'raisehand',
-                'tileview',
-                'hangup',
-            ],
-            toolbarConfig: {
-                alwaysVisible: true,
+    const meetingOptions = useMemo(
+        () => ({
+            userInfo: {
+                email: '',
+                displayName: 'Jitsi-Box',
             },
-            prejoinConfig: {
-                enabled: false,
+            configOverwrite: {
+                toolbarButtons: [
+                    'microphone',
+                    'camera',
+                    'videoquality',
+                    'fodeviceselection',
+                    'raisehand',
+                    'tileview',
+                    'hangup',
+                ],
+                toolbarConfig: {
+                    alwaysVisible: true,
+                },
+                prejoinConfig: {
+                    enabled: false,
+                },
+                startWithVideoMuted: false,
+                startWithAudioMuted: true,
             },
-            startWithVideoMuted: false,
-            startWithAudioMuted: true,
-        },
-    };
+        }),
+        [],
+    );
 
     return (
         <div className='BoxMeeting'>
@@ -46,6 +49,7 @@ const BoxMeeting: FunctionComponent = () => {
                 <div className='JitsiComponent'>
                     <JitsiFrame
                         information={information}
+                        isBox={true}
                         options={meetingOptions}
                         configure={(api) => {
                             api.addListener('videoConferenceLeft', () => {
