@@ -38,7 +38,7 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
             .then((mediastream: MediaStream) => {
                 const videoTrack = mediastream.getVideoTracks()[0];
                 videoTrack.applyConstraints({
-                    whiteBalanceMode: 'single-shot',
+                    //whiteBalanceMode: 'single-shot',
                     exposureMode: 'single-shot',
                     focusMode: 'single-shot',
                 });
