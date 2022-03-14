@@ -47,3 +47,7 @@ export type CounterProps = {
     domain: string;
     roomName: string;
 };
+
+export type CaptureImageProps = {
+    roomName: string;
+}
