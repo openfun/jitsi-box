@@ -7,8 +7,19 @@ import { LocationState } from '../../../utils/State';
 import styled from '@emotion/styled';
 import JitsiFrame from '../JitsiFrame';
 import axios from 'axios';
+import { Button, Menu, MenuItem } from '@mui/material';
 
 const StudentMeeting: FunctionComponent = () => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const processes = ['process1', 'process2', 'process3', 'process4'];
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     const meetingOptions = useMemo(
         () => ({
             configOverwrite: {
@@ -218,6 +229,15 @@ const StudentMeeting: FunctionComponent = () => {
         });
     }
 
+    const requestProcessedImage = (process: string) => {
+        axios.get(`http://localhost:8070/photo?process=${process}`).then((resp) => {
+            const arrayBuffer = resp.data;
+            const image_Slice = new Image();
+            image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
+            setImg(image_Slice.src);
+        });
+    };
+
     return (
         <div className='CreateMeetingComponent'>
             <PopupComponent information={information} setInformation={setInformation} />
@@ -292,6 +312,42 @@ const StudentMeeting: FunctionComponent = () => {
                         </button>
                     </div>
                 )}
+            </div>
+            <div className='selectProcess'>
+                <Button
+                    id='button'
+                    aria-controls={open ? 'menu' : undefined}
+                    aria-haspopup='menu'
+                    aria-expanded={open ? 'true' : undefined}
+                    onClick={(event) => {
+                        handleClick(event);
+                    }}
+                >
+                    Select process for image
+                </Button>
+                <Menu
+                    id='menu'
+                    aria-labelledby='button'
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                    }}
+                >
+                    {processes.map((element, index) => {
+                        return (
+                            <MenuItem onClick={() => requestProcessedImage(element)} key={index}>
+                                select {element}
+                            </MenuItem>
+                        );
+                    })}
+                </Menu>
             </div>
         </div>
     );
