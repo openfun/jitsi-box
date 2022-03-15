@@ -1,6 +1,6 @@
 import React, { useState, FunctionComponent, useEffect, useMemo } from 'react';
-import '../../css/BoxHome.css';
 import { useLocation, useNavigate } from 'react-router-dom';
+import '../../css/BoxMeeting.css';
 import PopupComponent from '../PopupComponent';
 import CircularProgress from '@mui/material/CircularProgress';
 import { LocationState } from '../../../utils/State';
