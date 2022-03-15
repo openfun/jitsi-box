@@ -21,6 +21,8 @@
         "lang": "Language",
         "qrCodeScanner": "Scan the QR Code of the meeting to join",
         "selectCamera": "Select camera ",
-        "camera": "camera"
+        "camera": "camera",
+        "joinAMeeting": "Join a meeting",
+        "linkForTeacher": "I am a teacher"
     }
   }
