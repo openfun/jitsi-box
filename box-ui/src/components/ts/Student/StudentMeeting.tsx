@@ -83,22 +83,26 @@ const StudentMeeting: FunctionComponent = () => {
     }, [img_original]);
 
     useEffect(() => {
-        const ws1 = new WebSocket('ws://localhost:8070/ws1');
-        ws1.onmessage = function (event) {
-            if (event.data == 'true') {
-                // if there is a new image availabe on the back
-                requestImage();
-            }
-        };
-        // ask to backend if there is a new photo to download
-        const interval = setInterval(() => {
-            ws1.send('photo?');
-        }, 1000);
+        const address = process.env.REACT_APP_WS_ADDRESS;
+        if (address) {
+            const ws1 = new WebSocket(address);
+            ws1.onmessage = function (event) {
+                if (event.data == 'true') {
+                    // if there is a new image availabe on the back
+                    requestImage();
+                }
+            };
 
-        return () => {
-            ws1.close;
-            clearInterval(interval);
-        };
+            // ask to backend if there is a new photo to download
+            const interval = setInterval(() => {
+                ws1.send(information.roomName);
+            }, 1000);
+
+            return () => {
+                ws1.close;
+                clearInterval(interval);
+            };
+        }
     }, []);
 
     // function called on click to validate the coordinates entry
@@ -117,14 +121,19 @@ const StudentMeeting: FunctionComponent = () => {
         }
 
         const bodyFormData = new FormData();
-
+        const address = process.env.REACT_APP_COORD;
         c.forEach((item) => {
             bodyFormData.append('coord', item);
         });
-        axios.post('http://localhost:8070/coord', { coord: c }).then(function () {
-            setCoord([]);
-            setCircles([]);
-        });
+        //bodyFormData.append('roomName', information.roomName);
+        if (address) {
+            axios.post(address, { roomName: information.roomName, coord: c }).then(function () {
+                setCoord([]);
+                setCircles([]);
+            });
+        } else {
+            alert('test');
+        }
     }
 
     // get relative coodinates of the click of the user
@@ -208,25 +217,31 @@ const StudentMeeting: FunctionComponent = () => {
 
     // download the image (with the potential cropped effect) from the back
     function requestImage() {
-        axios.get('http://localhost:8070/photo').then((resp) => {
-            const arrayBuffer = resp.data;
-            const image_Slice = new Image();
-            image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
-            setImg(image_Slice.src);
-            setLoading(false);
-            setTextBtn('Recadrer');
-        });
+        const address = process.env.REACT_APP_PHOTO;
+        if (address) {
+            axios.get(address, { params: { roomName: information.roomName } }).then((resp) => {
+                const arrayBuffer = resp.data;
+                const image_Slice = new Image();
+                image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
+                setImg(image_Slice.src);
+                setLoading(false);
+                setTextBtn('Recadrer');
+            });
+        }
     }
 
     //download the original image from the back
     function requestOriginalImage() {
         setLoading(true);
-        axios.get('http://localhost:8070/original_photo').then((resp) => {
-            const arrayBuffer = resp.data;
-            const image_Slice = new Image();
-            image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
-            setImg_original(image_Slice.src);
-        });
+        const address = process.env.REACT_APP_ORIGINAL_PHOTO;
+        if (address) {
+            axios.get(address, { params: { roomName: information.roomName } }).then((resp) => {
+                const arrayBuffer = resp.data;
+                const image_Slice = new Image();
+                image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
+                setImg_original(image_Slice.src);
+            });
+        }
     }
 
     const requestProcessedImage = (process: string) => {
@@ -243,7 +258,7 @@ const StudentMeeting: FunctionComponent = () => {
             <PopupComponent information={information} setInformation={setInformation} />
             <div className='CreateMeetingContainer'>
                 <div className='JitsiComponent'>
-                    <JitsiFrame information={information} options={meetingOptions} />
+                    <JitsiFrame isBox={false} information={information} options={meetingOptions} />
                 </div>
             </div>
             <div className='containerStudent'>
