@@ -34,7 +34,9 @@ const StudentMeeting: FunctionComponent = () => {
 
     // img : downloaded from back, potentially cropped
     const [height_img, setHeight] = useState<number>(0);
+    const [width_img_double, setWidth_img_double] = useState<string>('');
     const [img, setImg] = useState<string>('../../FirstPicture.png');
+    const [imgIsCropped, setImgIsCropped] = useState<boolean>(false);
 
     // img original : not cropped
     const [width_img_original, setWidthOriginal] = useState<number>(0);
@@ -51,9 +53,7 @@ const StudentMeeting: FunctionComponent = () => {
 
     useEffect(() => {
         if (selectCoord) {
-            if (!(coord.length == 4)) {
-                setTextBtn('Annuler');
-            }
+            setTextBtn('Annuler');
         } else {
             setTextBtn('Recadrer');
             setCoord([]);
@@ -94,8 +94,10 @@ const StudentMeeting: FunctionComponent = () => {
 
     // function called on click to validate the coordinates entry
     function validerSaisie() {
+        setLoading(true);
+        setImgIsCropped(true);
         setSelectCoord(false);
-        let coordinatesList: any[] = [];
+        let coordinatesList: [number, number][] = [];
 
         // operation to send the correct coordinates to the back
         const rapportx = width_img_original / widthAff;
@@ -112,15 +114,26 @@ const StudentMeeting: FunctionComponent = () => {
         }
     }
 
+    function resetCadrage() {
+        setImgIsCropped(false);
+        const address = process.env.REACT_APP_COORD;
+        if (address) {
+            axios.post(address, { roomName: information.roomName, coord: [] }).then(function () {
+                setCoord([]);
+                setCircles([]);
+            });
+        }
+    }
+
     // get relative coodinates of the click of the user
-    const getClickCoords = (event: { target: any; clientX: number; clientY: number }) => {
-        const dim = event.target.getBoundingClientRect();
+    const getClickCoords = (event: React.MouseEvent) => {
+        const dim = (event.target as Element).getBoundingClientRect();
         const x = event.clientX - dim.left;
         const y = event.clientY - dim.top;
         return [x, y];
     };
 
-    const addCircle = (event: { target: any; clientX: number; clientY: number }) => {
+    const addCircle = (event: React.MouseEvent) => {
         if (selectCoord && !(coord.length == 4)) {
             // get click coordinates
             const [x, y] = getClickCoords(event);
@@ -137,7 +150,7 @@ const StudentMeeting: FunctionComponent = () => {
             const cnt = allCircles.length;
             if (cnt == 4) {
                 // if there are 4 coordinates, do not allow to click again
-                const dim = event.target.getBoundingClientRect();
+                const dim = (event.target as Element).getBoundingClientRect();
                 // dimensions of the image displayed on screen
                 setHeightAff(dim.bottom - dim.top);
                 setWidthAff(dim.right - dim.left);
@@ -162,25 +175,25 @@ const StudentMeeting: FunctionComponent = () => {
         const newImg = new Image();
 
         newImg.onload = function () {
-            const width = newImg.width;
-            let height = newImg.height;
+            const width_new = newImg.width;
+            let height_new = newImg.height;
             if (original) {
-                const ratio_img = ((width * 50) / height).toString() + 'vh';
+                const ratio_img = ((width_new * 45) / height_new).toString() + 'vh';
                 setRatioOriginal(ratio_img);
-                setWidthOriginal(width);
-                setHeightOriginal(height);
+                setWidthOriginal(width_new);
+                setHeightOriginal(height_new);
             } else {
                 // dimensions of the original image, not of the image displayed on screen
                 const ViewportWidth = window.innerWidth * 0.9;
-                const ViewportHeight = window.innerHeight * 0.5;
-
-                const pot_height = (height / width) * ViewportWidth;
+                const ViewportHeight = window.innerHeight * 0.45;
+                setWidth_img_double(((width_new * 45) / height_new).toString() + 'vh');
+                const pot_height = (height_new / width_new) * ViewportWidth;
                 if (pot_height < ViewportHeight) {
-                    height = pot_height;
+                    height_new = pot_height;
                 } else {
-                    height = ViewportHeight;
+                    height_new = ViewportHeight;
                 }
-                setHeight(height);
+                setHeight(height_new);
             }
         };
 
@@ -197,14 +210,12 @@ const StudentMeeting: FunctionComponent = () => {
                 image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
                 setImg(image_Slice.src);
                 setLoading(false);
-                setTextBtn('Recadrer');
             });
         }
     }
 
     //download the original image from the back
     function requestOriginalImage() {
-        setLoading(true);
         const address = process.env.REACT_APP_ORIGINAL_PHOTO;
         if (address) {
             axios.get(address, { params: { roomName: information.roomName } }).then((resp) => {
@@ -248,7 +259,7 @@ const StudentMeeting: FunctionComponent = () => {
                     <div className='containerImgStudent'>
                         <div>
                             <ClickableSVG
-                                height='50vh'
+                                height='45vh'
                                 width={ratio_img_original}
                                 onClick={addCircle}
                                 style={{
@@ -264,7 +275,8 @@ const StudentMeeting: FunctionComponent = () => {
                         </div>
                         <div className='sectionClick'>
                             <ClickableSVG
-                                height='50vh'
+                                height='45vh'
+                                width={width_img_double}
                                 style={{
                                     backgroundImage: "url('" + img + "')",
                                     backgroundRepeat: 'no-repeat',
@@ -289,6 +301,12 @@ const StudentMeeting: FunctionComponent = () => {
                             Valider
                         </button>
                     </div>
+                )}
+
+                {imgIsCropped && (
+                    <button className='buttonStudent' onClick={() => resetCadrage()}>
+                        Annuler recadrage
+                    </button>
                 )}
             </div>
         </div>
