@@ -53,7 +53,7 @@ const BoxMeeting: FunctionComponent = () => {
                         options={meetingOptions}
                         configure={(api) => {
                             api.addListener('videoConferenceLeft', () => {
-                                navigate('/', {
+                                navigate('/box', {
                                     replace: true,
                                     state: {
                                         count: 120,
@@ -64,7 +64,7 @@ const BoxMeeting: FunctionComponent = () => {
                             });
                         }}
                         onError={() => {
-                            navigate('/');
+                            navigate('/box');
                         }}
                     />
                 </div>
