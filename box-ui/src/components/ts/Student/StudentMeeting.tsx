@@ -1,6 +1,6 @@
 import React, { useState, FunctionComponent, useEffect, useMemo } from 'react';
-import { useLocation } from 'react-router-dom';
 import '../../css/BoxHome.css';
+import { useLocation, useNavigate } from 'react-router-dom';
 import PopupComponent from '../PopupComponent';
 import CircularProgress from '@mui/material/CircularProgress';
 import { LocationState } from '../../../utils/State';
@@ -20,6 +20,7 @@ const StudentMeeting: FunctionComponent = () => {
         [],
     );
     const state = useLocation().state as LocationState;
+    const navigate = useNavigate();
     const [information, setInformation] = useState({
         roomName: state && state.roomName ? state.roomName : 'dty',
         domain: state && state.domain ? state.domain : 'meeting.education',
@@ -238,7 +239,23 @@ const StudentMeeting: FunctionComponent = () => {
             <PopupComponent information={information} setInformation={setInformation} />
             <div className='CreateMeetingContainer'>
                 <div className='JitsiComponent'>
-                    <JitsiFrame isBox={false} information={information} options={meetingOptions} />
+                    <JitsiFrame
+                        isBox={false}
+                        information={information}
+                        options={meetingOptions}
+                        configure={(api) => {
+                            api.addListener('videoConferenceLeft', () => {
+                                navigate('/student', {
+                                    replace: true,
+                                    state: {
+                                        count: 120,
+                                        roomName: information.roomName,
+                                        domain: information.domain,
+                                    },
+                                });
+                            });
+                        }}
+                    />
                 </div>
             </div>
             <div className='containerStudent'>
