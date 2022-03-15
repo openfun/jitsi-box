@@ -21,6 +21,8 @@
       "lang": "Langue",
       "qrCodeScanner": "Scanner le Code QR de la réunion à joindre",
       "selectCamera": "Choisir une caméra",
-      "camera": "caméra"
+      "camera": "caméra",
+      "joinAMeeting" : "Rejoindre une réunion",
+      "linkForTeacher": "Je suis un/une professeur·e"
     }
   }
