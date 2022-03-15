@@ -7,8 +7,10 @@ import { LocationState } from '../../../utils/State';
 import styled from '@emotion/styled';
 import JitsiFrame from '../JitsiFrame';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 
 const StudentMeeting: FunctionComponent = () => {
+    const { t } = useTranslation();
     const meetingOptions = useMemo(
         () => ({
             configOverwrite: {
@@ -70,9 +72,11 @@ const StudentMeeting: FunctionComponent = () => {
     }, [img_original]);
 
     useEffect(() => {
-        const address = process.env.REACT_APP_WS_ADDRESS;
-        if (address) {
-            const ws1 = new WebSocket(address);
+        const address_ws = process.env.REACT_APP_WS_ADDRESS;
+        if (address_ws == undefined) {
+            console.log('error websocket communication');
+        } else {
+            const ws1 = new WebSocket(address_ws);
             ws1.onmessage = function (event) {
                 if (event.data == 'true') {
                     // if there is a new image availabe on the back
@@ -90,7 +94,7 @@ const StudentMeeting: FunctionComponent = () => {
                 clearInterval(interval);
             };
         }
-    }, []);
+    }, [information]);
 
     // function called on click to validate the coordinates entry
     function validerSaisie() {
@@ -103,22 +107,24 @@ const StudentMeeting: FunctionComponent = () => {
         const rapportx = width_img_original / widthAff;
         const rapporty = height_img_original / heightAff;
         coordinatesList = coord.map((point) => [point[0] * rapportx, point[1] * rapporty]);
-        const address = process.env.REACT_APP_COORD;
-        if (address) {
-            axios.post(address, { roomName: information.roomName, coord: coordinatesList }).then(function () {
+        const address_coord = process.env.REACT_APP_COORD;
+        if (address_coord == undefined) {
+            console.log('error address coord');
+        } else {
+            axios.post(address_coord, { roomName: information.roomName, coord: coordinatesList }).then(function () {
                 setCoord([]);
                 setCircles([]);
             });
-        } else {
-            alert('test');
         }
     }
 
     function resetCadrage() {
         setImgIsCropped(false);
-        const address = process.env.REACT_APP_COORD;
-        if (address) {
-            axios.post(address, { roomName: information.roomName, coord: [] }).then(function () {
+        const address_coord = process.env.REACT_APP_COORD;
+        if (address_coord == undefined) {
+            console.log('error address coord');
+        } else {
+            axios.post(address_coord, { roomName: information.roomName, coord: [] }).then(function () {
                 setCoord([]);
                 setCircles([]);
             });
@@ -202,9 +208,11 @@ const StudentMeeting: FunctionComponent = () => {
 
     // download the image (with the potential cropped effect) from the back
     function requestImage() {
-        const address = process.env.REACT_APP_PHOTO;
-        if (address) {
-            axios.get(address, { params: { roomName: information.roomName } }).then((resp) => {
+        const address_photo = process.env.REACT_APP_PHOTO;
+        if (address_photo == undefined) {
+            console.log('addresse photo undefined');
+        } else {
+            axios.get(address_photo, { params: { roomName: information.roomName } }).then((resp) => {
                 const arrayBuffer = resp.data;
                 const image_Slice = new Image();
                 image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
@@ -216,9 +224,11 @@ const StudentMeeting: FunctionComponent = () => {
 
     //download the original image from the back
     function requestOriginalImage() {
-        const address = process.env.REACT_APP_ORIGINAL_PHOTO;
-        if (address) {
-            axios.get(address, { params: { roomName: information.roomName } }).then((resp) => {
+        const address_orig_photo = process.env.REACT_APP_ORIGINAL_PHOTO;
+        if (address_orig_photo == undefined) {
+            console.log('error adresse original photo');
+        } else {
+            axios.get(address_orig_photo, { params: { roomName: information.roomName } }).then((resp) => {
                 const arrayBuffer = resp.data;
                 const image_Slice = new Image();
                 image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
@@ -292,20 +302,20 @@ const StudentMeeting: FunctionComponent = () => {
             <div className='sectionButtonsStudent'>
                 <div className='buttonAmeliorerVue'>
                     <button className='buttonStudent' onClick={() => AmeliorerVue()}>
-                        {textBtn}
+                        {textBtn == 'Recadrer' ? t('crop') : t('cancel')}
                     </button>
                 </div>
                 {coord.length == 4 && (
                     <div>
                         <button className='buttonStudent' onClick={() => validerSaisie()}>
-                            Valider
+                            {t('validate')}
                         </button>
                     </div>
                 )}
 
                 {imgIsCropped && (
                     <button className='buttonStudent' onClick={() => resetCadrage()}>
-                        Annuler recadrage
+                        {t('resetCropping')}
                     </button>
                 )}
             </div>
