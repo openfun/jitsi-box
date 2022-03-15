@@ -37,8 +37,8 @@ interface InformationProps {
 
 export type JitsiFrameProps = {
     information: Information;
-    isBox : boolean;
-    options: ConstructorParameters<typeof JitsiMeetExternalAPI>[1];
+    isBox: boolean;
+    options?: ConstructorParameters<typeof JitsiMeetExternalAPI>[1];
     configure?: (api: JitsiMeetExternalAPI) => void;
     onError?: () => void;
 };
@@ -51,4 +51,15 @@ export type CounterProps = {
 
 export type CaptureImageProps = {
     roomName: string;
-}
+};
+
+export type InputButtonProps = {
+    onSubmit: (value: string) => void;
+    inputLabel: string;
+    buttonLabel: string;
+};
+
+export type ProgressButtonProps = {
+    initialCounter: number;
+    onClick: () => void;
+};
