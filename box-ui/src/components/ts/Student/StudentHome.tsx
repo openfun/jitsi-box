@@ -44,7 +44,11 @@ const StudentHome: FunctionComponent = () => {
             </div>
             <div className='HomeButtonsContainer'>
                 <InputButton buttonLabel={t('joinAMeeting')} inputLabel={t('enterRoomName')} onSubmit={joinMeeting} />
-                <ProgressButton initialCounter={state ? state.count : 10} onClick={launchLastMeeting} />
+                <ProgressButton initialCounter={state ? state.count : 0} onClick={launchLastMeeting}>
+                    {t('goBackToMeeting')}
+                    <br />
+                    {state?.roomName}
+                </ProgressButton>
                 <Link to='/teacher'>{t('linkForTeacher')}</Link>
             </div>
             <LanguageSelector />
