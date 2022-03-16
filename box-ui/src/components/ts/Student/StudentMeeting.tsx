@@ -72,9 +72,9 @@ const StudentMeeting: FunctionComponent = () => {
     }, [imgOriginal]);
 
     useEffect(() => {
-            console.log('error websocket communication');
         const addressWebsocket = process.env.REACT_APP_WS_ADDRESS;
         if (addressWebsocket == undefined) {
+            console.error('Websocket address is not configured');
         } else {
             const ws1 = new WebSocket(addressWebsocket);
             ws1.onmessage = function (event) {
@@ -107,9 +107,9 @@ const StudentMeeting: FunctionComponent = () => {
         const rapportx = widthImgOriginal / widthAff;
         const rapporty = heightImgOriginal / heightAff;
         coordinatesList = coord.map((point) => [point[0] * rapportx, point[1] * rapporty]);
-            console.log('error address coord');
         const addressCoord = process.env.REACT_APP_COORD;
         if (addressCoord == undefined) {
+            console.error('Coordinate address is not configured');
         } else {
             axios.post(addressCoord, { roomName: information.roomName, coord: coordinatesList }).then(function () {
                 setCoord([]);
@@ -120,9 +120,9 @@ const StudentMeeting: FunctionComponent = () => {
 
     function resetCadrage() {
         setImgIsCropped(false);
-            console.log('error address coord');
         const addressCoord = process.env.REACT_APP_COORD;
         if (addressCoord == undefined) {
+            console.error('Coordinate address is not configured');
         } else {
             axios.post(addressCoord, { roomName: information.roomName, coord: [] }).then(function () {
                 setCoord([]);
@@ -208,9 +208,9 @@ const StudentMeeting: FunctionComponent = () => {
 
     // download the image (with the potential cropped effect) from the back
     function requestImage() {
-            console.log('addresse photo undefined');
         const addressPhoto = process.env.REACT_APP_PHOTO;
         if (addressPhoto == undefined) {
+            console.error('Photo address is not configured');
         } else {
             axios.get(addressPhoto, { params: { roomName: information.roomName } }).then((resp) => {
                 const arrayBuffer = resp.data;
@@ -224,9 +224,9 @@ const StudentMeeting: FunctionComponent = () => {
 
     //download the original image from the back
     function requestOriginalImage() {
-            console.log('error adresse original photo');
         const addressOriginalPhoto = process.env.REACT_APP_ORIGINAL_PHOTO;
         if (addressOriginalPhoto == undefined) {
+            console.error('Original photo address is not configured');
         } else {
             axios.get(addressOriginalPhoto, { params: { roomName: information.roomName } }).then((resp) => {
                 const arrayBuffer = resp.data;
