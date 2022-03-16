@@ -43,19 +43,18 @@ const StudentMeeting: FunctionComponent = () => {
 
     //circle : svg element to display on click on the image
     const [circles, setCircles] = useState<React.SVGProps<SVGCircleElement>[]>([]);
-    const [textBtn, setTextBtn] = useState<string>('Recadrer');
 
     // img : downloaded from back, potentially cropped
-    const [height_img, setHeight] = useState<number>(0);
-    const [width_img_double, setWidth_img_double] = useState<string>('');
+    const [heightImg, setHeightImg] = useState<number>(0);
+    const [widthImgDouble, setWidthImgDouble] = useState<string>('');
     const [img, setImg] = useState<string>('../../FirstPicture.png');
     const [imgIsCropped, setImgIsCropped] = useState<boolean>(false);
 
     // img original : not cropped
-    const [width_img_original, setWidthOriginal] = useState<number>(0);
-    const [height_img_original, setHeightOriginal] = useState<number>(0);
-    const [ratio_img_original, setRatioOriginal] = useState<string>('');
-    const [img_original, setImg_original] = useState<string>('../../FirstPicture.png');
+    const [widthImgOriginal, setWidthImgOriginal] = useState<number>(0);
+    const [heightImgOriginal, setHeightImgOriginal] = useState<number>(0);
+    const [ratioImgOriginal, setRatioImgOriginal] = useState<string>('');
+    const [imgOriginal, setImgOriginal] = useState<string>('../../FirstPicture.png');
 
     //Dimension image affichée
     const [widthAff, setWidthAff] = useState<number>(0);
@@ -65,10 +64,7 @@ const StudentMeeting: FunctionComponent = () => {
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        if (selectCoord) {
-            setTextBtn('Annuler');
-        } else {
-            setTextBtn('Recadrer');
+        if (!selectCoord) {
             setCoord([]);
             setCircles([]);
         }
@@ -79,15 +75,15 @@ const StudentMeeting: FunctionComponent = () => {
     }, [img]);
 
     useEffect(() => {
-        getImgSize(img_original, true);
-    }, [img_original]);
+        getImgSize(imgOriginal, true);
+    }, [imgOriginal]);
 
     useEffect(() => {
-        const address_ws = process.env.REACT_APP_WS_ADDRESS;
-        if (address_ws == undefined) {
-            console.log('error websocket communication');
+        const addressWebsocket = process.env.REACT_APP_WS_ADDRESS;
+        if (addressWebsocket == undefined) {
+            console.error('Websocket address is not configured');
         } else {
-            const ws1 = new WebSocket(address_ws);
+            const ws1 = new WebSocket(addressWebsocket);
             ws1.onmessage = function (event) {
                 if (event.data == 'true') {
                     // if there is a new image availabe on the back
@@ -115,14 +111,14 @@ const StudentMeeting: FunctionComponent = () => {
         let coordinatesList: [number, number][] = [];
 
         // operation to send the correct coordinates to the back
-        const rapportx = width_img_original / widthAff;
-        const rapporty = height_img_original / heightAff;
+        const rapportx = widthImgOriginal / widthAff;
+        const rapporty = heightImgOriginal / heightAff;
         coordinatesList = coord.map((point) => [point[0] * rapportx, point[1] * rapporty]);
-        const address_coord = process.env.REACT_APP_COORD;
-        if (address_coord == undefined) {
-            console.log('error address coord');
+        const addressCoord = process.env.REACT_APP_COORD;
+        if (addressCoord == undefined) {
+            console.error('Coordinate address is not configured');
         } else {
-            axios.post(address_coord, { roomName: information.roomName, coord: coordinatesList }).then(function () {
+            axios.post(addressCoord, { roomName: information.roomName, coord: coordinatesList }).then(function () {
                 setCoord([]);
                 setCircles([]);
             });
@@ -131,11 +127,11 @@ const StudentMeeting: FunctionComponent = () => {
 
     function resetCadrage() {
         setImgIsCropped(false);
-        const address_coord = process.env.REACT_APP_COORD;
-        if (address_coord == undefined) {
-            console.log('error address coord');
+        const addressCoord = process.env.REACT_APP_COORD;
+        if (addressCoord == undefined) {
+            console.error('Coordinate address is not configured');
         } else {
-            axios.post(address_coord, { roomName: information.roomName, coord: [] }).then(function () {
+            axios.post(addressCoord, { roomName: information.roomName, coord: [] }).then(function () {
                 setCoord([]);
                 setCircles([]);
             });
@@ -192,25 +188,25 @@ const StudentMeeting: FunctionComponent = () => {
         const newImg = new Image();
 
         newImg.onload = function () {
-            const width_new = newImg.width;
-            let height_new = newImg.height;
+            const widthNew = newImg.width;
+            let heightNew = newImg.height;
             if (original) {
-                const ratio_img = ((width_new * 45) / height_new).toString() + 'vh';
-                setRatioOriginal(ratio_img);
-                setWidthOriginal(width_new);
-                setHeightOriginal(height_new);
+                const ratioImg = ((widthNew * 45) / heightNew).toString() + 'vh';
+                setRatioImgOriginal(ratioImg);
+                setWidthImgOriginal(widthNew);
+                setHeightImgOriginal(heightNew);
             } else {
                 // dimensions of the original image, not of the image displayed on screen
                 const ViewportWidth = window.innerWidth * 0.9;
                 const ViewportHeight = window.innerHeight * 0.45;
-                setWidth_img_double(((width_new * 45) / height_new).toString() + 'vh');
-                const pot_height = (height_new / width_new) * ViewportWidth;
-                if (pot_height < ViewportHeight) {
-                    height_new = pot_height;
+                setWidthImgDouble(((widthNew * 45) / heightNew).toString() + 'vh');
+                const potentialHeight = (heightNew / widthNew) * ViewportWidth;
+                if (potentialHeight < ViewportHeight) {
+                    heightNew = potentialHeight;
                 } else {
-                    height_new = ViewportHeight;
+                    heightNew = ViewportHeight;
                 }
-                setHeight(height_new);
+                setHeightImg(heightNew);
             }
         };
 
@@ -219,30 +215,32 @@ const StudentMeeting: FunctionComponent = () => {
 
     // download the image (with the potential cropped effect) from the back
 
+
     const requestProcessedImage = (proc: string) => {
         const address = process.env.REACT_APP_PROCESS;
         setprocessSelected(proc);
         if (address) {
             axios.get(address, { params: { roomName: information.roomName, process: proc } }).then((resp) => {
+
                 const arrayBuffer = resp.data;
-                const image_Slice = new Image();
-                image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
-                setImg(image_Slice.src);
+                const imageSlice = new Image();
+                imageSlice.src = 'data:image/jpg;base64,' + arrayBuffer;
+                setImg(imageSlice.src);
                 setLoading(false);
             });
         }
     };
     //download the original image from the back
     function requestOriginalImage() {
-        const address_orig_photo = process.env.REACT_APP_ORIGINAL_PHOTO;
-        if (address_orig_photo == undefined) {
-            console.log('error adresse original photo');
+        const addressOriginalPhoto = process.env.REACT_APP_ORIGINAL_PHOTO;
+        if (addressOriginalPhoto == undefined) {
+            console.error('Original photo address is not configured');
         } else {
-            axios.get(address_orig_photo, { params: { roomName: information.roomName } }).then((resp) => {
+            axios.get(addressOriginalPhoto, { params: { roomName: information.roomName } }).then((resp) => {
                 const arrayBuffer = resp.data;
-                const image_Slice = new Image();
-                image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
-                setImg_original(image_Slice.src);
+                const imageSlice = new Image();
+                imageSlice.src = 'data:image/jpg;base64,' + arrayBuffer;
+                setImgOriginal(imageSlice.src);
             });
         }
     }
@@ -260,7 +258,7 @@ const StudentMeeting: FunctionComponent = () => {
                     <div className='containerImgStudent'>
                         <div className='sectionClickSolo'>
                             <ClickableSVG
-                                height={height_img + 'px'}
+                                height={heightImg + 'px'}
                                 style={{
                                     backgroundImage: "url('" + img + "')",
                                     backgroundRepeat: 'no-repeat',
@@ -280,10 +278,10 @@ const StudentMeeting: FunctionComponent = () => {
                         <div>
                             <ClickableSVG
                                 height='45vh'
-                                width={ratio_img_original}
+                                width={ratioImgOriginal}
                                 onClick={addCircle}
                                 style={{
-                                    backgroundImage: "url('" + img_original + "')",
+                                    backgroundImage: "url('" + imgOriginal + "')",
                                     backgroundRepeat: 'no-repeat',
                                     backgroundSize: 'contain',
                                     maxWidth: '45vw',
@@ -296,7 +294,7 @@ const StudentMeeting: FunctionComponent = () => {
                         <div className='sectionClick'>
                             <ClickableSVG
                                 height='45vh'
-                                width={width_img_double}
+                                width={widthImgDouble}
                                 style={{
                                     backgroundImage: "url('" + img + "')",
                                     backgroundRepeat: 'no-repeat',
@@ -349,7 +347,7 @@ const StudentMeeting: FunctionComponent = () => {
                 </div>
                 <div className='buttonAmeliorerVue'>
                     <button className='buttonStudent' onClick={() => AmeliorerVue()}>
-                        {textBtn == 'Recadrer' ? t('crop') : t('cancel')}
+                        {!selectCoord ? t('crop') : t('cancel')}
                     </button>
                 </div>
                 {coord.length == 4 && (
