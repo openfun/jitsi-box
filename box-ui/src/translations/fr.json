@@ -23,6 +23,10 @@
       "resetCropping": "Annuler Recadrage",
       "validate": "Valider",
       "cancel":"Annuler",
-      "crop":"Recadrer"
+      "crop":"Recadrer",
+      "selectCamera": "Choisir une caméra",
+      "camera": "caméra",
+      "joinAMeeting" : "Rejoindre une réunion",
+      "linkForTeacher": "Je suis un/une professeur·e"
     }
   }

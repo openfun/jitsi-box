@@ -1,20 +1,23 @@
-.HomeButtonsContainer {
+.HomeContainer {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     text-align: center;
     align-self: center;
     background: #1f1f1f;
+    color: #efefef;
+    font-size: large;
     height: 100vh;
     width: 100vw;
 }
 
-.CreateMeetingComponent {
+.HomeButtonsContainer {
+    width: 100%;
+    margin-top: 4rem;
     display: flex;
     flex-direction: column;
-    justify-content: start;
-    height: 100vh;
-    width: 100vw;
+    justify-content: flex-start;
+    align-items: center;
 }
 
 .LogoContainer {
@@ -24,11 +27,4 @@
 
 .logo {
     display: flex;
-}
-.LanguageSupport {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    margin-right: 2%;
-    margin-bottom: 2%;
 }

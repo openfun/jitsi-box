@@ -23,6 +23,10 @@
         "resetCropping": "Reset Cropping",
         "validate": "Validate",
         "cancel":"Cancel",
-        "crop":"Crop"
+        "crop":"Crop",
+        "selectCamera": "Select camera ",
+        "camera": "camera",
+        "joinAMeeting": "Join a meeting",
+        "linkForTeacher": "I am a teacher"
     }
   }

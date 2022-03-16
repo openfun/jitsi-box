@@ -1,0 +1,8 @@
+.HomeContainer a {
+    color: cornflowerblue;
+    margin-top: 2em;
+}
+
+.HomeContainer a:visited {
+    color: #a233ec;
+}
