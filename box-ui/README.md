@@ -60,11 +60,15 @@ You must create a `.env` file (copy the `.env.template`), and fill it with the c
 
 Env variables starting with `REACT_APP_` are automatically catched by react, so we do not need the `dotenv` package.
 
-At the moment 3 variables are used :
+At the moment 7 variables are used :
 
 -   `REACT_APP_MARSHA_URL` that set marsha's address
 -   `REACT_APP_POLICY_ADDRESS` that should be set to `[policy server | http://localhost:8070]/policy?custom_address=${roomName}` if you need to upload pictures on different servers (depending on the meeting for instance) otherwise you just need to go on /policy
 -   `REACT_APP_TIME_BETWEEN_PICTURES` defines the time between two pictures sent to backend server
+-   `REACT_APP_ORIGINAL_PHOTO` defines the address to get the image not processed
+-   `REACT_APP_PHOTO` defines the address to get the image of the image processed
+-   `REACT_APP_WS_ADDRESS` defines the address used for Websocket commmunication
+-   `REACT_APP_COORD` defines the address to post the coordinates used for cropping the image
 
 ## Dockerfile
 
