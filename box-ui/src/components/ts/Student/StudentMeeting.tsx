@@ -32,7 +32,6 @@ const StudentMeeting: FunctionComponent = () => {
 
     //circle : svg element to display on click on the image
     const [circles, setCircles] = useState<React.SVGProps<SVGCircleElement>[]>([]);
-    const [textBtn, setTextBtn] = useState<string>('Recadrer');
 
     // img : downloaded from back, potentially cropped
     const [heightImg, setHeightImg] = useState<number>(0);
@@ -54,10 +53,7 @@ const StudentMeeting: FunctionComponent = () => {
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        if (selectCoord) {
-            setTextBtn('Annuler');
-        } else {
-            setTextBtn('Recadrer');
+        if (!selectCoord) {
             setCoord([]);
             setCircles([]);
         }
@@ -302,7 +298,7 @@ const StudentMeeting: FunctionComponent = () => {
             <div className='sectionButtonsStudent'>
                 <div className='buttonAmeliorerVue'>
                     <button className='buttonStudent' onClick={() => AmeliorerVue()}>
-                        {textBtn == 'Recadrer' ? t('crop') : t('cancel')}
+                        {!selectCoord ? t('crop') : t('cancel')}
                     </button>
                 </div>
                 {coord.length == 4 && (
