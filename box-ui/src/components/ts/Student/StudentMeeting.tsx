@@ -37,7 +37,7 @@ const StudentMeeting: FunctionComponent = () => {
 
     const [selectCoord, setSelectCoord] = useState<boolean>(false);
     const [coord, setCoord] = useState<[number, number][]>([]);
-    const [proco, setproco] = useState<string>('original');
+    const [processSelected, setprocessSelected] = useState<string>('original');
 
     //circle : svg element to display on click on the image
     const [circles, setCircles] = useState<React.SVGProps<SVGCircleElement>[]>([]);
@@ -101,7 +101,7 @@ const StudentMeeting: FunctionComponent = () => {
                 clearInterval(interval);
             };
         }
-    }, [proco, information]);
+    }, [processSelected, information]);
 
     // function called on click to validate the coordinates entry
     function validerSaisie() {
