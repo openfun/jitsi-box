@@ -91,7 +91,7 @@ const StudentMeeting: FunctionComponent = () => {
             ws1.onmessage = function (event) {
                 if (event.data == 'true') {
                     // if there is a new image availabe on the back
-                    requestImage();
+                    requestProcessedImage(processSelected);
                 }
             };
 
@@ -218,24 +218,10 @@ const StudentMeeting: FunctionComponent = () => {
     }
 
     // download the image (with the potential cropped effect) from the back
-    function requestImage() {
-        const address_photo = process.env.REACT_APP_PHOTO;
-        if (address_photo == undefined) {
-            console.log('addresse photo undefined');
-        } else {
-            axios.get(address_photo, { params: { roomName: information.roomName, process: proco } }).then((resp) => {
-                const arrayBuffer = resp.data;
-                const image_Slice = new Image();
-                image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
-                setImg(image_Slice.src);
-                setLoading(false);
-            });
-        }
-    }
 
     const requestProcessedImage = (proc: string) => {
         const address = process.env.REACT_APP_PROCESS;
-        setproco(proc);
+        setprocessSelected(proc);
         if (address) {
             axios.get(address, { params: { roomName: information.roomName, process: proc } }).then((resp) => {
                 const arrayBuffer = resp.data;
