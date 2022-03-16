@@ -7,8 +7,18 @@ import { LocationState } from '../../../utils/State';
 import styled from '@emotion/styled';
 import JitsiFrame from '../JitsiFrame';
 import axios from 'axios';
+import { Button, Menu, MenuItem } from '@mui/material';
 
 const StudentMeeting: FunctionComponent = () => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const processes = ['Color', 'B&W', 'Contrast', 'original', 'SuperRes'];
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
     const meetingOptions = useMemo(
         () => ({
             configOverwrite: {
@@ -27,6 +37,7 @@ const StudentMeeting: FunctionComponent = () => {
 
     const [selectCoord, setSelectCoord] = useState<boolean>(false);
     const [coord, setCoord] = useState<[number, number][]>([]);
+    const [proco, setproco] = useState<string>('original');
 
     //circle : svg element to display on click on the image
     const [circles, setCircles] = useState<React.SVGProps<SVGCircleElement>[]>([]);
@@ -90,7 +101,7 @@ const StudentMeeting: FunctionComponent = () => {
                 clearInterval(interval);
             };
         }
-    }, []);
+    }, [proco, information]);
 
     // function called on click to validate the coordinates entry
     function validerSaisie() {
@@ -202,9 +213,9 @@ const StudentMeeting: FunctionComponent = () => {
 
     // download the image (with the potential cropped effect) from the back
     function requestImage() {
-        const address = process.env.REACT_APP_PHOTO;
+        const address = process.env.REACT_APP_PROCESS;
         if (address) {
-            axios.get(address, { params: { roomName: information.roomName } }).then((resp) => {
+            axios.get(address, { params: { roomName: information.roomName, process: proco } }).then((resp) => {
                 const arrayBuffer = resp.data;
                 const image_Slice = new Image();
                 image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
@@ -214,6 +225,19 @@ const StudentMeeting: FunctionComponent = () => {
         }
     }
 
+    const requestProcessedImage = (proc: string) => {
+        const address = process.env.REACT_APP_PROCESS;
+        setproco(proc);
+        if (address) {
+            axios.get(address, { params: { roomName: information.roomName, process: proc } }).then((resp) => {
+                const arrayBuffer = resp.data;
+                const image_Slice = new Image();
+                image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
+                setImg(image_Slice.src);
+                setLoading(false);
+            });
+        }
+    };
     //download the original image from the back
     function requestOriginalImage() {
         const address = process.env.REACT_APP_ORIGINAL_PHOTO;
@@ -290,6 +314,43 @@ const StudentMeeting: FunctionComponent = () => {
             </div>
 
             <div className='sectionButtonsStudent'>
+                <div className='selectProcess'>
+                    <button
+                        // id='button'
+                        className='buttonStudent'
+                        aria-controls={open ? 'menu' : undefined}
+                        aria-haspopup='menu'
+                        aria-expanded={open ? 'true' : undefined}
+                        onClick={(event) => {
+                            handleClick(event);
+                        }}
+                    >
+                        Select Filter
+                    </button>
+                    <Menu
+                        id='menu'
+                        aria-labelledby='button'
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                    >
+                        {processes.map((element, index) => {
+                            return (
+                                <MenuItem onClick={() => requestProcessedImage(element)} key={index}>
+                                    select {element}
+                                </MenuItem>
+                            );
+                        })}
+                    </Menu>
+                </div>
                 <div className='buttonAmeliorerVue'>
                     <button className='buttonStudent' onClick={() => AmeliorerVue()}>
                         {textBtn}
