@@ -8,8 +8,18 @@ import styled from '@emotion/styled';
 import JitsiFrame from '../JitsiFrame';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
+import { Button, Menu, MenuItem } from '@mui/material';
 
 const StudentMeeting: FunctionComponent = () => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
+    const processes = ['Color', 'B&W', 'Contrast', 'original', 'SuperRes'];
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
     const { t } = useTranslation();
     const meetingOptions = useMemo(
         () => ({
@@ -29,6 +39,7 @@ const StudentMeeting: FunctionComponent = () => {
 
     const [selectCoord, setSelectCoord] = useState<boolean>(false);
     const [coord, setCoord] = useState<[number, number][]>([]);
+    const [processSelected, setprocessSelected] = useState<string>('original');
 
     //circle : svg element to display on click on the image
     const [circles, setCircles] = useState<React.SVGProps<SVGCircleElement>[]>([]);
@@ -76,7 +87,7 @@ const StudentMeeting: FunctionComponent = () => {
             ws1.onmessage = function (event) {
                 if (event.data == 'true') {
                     // if there is a new image availabe on the back
-                    requestImage();
+                    requestProcessedImage(processSelected);
                 }
             };
 
@@ -90,7 +101,7 @@ const StudentMeeting: FunctionComponent = () => {
                 clearInterval(interval);
             };
         }
-    }, [information]);
+    }, [processSelected, information]);
 
     // function called on click to validate the coordinates entry
     function validerSaisie() {
@@ -203,12 +214,14 @@ const StudentMeeting: FunctionComponent = () => {
     }
 
     // download the image (with the potential cropped effect) from the back
-    function requestImage() {
-        const addressPhoto = process.env.REACT_APP_PHOTO;
-        if (addressPhoto == undefined) {
-            console.error('Photo address is not configured');
-        } else {
-            axios.get(addressPhoto, { params: { roomName: information.roomName } }).then((resp) => {
+
+
+    const requestProcessedImage = (proc: string) => {
+        const address = process.env.REACT_APP_PROCESS;
+        setprocessSelected(proc);
+        if (address) {
+            axios.get(address, { params: { roomName: information.roomName, process: proc } }).then((resp) => {
+
                 const arrayBuffer = resp.data;
                 const imageSlice = new Image();
                 imageSlice.src = 'data:image/jpg;base64,' + arrayBuffer;
@@ -216,8 +229,7 @@ const StudentMeeting: FunctionComponent = () => {
                 setLoading(false);
             });
         }
-    }
-
+    };
     //download the original image from the back
     function requestOriginalImage() {
         const addressOriginalPhoto = process.env.REACT_APP_ORIGINAL_PHOTO;
@@ -296,6 +308,43 @@ const StudentMeeting: FunctionComponent = () => {
             </div>
 
             <div className='sectionButtonsStudent'>
+                <div className='selectProcess'>
+                    <button
+                        // id='button'
+                        className='buttonStudent'
+                        aria-controls={open ? 'menu' : undefined}
+                        aria-haspopup='menu'
+                        aria-expanded={open ? 'true' : undefined}
+                        onClick={(event) => {
+                            handleClick(event);
+                        }}
+                    >
+                        Select Filter
+                    </button>
+                    <Menu
+                        id='menu'
+                        aria-labelledby='button'
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleClose}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'left',
+                        }}
+                    >
+                        {processes.map((element, index) => {
+                            return (
+                                <MenuItem onClick={() => requestProcessedImage(element)} key={index}>
+                                    select {element}
+                                </MenuItem>
+                            );
+                        })}
+                    </Menu>
+                </div>
                 <div className='buttonAmeliorerVue'>
                     <button className='buttonStudent' onClick={() => AmeliorerVue()}>
                         {!selectCoord ? t('crop') : t('cancel')}
