@@ -6,12 +6,14 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import '../css/CaptureImage.css';
+import { useTranslation } from 'react-i18next';
 
 const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageProps) => {
     const [photoInterval, setPhotoInterval] = useState<ReturnType<typeof setTimeout>>();
     const [cameraList, setCameraList] = useState<MediaDeviceInfo[]>([]);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
+    const { t } = useTranslation();
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -113,7 +115,7 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
                     detectCamera(), handleClick(event);
                 }}
             >
-                Select camera
+                {t('selectCamera')}
             </Button>
             <Menu
                 id='menu'
@@ -139,7 +141,7 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
                                 }}
                                 key={index}
                             >
-                                select camera {camera['label']}
+                                {camera['label'] !== '' ? camera['label'] : `${t('camera')} ${index + 1}`}
                             </MenuItem>
                         </div>
                     );
