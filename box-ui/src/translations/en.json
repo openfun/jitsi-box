@@ -19,6 +19,8 @@
         "tipDescription": "You can use your smartphone to see the chat and to share the meeting QR Code.",
         "qrCodeDescription": "By scanning the QR Code with your smartphone, you can join the meeting or share the link.",
         "lang": "Language",
-        "qrCodeScanner": "Scan the QR Code of the meeting to join"
+        "qrCodeScanner": "Scan the QR Code of the meeting to join",
+        "selectCamera": "Select camera ",
+        "camera": "camera"
     }
   }
