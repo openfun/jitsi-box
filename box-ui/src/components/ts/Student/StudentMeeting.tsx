@@ -250,7 +250,7 @@ const StudentMeeting: FunctionComponent = () => {
                     <div className='containerImgStudent'>
                         <div className='sectionClickSolo'>
                             <ClickableSVG
-                                height={height_img.toString() + 'px'}
+                                height={height_img + 'px'}
                                 style={{
                                     backgroundImage: "url('" + img + "')",
                                     backgroundRepeat: 'no-repeat',
