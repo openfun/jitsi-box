@@ -8,7 +8,7 @@ import styled from '@emotion/styled';
 import JitsiFrame from '../JitsiFrame';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import { Button, Menu, MenuItem } from '@mui/material';
+import { Menu, MenuItem } from '@mui/material';
 
 const StudentMeeting: FunctionComponent = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -216,13 +216,11 @@ const StudentMeeting: FunctionComponent = () => {
 
     // download the image (with the potential cropped effect) from the back
 
-
     const requestProcessedImage = (proc: string) => {
         const address = process.env.REACT_APP_PROCESS;
         setprocessSelected(proc);
         if (address) {
             axios.get(address, { params: { roomName: information.roomName, process: proc } }).then((resp) => {
-
                 const arrayBuffer = resp.data;
                 const imageSlice = new Image();
                 imageSlice.src = 'data:image/jpg;base64,' + arrayBuffer;
