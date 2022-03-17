@@ -65,6 +65,9 @@ const StudentMeeting: FunctionComponent = () => {
     //Animation loading, waiting for new Image
     const [loading, setLoading] = useState<boolean>(false);
 
+    //websocket
+    const [ws1, setWs1] = useState<WebSocket>();
+
     useEffect(() => {
         if (!selectCoord) {
             setCoord([]);
@@ -81,11 +84,19 @@ const StudentMeeting: FunctionComponent = () => {
     }, [imgOriginal]);
 
     useEffect(() => {
-        const addressWebsocket = process.env.REACT_APP_WS_ADDRESS;
-        if (addressWebsocket == undefined) {
+        const id = Date.now();
+        const addressWebsocket_general = process.env.REACT_APP_WS_ADDRESS;
+        if (addressWebsocket_general == undefined) {
             console.error('Websocket address is not configured');
         } else {
+            const addressWebsocket = addressWebsocket_general + '/' + information.roomName + '/' + id;
             const ws1 = new WebSocket(addressWebsocket);
+            setWs1(ws1);
+        }
+    }, [information]);
+
+    useEffect(() => {
+        if (ws1) {
             ws1.onmessage = function (event) {
                 if (event.data == 'true') {
                     // if there is a new image availabe on the back
@@ -96,14 +107,14 @@ const StudentMeeting: FunctionComponent = () => {
             // ask to backend if there is a new photo to download
             const interval = setInterval(() => {
                 ws1.send(information.roomName);
-            }, 1000);
+            }, 4000);
 
             return () => {
                 ws1.close;
                 clearInterval(interval);
             };
         }
-    }, [processSelected, information]);
+    }, [ws1, processSelected, information]);
 
     const configureFrame = useCallback(
         (api: JitsiMeetExternalAPI) => {
