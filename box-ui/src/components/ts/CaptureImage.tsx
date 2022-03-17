@@ -15,7 +15,7 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
     const [photoInterval, setPhotoInterval] = useState<ReturnType<typeof setTimeout>>();
     const [cameraList, setCameraList] = useState<MediaDeviceInfo[]>([]);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const [beginTuto, setBeginTuto] = useState(false);
+    const [displayFocus, setDisplayFocus] = useState(false);
     const open = Boolean(anchorEl);
     const { t } = useTranslation();
 
@@ -151,10 +151,10 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
                     );
                 })}
             </Menu>
-            <IconButton id='TutoButton' aria-label='help' onClick={() => setBeginTuto(!beginTuto)}>
+            <IconButton id='TutoButton' aria-label='help' onClick={() => setDisplayFocus(!displayFocus)}>
                 <HelpIcon />
             </IconButton>
-            {beginTuto ? (
+            {displayFocus ? (
                 <FocusMode
                     focusItems={[
                         {
@@ -166,6 +166,7 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
                         { element: '.QrcodeButton', textElement: t('tutoShareQRCode') },
                         { element: '.OpenTopBarButton', textElement: t('tutoBroadcast') },
                     ]}
+                    setDisplayFocus={setDisplayFocus}
                 />
             ) : null}
         </div>

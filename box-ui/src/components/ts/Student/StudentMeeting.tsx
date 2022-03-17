@@ -8,13 +8,16 @@ import styled from '@emotion/styled';
 import JitsiFrame from '../JitsiFrame';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import { Menu, MenuItem } from '@mui/material';
+import { IconButton, Menu, MenuItem } from '@mui/material';
+import HelpIcon from '@mui/icons-material/Help';
 import JitsiMeetExternalAPI from '../../../utils/JitsiMeetExternalAPI';
+import FocusMode from '../FocusMode';
 
 const StudentMeeting: FunctionComponent = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const processes = ['Color', 'B&W', 'Contrast', 'original', 'SuperRes'];
+    const [displayFocus, setDisplayFocus] = useState(false);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -384,7 +387,24 @@ const StudentMeeting: FunctionComponent = () => {
                         {t('resetCropping')}
                     </button>
                 )}
+                <IconButton id='TutoButton' aria-label='help' onClick={() => setDisplayFocus(!displayFocus)}>
+                    <HelpIcon sx={{ color: 'white' }} />
+                </IconButton>
             </div>
+            {displayFocus ? (
+                <FocusMode
+                    focusItems={[
+                        { element: '.meetingUrl', textElement: t('tutoMeetingUrl') },
+                        { element: '.QrcodeScannerButton', textElement: t('tutoQRCode') },
+                        { element: '.QrcodeButton', textElement: t('tutoShareQRCode') },
+                        { element: '.OpenTopBarButton', textElement: t('tutoBroadcast') },
+                        { element: '.sectionClickSolo', textElement: t('tutoSelectCamera') },
+                        { element: '.selectProcess', textElement: t('tutoMeetingUrl') },
+                        { element: '.buttonAmeliorerVue', textElement: t('tutoMeetingUrl') },
+                    ]}
+                    setDisplayFocus={setDisplayFocus}
+                />
+            ) : null}
         </div>
     );
 };
