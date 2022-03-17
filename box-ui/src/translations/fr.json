@@ -27,6 +27,11 @@
       "selectCamera": "Choisir une caméra",
       "camera": "caméra",
       "joinAMeeting" : "Rejoindre une réunion",
-      "linkForTeacher": "Je suis un/une professeur·e"
+      "linkForTeacher": "Je suis un/une professeur·e",
+      "tutoSelectCamera" : "Cliquez ici pour choisir la caméra qui prendra des photos du tableau pour les élèves à distance. La première fois que vous appuyez sur ce bouton le nom des caméras peut ne pas apparaître si vous n'avez jamais autorisé l'application à prendre des photos. Après avoir donné l'autorisation les photos commenceront, vous n'avez pas à resélectionner une caméra.",
+      "tutoMeetingUrl" : "Vous pouvez voir ici le nom de votre réunion, en particulier ce qui se situe après https://meeting.education constitue le nom de votre salle ! Vous pouvez aussi cliquer ici pour changer de salle.",
+      "tutoQRCode" : "Si vous possedez un QR code de réunion, vous pouvez appuyer sur cette icone pour scanner le QR code.",
+      "tutoShareQRCode" : "En cliquant ici vous pouvez récupérer le QR code de votre réunion pour le partager.",
+      "tutoBroadcast" : "Ici vous pouvez démarrer un live avec Marsha."
     }
   }
