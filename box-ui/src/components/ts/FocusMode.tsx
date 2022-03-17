@@ -1,4 +1,5 @@
 import React, { useState, FunctionComponent, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FocusModeProps } from '../../utils/Props';
 import '../css/FocusMode.css';
 
@@ -6,6 +7,7 @@ const FocusMode: FunctionComponent<FocusModeProps> = (props: FocusModeProps) => 
     const [borderSize, setBorderSize] = useState('0px');
     const [tutoState, setTutoState] = useState(0);
     const [sizeChanged, setSizeChanged] = useState(true);
+    const { t } = useTranslation();
     let timerId: NodeJS.Timeout;
     console.log('help asked');
     useEffect(() => {
@@ -49,7 +51,10 @@ const FocusMode: FunctionComponent<FocusModeProps> = (props: FocusModeProps) => 
                         {tutoState < props.focusItems.length ? props.focusItems[tutoState].textElement : ''}
                     </p>
                     <button id='continueTuto' onClick={() => setTutoState(tutoState + 1)}>
-                        Continuer le tuto
+                        {t('continueTuto')}
+                    </button>
+                    <button id='quitterTuto' onClick={() => props.setDisplayFocus(false)}>
+                        {t('quitTuto')}
                     </button>
                 </div>
             </div>
