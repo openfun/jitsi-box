@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent, useEffect, useMemo } from 'react';
+import React, { useState, FunctionComponent, useEffect, useMemo, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../../css/StudentMeeting.css';
 import PopupComponent from '../PopupComponent';
@@ -9,6 +9,7 @@ import JitsiFrame from '../JitsiFrame';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { Menu, MenuItem } from '@mui/material';
+import JitsiMeetExternalAPI from '../../../utils/JitsiMeetExternalAPI';
 
 const StudentMeeting: FunctionComponent = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -103,6 +104,22 @@ const StudentMeeting: FunctionComponent = () => {
             };
         }
     }, [processSelected, information]);
+
+    const configureFrame = useCallback(
+        (api: JitsiMeetExternalAPI) => {
+            api.addListener('videoConferenceLeft', () => {
+                navigate('/student', {
+                    replace: true,
+                    state: {
+                        count: 120,
+                        roomName: information.roomName,
+                        domain: information.domain,
+                    },
+                });
+            });
+        },
+        [information],
+    );
 
     // function called on click to validate the coordinates entry
     function validerSaisie() {
@@ -253,18 +270,7 @@ const StudentMeeting: FunctionComponent = () => {
                         isBox={false}
                         information={information}
                         options={meetingOptions}
-                        configure={(api) => {
-                            api.addListener('videoConferenceLeft', () => {
-                                navigate('/student', {
-                                    replace: true,
-                                    state: {
-                                        count: 120,
-                                        roomName: information.roomName,
-                                        domain: information.domain,
-                                    },
-                                });
-                            });
-                        }}
+                        configure={configureFrame}
                     />
                 </div>
             </div>
