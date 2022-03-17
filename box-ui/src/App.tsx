@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
 import BoxHome from './components/ts/Box/BoxHome';
 import BoxMeeting from './components/ts/Box/BoxMeeting';
 import StudentMeeting from './components/ts/Student/StudentMeeting';
@@ -9,7 +9,7 @@ import TeacherMeeting from './components/ts/Teacher/TeacherMeeting';
 
 const App: FunctionComponent = () => {
     return (
-        <HashRouter>
+        <Router basename={process.env.PUBLIC_URL}>
             <div className='App'>
                 <Routes>
                     <Route path='' element={<Navigate to='/student' />} />
@@ -28,7 +28,7 @@ const App: FunctionComponent = () => {
                     <Route path='*' element={<Navigate to='student' />} />
                 </Routes>
             </div>
-        </HashRouter>
+        </Router>
     );
 };
 
