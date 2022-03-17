@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo, useCallback, FunctionComponent } from 'react';
+import React, { useState, useMemo, FunctionComponent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CaptureImage from '../CaptureImage';
 import '../../css/BoxMeeting.css';

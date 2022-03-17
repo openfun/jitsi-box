@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useRef, useEffect, useState } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 import { styled } from '@mui/material/styles';
 import HomeButton from './HomeButton';
