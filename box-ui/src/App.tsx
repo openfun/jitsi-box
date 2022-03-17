@@ -9,7 +9,7 @@ import TeacherMeeting from './components/ts/Teacher/TeacherMeeting';
 
 const App: FunctionComponent = () => {
     return (
-        <Router basename={process.env.REACT_APP_PUBLIC_URL}>
+        <Router>
             <div className='App'>
                 <Routes>
                     <Route path='' element={<Navigate to='/student' />} />
