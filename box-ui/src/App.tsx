@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { BrowserRouter as Router, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import BoxHome from './components/ts/Box/BoxHome';
 import BoxMeeting from './components/ts/Box/BoxMeeting';
 import StudentMeeting from './components/ts/Student/StudentMeeting';
@@ -9,10 +9,10 @@ import TeacherMeeting from './components/ts/Teacher/TeacherMeeting';
 
 const App: FunctionComponent = () => {
     return (
-        <Router>
+        <HashRouter>
             <div className='App'>
                 <Routes>
-                    <Route path='/' element={<Navigate to='/student' />} />
+                    <Route path='' element={<Navigate to='/student' />} />
                     <Route path='box'>
                         <Route index element={<BoxHome />} />
                         <Route path='meeting' element={<BoxMeeting />} />
@@ -28,7 +28,7 @@ const App: FunctionComponent = () => {
                     <Route path='*' element={<Navigate to='student' />} />
                 </Routes>
             </div>
-        </Router>
+        </HashRouter>
     );
 };
 
