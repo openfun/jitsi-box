@@ -32,6 +32,8 @@
         "tutoMeetingUrl" : "You can see here the name of your meeting, all that is after https://meeting.education is your room name ! You can also click here to change your room.",
         "tutoQRCode" : "If you have a meeting QR code, you can scan it by clicking on this icone",
         "tutoShareQRCode" : "By clicking here you can get your meeting QR code to share it.",
-        "tutoBroadcast" : "Here you can start a Marsha live."
+        "tutoBroadcast" : "Here you can start a Marsha live.",
+        "continueTuto": "Continue tutorial",
+        "quitTuto": "Exit tutorial"
     }
   }
