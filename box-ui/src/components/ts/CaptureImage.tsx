@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FunctionComponent, useRef } from 'react';
+import React, { useState, useEffect, FunctionComponent } from 'react';
 import { ImageCapture } from 'image-capture';
 import { CaptureImageProps } from '../../utils/Props';
 import axios, { AxiosResponse } from 'axios';
