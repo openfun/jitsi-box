@@ -1,0 +1,44 @@
+#focusMode {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    border: solid;
+    border-color: rgba(0, 0, 0, 0.7);
+    border-image-slice: 1;
+    z-index: 2;
+    pointer-events: none;
+}
+
+#centeringExplanation {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+#explanation {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    align-self: center;
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    border-radius: 25px;
+    z-index: 3;
+    pointer-events: all;
+    padding: 1em;
+    max-width: 20em;
+}
+
+#explanationText {
+    overflow-wrap: break-word;
+    max-width: 20em;
+}
