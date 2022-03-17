@@ -29,7 +29,7 @@ const StudentHome: FunctionComponent = () => {
 
     const launchLastMeeting = () => {
         navigate(
-            { pathname: '/box/meeting' },
+            { pathname: '/student/meeting' },
             {
                 replace: true,
                 state: { roomName: state ? state.roomName : '', domain: state ? state.domain : '' },
