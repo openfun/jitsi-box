@@ -9,6 +9,7 @@
     border-image-slice: 1;
     z-index: 2;
     pointer-events: none;
+    transition: all 0.5s linear;
 }
 
 #centeringExplanation {
@@ -18,8 +19,8 @@
     bottom: 0px;
     left: 0px;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: left;
+    justify-content: left;
     pointer-events: none;
 }
 
@@ -28,8 +29,7 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    align-self: center;
-    position: absolute;
+    align-self: flex-end;
     background-color: rgb(255, 255, 255);
     border-radius: 25px;
     z-index: 3;
