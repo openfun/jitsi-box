@@ -4,7 +4,9 @@ import { useTranslation } from 'react-i18next';
 import { availableLanguages } from '../../i18n';
 import '../css/LanguageSelector.css';
 
-const LanguageSelector: FunctionComponent<React.HTMLAttributes<any>> = (props: React.HTMLAttributes<any>) => {
+const LanguageSelector: FunctionComponent<React.HTMLAttributes<HTMLDivElement>> = (
+    props: React.HTMLAttributes<HTMLDivElement>,
+) => {
     const { t, i18n } = useTranslation();
     return (
         <div {...props} className='LanguageSelector'>
