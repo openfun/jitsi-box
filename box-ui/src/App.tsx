@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { BrowserRouter as HashRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import BoxHome from './components/ts/Box/BoxHome';
 import BoxMeeting from './components/ts/Box/BoxMeeting';
 import StudentMeeting from './components/ts/Student/StudentMeeting';
