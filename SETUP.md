@@ -96,7 +96,7 @@ and add your public key.
 
 To change the Jitsi-Box UI website: `sudo nano /etc/xdg/openbox/environment`, and change the line
 ```bash
-export JITSI_BOX_URL=https://your.jitsi-box.url.com
+export JITSI_BOX_URL=https://your.jitsi-box.url.com/box
 ```
 
 Reboot once you are done :)
