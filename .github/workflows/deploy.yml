@@ -28,9 +28,7 @@ jobs:
         run: npm ci
 
       - name: Create the production build
-        run: |
-          npm run build --if-present
-          cp build/index.html build/404.html
+        run: npm run build --if-present
         env:
           REACT_APP_MARSHA_URL: https://marsha.education/api/video/pairing-challenge
           REACT_APP_PUBLIC_URL: https://jitsi-box.com
