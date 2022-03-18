@@ -65,30 +65,23 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
     };
 
     const takePhoto = (imageCapturer: ImageCapture, roomName: string) => {
-        imageCapturer
-            .takePhoto()
-            .then((blob: Blob) => {
-                const data = new FormData();
-                data.append('name', 'image');
-                data.append('file', blob, `${roomName}.jpg`);
-                const address = process.env.REACT_APP_POLICY_ADDRESS;
-                if (address == undefined) {
-                    alert('No policy server defined');
-                } else {
-                    axios.get(address).then((response: AxiosResponse) =>
-                        axios
-                            .post(response.data['url'], data, {
-                                headers: {
-                                    'Content-Type': 'multipart/form-data',
-                                },
-                            })
-                            .catch((error) => console.log(error)),
-                    );
-                }
-            })
-            .catch((error) => {
-                console.error('takePhoto() failed: ', error);
-            });
+        imageCapturer.takePhoto().then((blob: Blob) => {
+            const data = new FormData();
+            data.append('name', 'image');
+            data.append('file', blob, `${roomName}.jpg`);
+            const pictureAddress = process.env.REACT_APP_PICTURE_ADDRESS;
+            if (pictureAddress == undefined) {
+                console.log('No picture address defined, contact your maintainer');
+            } else {
+                axios
+                    .post(pictureAddress, data, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    })
+                    .catch((error) => console.log(error));
+            }
+        });
     };
 
     useEffect(() => {
