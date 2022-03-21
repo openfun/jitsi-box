@@ -1,5 +1,5 @@
 import React, { useEffect, FunctionComponent } from 'react';
-import '../css/JitsiComponent.css';
+import '../css/JitsiFrame.css';
 import { JitsiFrameProps } from '../../utils/Props';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import JitsiMeetExternalAPI from '../../utils/JitsiMeetExternalAPI';
