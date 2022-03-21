@@ -2,16 +2,17 @@ import React, { FunctionComponent } from 'react';
 import HomeButton from '../HomeButton';
 import '../../css/Home.css';
 import JitsiBoxLogo from '../../../logo/jitsibox.svg';
-import LanguageSelector from '../LanguageSelector';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { LocationState } from '../../../utils/State';
 import { useTranslation } from 'react-i18next';
 import GenerateRandomFrenchRoomName from '../../../dictionnaries_fr';
 import ProgressButton from '../ProgressButton';
+import SelectButton from '../SelectButton';
+import { availableLanguages } from '../../../i18n';
 
 const BoxHome: FunctionComponent = () => {
     const state = useLocation().state as LocationState | null;
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const launchMeeting = () => {
         navigate(
@@ -46,7 +47,14 @@ const BoxHome: FunctionComponent = () => {
                     {state ? state.roomName : ''}
                 </ProgressButton>
             </div>
-            <LanguageSelector />
+            <SelectButton
+                selectItems={{
+                    inputLabelText: t('lang'),
+                    menuItems: availableLanguages,
+                }}
+                value={i18n.language}
+                onChange={(e) => i18n.changeLanguage(e.target.value)}
+            />
         </div>
     );
 };
