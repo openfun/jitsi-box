@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import { Menu, MenuItem } from '@mui/material';
 import JitsiMeetExternalAPI from '../../../utils/JitsiMeetExternalAPI';
 import FloatingBox from '../FloatingBox';
-import { ResizableBox } from 'react-resizable';
 
 const StudentMeeting: FunctionComponent = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
