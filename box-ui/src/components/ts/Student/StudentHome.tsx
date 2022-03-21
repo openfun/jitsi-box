@@ -1,16 +1,17 @@
 import React, { FunctionComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import LanguageSelector from '../LanguageSelector';
 import InputButton from '../InputButton';
 import JitsiBoxLogo from '../../../logo/jitsibox.svg';
 import '../../css/Home.css';
 import '../../css/StudentHome.css';
 import { LocationState } from '../../../utils/State';
 import ProgressButton from '../ProgressButton';
+import SelectButton from '../SelectButton';
+import { availableLanguages } from '../../../i18n';
 
 const StudentHome: FunctionComponent = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const state = useLocation().state as LocationState | null;
     const navigate = useNavigate();
 
@@ -51,7 +52,16 @@ const StudentHome: FunctionComponent = () => {
                 </ProgressButton>
                 <Link to='/teacher'>{t('linkForTeacher')}</Link>
             </div>
-            <LanguageSelector />
+            <SelectButton
+                selectItems={{
+                    inputLabelText: t('lang'),
+                    menuItems: availableLanguages,
+                }}
+                value={i18n.language}
+                onChange={(e) => {
+                    i18n.changeLanguage(e.target.value as string);
+                }}
+            />
         </div>
     );
 };
