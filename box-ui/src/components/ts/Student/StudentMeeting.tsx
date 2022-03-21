@@ -10,6 +10,7 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { Menu, MenuItem } from '@mui/material';
 import JitsiMeetExternalAPI from '../../../utils/JitsiMeetExternalAPI';
+import { v1 as uuidv1 } from 'uuid';
 
 const StudentMeeting: FunctionComponent = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -84,7 +85,7 @@ const StudentMeeting: FunctionComponent = () => {
     }, [imgOriginal]);
 
     useEffect(() => {
-        const id = Date.now();
+        const id = uuidv1();
         const addressWebsocket_general = process.env.REACT_APP_WS_ADDRESS;
         if (addressWebsocket_general == undefined) {
             console.error('Websocket address is not configured');
@@ -108,7 +109,7 @@ const StudentMeeting: FunctionComponent = () => {
                 ws.close;
             };
         }
-    }, [ws, processSelected, information]);
+    }, [ws, processSelected]);
 
     const configureFrame = useCallback(
         (api: JitsiMeetExternalAPI) => {
