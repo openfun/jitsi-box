@@ -104,14 +104,8 @@ const StudentMeeting: FunctionComponent = () => {
                 }
             };
 
-            // ask to backend if there is a new photo to download
-            const interval = setInterval(() => {
-                ws1.send(information.roomName);
-            }, 4000);
-
             return () => {
                 ws1.close;
-                clearInterval(interval);
             };
         }
     }, [ws1, processSelected, information]);
