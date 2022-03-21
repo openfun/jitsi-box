@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import '../css/SelectButton.css';
 import { SelectButtonProps } from '../../utils/Props';
 
 const SelectButton: FunctionComponent<SelectButtonProps> = (props: SelectButtonProps) => {
