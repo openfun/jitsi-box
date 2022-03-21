@@ -56,6 +56,7 @@ declare namespace JitsiMeetExternalAPI {
         disableDeepLinking?: boolean;
         disablePolls?: boolean;
         disableSimulcast?: boolean;
+        disabledSounds?: string[];
         enableWelcomePage?: false;
         hideConferenceSubject?: boolean;
         hideConferenceTimer?: boolean;
