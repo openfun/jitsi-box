@@ -66,7 +66,7 @@ const StudentMeeting: FunctionComponent = () => {
     const [loading, setLoading] = useState<boolean>(false);
 
     //websocket
-    const [ws1, setWs1] = useState<WebSocket>();
+    const [ws, setWs] = useState<WebSocket>();
 
     useEffect(() => {
         if (!selectCoord) {
@@ -90,14 +90,14 @@ const StudentMeeting: FunctionComponent = () => {
             console.error('Websocket address is not configured');
         } else {
             const addressWebsocket = addressWebsocket_general + '/' + information.roomName + '/' + id;
-            const ws1 = new WebSocket(addressWebsocket);
-            setWs1(ws1);
+            const ws = new WebSocket(addressWebsocket);
+            setWs(ws);
         }
     }, [information]);
 
     useEffect(() => {
-        if (ws1) {
-            ws1.onmessage = function (event) {
+        if (ws) {
+            ws.onmessage = function (event) {
                 if (event.data == 'true') {
                     // if there is a new image availabe on the back
                     requestProcessedImage(processSelected);
@@ -105,10 +105,10 @@ const StudentMeeting: FunctionComponent = () => {
             };
 
             return () => {
-                ws1.close;
+                ws.close;
             };
         }
-    }, [ws1, processSelected, information]);
+    }, [ws, processSelected, information]);
 
     const configureFrame = useCallback(
         (api: JitsiMeetExternalAPI) => {
@@ -138,7 +138,7 @@ const StudentMeeting: FunctionComponent = () => {
         const rapporty = heightImgOriginal / heightAff;
         coordinatesList = coord.map((point) => [point[0] * rapportx, point[1] * rapporty]);
         const addressCoord = process.env.REACT_APP_COORD;
-        if (addressCoord == undefined) {
+        if (addressCoord === undefined) {
             console.error('Coordinate address is not configured');
         } else {
             axios.post(addressCoord, { room_name: information.roomName, coord: coordinatesList }).then(function () {
@@ -151,7 +151,7 @@ const StudentMeeting: FunctionComponent = () => {
     function resetCadrage() {
         setImgIsCropped(false);
         const addressCoord = process.env.REACT_APP_COORD;
-        if (addressCoord == undefined) {
+        if (addressCoord === undefined) {
             console.error('Coordinate address is not configured');
         } else {
             axios.post(addressCoord, { room_name: information.roomName, coord: [] }).then(function () {
@@ -254,7 +254,7 @@ const StudentMeeting: FunctionComponent = () => {
     //download the original image from the back
     function requestOriginalImage() {
         const addressOriginalPhoto = process.env.REACT_APP_ORIGINAL_PHOTO;
-        if (addressOriginalPhoto == undefined) {
+        if (addressOriginalPhoto === undefined) {
             console.error('Original photo address is not configured');
         } else {
             axios.get(addressOriginalPhoto, { params: { room_name: information.roomName } }).then((resp) => {
