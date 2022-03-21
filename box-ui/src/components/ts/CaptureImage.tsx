@@ -8,6 +8,7 @@ import SelectButton from './SelectButton';
 import { IconButton } from '@mui/material';
 import FocusMode from './FocusMode';
 import HelpIcon from '@mui/icons-material/Help';
+import SelectButton from './SelectButton';
 
 const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageProps) => {
     const [photoInterval, setPhotoInterval] = useState<ReturnType<typeof setTimeout>>();
@@ -15,9 +16,11 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
     const [displayFocus, setDisplayFocus] = useState(false);
     const { t } = useTranslation();
     const detectCamera = () => {
-        navigator.mediaDevices.enumerateDevices().then((devices) => {
-            const cameras = devices.filter((value) => value['kind'] === 'videoinput');
-            setCameraList(cameras);
+        navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(() => {
+            navigator.mediaDevices.enumerateDevices().then((devices) => {
+                const cameras = devices.filter((value) => value['kind'] === 'videoinput');
+                setCameraList(cameras);
+            });
         });
     };
 
