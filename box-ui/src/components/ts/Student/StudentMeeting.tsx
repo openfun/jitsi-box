@@ -1,7 +1,6 @@
-import React, { useState, FunctionComponent, useEffect, useMemo, useCallback } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useState, FunctionComponent, useEffect, useMemo } from 'react';
+import { useLocation } from 'react-router-dom';
 import '../../css/StudentMeeting.css';
-import PopupComponent from '../PopupComponent';
 import CircularProgress from '@mui/material/CircularProgress';
 import { LocationState } from '../../../utils/State';
 import styled from '@emotion/styled';
@@ -10,6 +9,8 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { Menu, MenuItem } from '@mui/material';
 import JitsiMeetExternalAPI from '../../../utils/JitsiMeetExternalAPI';
+import FloatingBox from '../FloatingBox';
+import { ResizableBox } from 'react-resizable';
 
 const StudentMeeting: FunctionComponent = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -33,30 +34,31 @@ const StudentMeeting: FunctionComponent = () => {
         [],
     );
     const state = useLocation().state as LocationState;
-    const navigate = useNavigate();
     const [information, setInformation] = useState({
         roomName: state && state.roomName ? state.roomName : 'dty',
         domain: state && state.domain ? state.domain : 'meeting.education',
     });
 
     const [selectCoord, setSelectCoord] = useState<boolean>(false);
+    const [miniImg, setMiniImg] = useState<boolean>(true);
     const [coord, setCoord] = useState<[number, number][]>([]);
     const [processSelected, setprocessSelected] = useState<string>('original');
 
     //circle : svg element to display on click on the image
     const [circles, setCircles] = useState<React.SVGProps<SVGCircleElement>[]>([]);
+    const [textBtn, setTextBtn] = useState<string>('Recadrer');
 
     // img : downloaded from back, potentially cropped
-    const [heightImg, setHeightImg] = useState<number>(0);
-    const [widthImgDouble, setWidthImgDouble] = useState<string>('');
+    const [height_img, setHeight] = useState<number>(0);
+    const [width_img_double, setWidth_img_double] = useState<string>('');
     const [img, setImg] = useState<string>('../../FirstPicture.png');
     const [imgIsCropped, setImgIsCropped] = useState<boolean>(false);
 
     // img original : not cropped
-    const [widthImgOriginal, setWidthImgOriginal] = useState<number>(0);
-    const [heightImgOriginal, setHeightImgOriginal] = useState<number>(0);
-    const [ratioImgOriginal, setRatioImgOriginal] = useState<string>('');
-    const [imgOriginal, setImgOriginal] = useState<string>('../../FirstPicture.png');
+    const [width_img_original, setWidthOriginal] = useState<number>(0);
+    const [height_img_original, setHeightOriginal] = useState<number>(0);
+    const [ratio_img_original, setRatioOriginal] = useState<string>('');
+    const [img_original, setImg_original] = useState<string>('../../FirstPicture.png');
 
     //Dimension image affichée
     const [widthAff, setWidthAff] = useState<number>(0);
@@ -66,7 +68,10 @@ const StudentMeeting: FunctionComponent = () => {
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        if (!selectCoord) {
+        if (selectCoord) {
+            setTextBtn('Annuler');
+        } else {
+            setTextBtn('Recadrer');
             setCoord([]);
             setCircles([]);
         }
@@ -77,15 +82,19 @@ const StudentMeeting: FunctionComponent = () => {
     }, [img]);
 
     useEffect(() => {
-        getImgSize(imgOriginal, true);
-    }, [imgOriginal]);
+        console.log('view changed');
+    }, [miniImg]);
 
     useEffect(() => {
-        const addressWebsocket = process.env.REACT_APP_WS_ADDRESS;
-        if (addressWebsocket == undefined) {
-            console.error('Websocket address is not configured');
+        getImgSize(img_original, true);
+    }, [img_original]);
+
+    useEffect(() => {
+        const address_ws = process.env.REACT_APP_WS_ADDRESS;
+        if (address_ws == undefined) {
+            console.log('error websocket communication');
         } else {
-            const ws1 = new WebSocket(addressWebsocket);
+            const ws1 = new WebSocket(address_ws);
             ws1.onmessage = function (event) {
                 if (event.data == 'true') {
                     // if there is a new image availabe on the back
@@ -105,22 +114,6 @@ const StudentMeeting: FunctionComponent = () => {
         }
     }, [processSelected, information]);
 
-    const configureFrame = useCallback(
-        (api: JitsiMeetExternalAPI) => {
-            api.addListener('videoConferenceLeft', () => {
-                navigate('/student', {
-                    replace: true,
-                    state: {
-                        count: 120,
-                        roomName: information.roomName,
-                        domain: information.domain,
-                    },
-                });
-            });
-        },
-        [information],
-    );
-
     // function called on click to validate the coordinates entry
     function validerSaisie() {
         setLoading(true);
@@ -129,14 +122,15 @@ const StudentMeeting: FunctionComponent = () => {
         let coordinatesList: [number, number][] = [];
 
         // operation to send the correct coordinates to the back
-        const rapportx = widthImgOriginal / widthAff;
-        const rapporty = heightImgOriginal / heightAff;
+        const rapportx = width_img_original / widthAff;
+        const rapporty = height_img_original / heightAff;
         coordinatesList = coord.map((point) => [point[0] * rapportx, point[1] * rapporty]);
-        const addressCoord = process.env.REACT_APP_COORD;
-        if (addressCoord == undefined) {
-            console.error('Coordinate address is not configured');
+        const address_coord = process.env.REACT_APP_COORD;
+        if (address_coord == undefined) {
+            console.log('error address coord');
         } else {
-            axios.post(addressCoord, { roomName: information.roomName, coord: coordinatesList }).then(function () {
+            console.log('the coordinates are', coordinatesList);
+            axios.post(address_coord, { roomName: information.roomName, coord: coordinatesList }).then(function () {
                 setCoord([]);
                 setCircles([]);
             });
@@ -145,11 +139,11 @@ const StudentMeeting: FunctionComponent = () => {
 
     function resetCadrage() {
         setImgIsCropped(false);
-        const addressCoord = process.env.REACT_APP_COORD;
-        if (addressCoord == undefined) {
-            console.error('Coordinate address is not configured');
+        const address_coord = process.env.REACT_APP_COORD;
+        if (address_coord == undefined) {
+            console.log('error address coord');
         } else {
-            axios.post(addressCoord, { roomName: information.roomName, coord: [] }).then(function () {
+            axios.post(address_coord, { roomName: information.roomName, coord: [] }).then(function () {
                 setCoord([]);
                 setCircles([]);
             });
@@ -201,30 +195,33 @@ const StudentMeeting: FunctionComponent = () => {
             setSelectCoord(true);
         }
     }
+    function ChangeView() {
+        setMiniImg((miniImg) => !miniImg);
+    }
 
     function getImgSize(imgSrc: string, original: boolean) {
         const newImg = new Image();
 
         newImg.onload = function () {
-            const widthNew = newImg.width;
-            let heightNew = newImg.height;
+            const width_new = newImg.width;
+            let height_new = newImg.height;
             if (original) {
-                const ratioImg = ((widthNew * 45) / heightNew).toString() + 'vh';
-                setRatioImgOriginal(ratioImg);
-                setWidthImgOriginal(widthNew);
-                setHeightImgOriginal(heightNew);
+                const ratio_img = ((width_new * 45) / height_new).toString() + 'vh';
+                setRatioOriginal(ratio_img);
+                setWidthOriginal(width_new);
+                setHeightOriginal(height_new);
             } else {
                 // dimensions of the original image, not of the image displayed on screen
                 const ViewportWidth = window.innerWidth * 0.9;
                 const ViewportHeight = window.innerHeight * 0.45;
-                setWidthImgDouble(((widthNew * 45) / heightNew).toString() + 'vh');
-                const potentialHeight = (heightNew / widthNew) * ViewportWidth;
-                if (potentialHeight < ViewportHeight) {
-                    heightNew = potentialHeight;
+                setWidth_img_double(((width_new * 45) / height_new).toString() + 'vh');
+                const pot_height = (height_new / width_new) * ViewportWidth;
+                if (pot_height < ViewportHeight) {
+                    height_new = pot_height;
                 } else {
-                    heightNew = ViewportHeight;
+                    height_new = ViewportHeight;
                 }
-                setHeightImg(heightNew);
+                setHeight(height_new);
             }
         };
 
@@ -239,95 +236,105 @@ const StudentMeeting: FunctionComponent = () => {
         if (address) {
             axios.get(address, { params: { roomName: information.roomName, process: proc } }).then((resp) => {
                 const arrayBuffer = resp.data;
-                const imageSlice = new Image();
-                imageSlice.src = 'data:image/jpg;base64,' + arrayBuffer;
-                setImg(imageSlice.src);
+                const image_Slice = new Image();
+                image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
+                setImg(image_Slice.src);
                 setLoading(false);
             });
         }
     };
     //download the original image from the back
     function requestOriginalImage() {
-        const addressOriginalPhoto = process.env.REACT_APP_ORIGINAL_PHOTO;
-        if (addressOriginalPhoto == undefined) {
-            console.error('Original photo address is not configured');
+        const address_orig_photo = process.env.REACT_APP_ORIGINAL_PHOTO;
+        if (address_orig_photo == undefined) {
+            console.log('error adresse original photo');
         } else {
-            axios.get(addressOriginalPhoto, { params: { roomName: information.roomName } }).then((resp) => {
+            axios.get(address_orig_photo, { params: { roomName: information.roomName } }).then((resp) => {
                 const arrayBuffer = resp.data;
-                const imageSlice = new Image();
-                imageSlice.src = 'data:image/jpg;base64,' + arrayBuffer;
-                setImgOriginal(imageSlice.src);
+                const image_Slice = new Image();
+                image_Slice.src = 'data:image/jpg;base64,' + arrayBuffer;
+                setImg_original(image_Slice.src);
             });
         }
     }
 
     return (
         <div className='CreateMeetingComponent'>
-            <PopupComponent information={information} setInformation={setInformation} />
-            <div className='CreateMeetingContainer'>
-                <div className='JitsiComponent'>
-                    <JitsiFrame
-                        isBox={false}
-                        information={information}
-                        options={meetingOptions}
-                        configure={configureFrame}
-                    />
+            {!selectCoord && miniImg && (
+                <FloatingBox>
+                    <img src={img} draggable='false' className='containerImg' />
+                    {loading && <CircularProgress className='circularProgress' />}
+                </FloatingBox>
+            )}
+            {selectCoord && miniImg && (
+                <FloatingBox>
+                    <div className='containerImgStudent'>
+                        <ClickableSVG
+                            height='45vh'
+                            width={ratio_img_original}
+                            onClick={addCircle}
+                            style={{
+                                backgroundImage: "url('" + img_original + "')",
+                                backgroundRepeat: 'no-repeat',
+                                backgroundSize: 'contain',
+                                maxWidth: '45vw',
+                                border: '1px solid blue',
+                            }}
+                        >
+                            {circles}
+                        </ClickableSVG>
+                        <img
+                            src={img}
+                            draggable='false'
+                            className='imgComponent'
+                            style={{ resize: 'both', width: '100%', maxWidth: '500px' }}
+                        />
+                        {loading && <CircularProgress className='circularProgress' />}
+                    </div>
+                </FloatingBox>
+            )}
+            {miniImg && (
+                <div className='CreateMeetingContainer'>
+                    <div className='JitsiComponent'>
+                        <JitsiFrame isBox={false} information={information} options={meetingOptions} />
+                    </div>
                 </div>
-            </div>
-            <div className='containerStudent'>
-                {!selectCoord && (
-                    <div className='containerImgStudent'>
-                        <div className='sectionClickSolo'>
-                            <ClickableSVG
-                                height={heightImg + 'px'}
-                                style={{
-                                    backgroundImage: "url('" + img + "')",
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundSize: 'contain',
-                                    backgroundPosition: 'center',
-                                    maxWidth: '95vw',
-                                    maxHeight: '50vh',
-                                }}
-                            ></ClickableSVG>
-                            {loading && <CircularProgress className='circularProgress' />}
+            )}
+            {!miniImg && (
+                <FloatingBox>
+                    <div className='CreateMeetingContainer'>
+                        <div className='JitsiComponent' style={{ margin: '20px 20px 20px 20px' }}>
+                            <JitsiFrame isBox={false} information={information} options={meetingOptions} />
                         </div>
                     </div>
-                )}
-
-                {selectCoord && (
-                    <div className='containerImgStudent'>
-                        <div>
-                            <ClickableSVG
-                                height='45vh'
-                                width={ratioImgOriginal}
-                                onClick={addCircle}
-                                style={{
-                                    backgroundImage: "url('" + imgOriginal + "')",
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundSize: 'contain',
-                                    maxWidth: '45vw',
-                                    border: '1px solid blue',
-                                }}
-                            >
-                                {circles}
-                            </ClickableSVG>
-                        </div>
-                        <div className='sectionClick'>
-                            <ClickableSVG
-                                height='45vh'
-                                width={widthImgDouble}
-                                style={{
-                                    backgroundImage: "url('" + img + "')",
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundSize: 'contain',
-                                    maxWidth: '40vw',
-                                }}
-                            ></ClickableSVG>
-                        </div>
-                    </div>
-                )}
-            </div>
-
+                </FloatingBox>
+            )}
+            {!selectCoord && !miniImg && (
+                <div className='containerImgStudent'>
+                    <img src={img} draggable='false' className='imgComponent' />
+                    {loading && <CircularProgress className='circularProgress' />}
+                </div>
+            )}
+            {selectCoord && !miniImg && (
+                <div className='containerImgStudent'>
+                    <ClickableSVG
+                        height='45vh'
+                        width={ratio_img_original}
+                        onClick={addCircle}
+                        style={{
+                            backgroundImage: "url('" + img_original + "')",
+                            backgroundRepeat: 'no-repeat',
+                            backgroundSize: 'contain',
+                            maxWidth: '45vw',
+                            border: '1px solid blue',
+                        }}
+                    >
+                        {circles}
+                    </ClickableSVG>
+                    <img src={img} draggable='false' className='imgComponent' />
+                    {loading && <CircularProgress className='circularProgress' />}
+                </div>
+            )}
             <div className='sectionButtonsStudent'>
                 <div className='selectProcess'>
                     <button
@@ -368,9 +375,12 @@ const StudentMeeting: FunctionComponent = () => {
                 </div>
                 <div className='buttonAmeliorerVue'>
                     <button className='buttonStudent' onClick={() => AmeliorerVue()}>
-                        {!selectCoord ? t('crop') : t('cancel')}
+                        {textBtn == 'Recadrer' ? t('crop') : t('cancel')}
                     </button>
                 </div>
+                <button className='buttonStudent' onClick={() => ChangeView()}>
+                    change View
+                </button>
                 {coord.length == 4 && (
                     <div>
                         <button className='buttonStudent' onClick={() => validerSaisie()}>
