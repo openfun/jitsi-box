@@ -36,6 +36,7 @@ const BoxMeeting: FunctionComponent = () => {
                 displayName: 'Jitsi-Box',
             },
             configOverwrite: {
+                disabledSounds: ['RAISE_HAND_SOUND', 'INCOMING_MSG_SOUND'],
                 toolbarButtons: [
                     'microphone',
                     'camera',
