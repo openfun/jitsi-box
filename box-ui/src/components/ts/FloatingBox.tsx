@@ -1,7 +1,6 @@
 import React from 'react';
 import Draggable from 'react-draggable';
 import '../css/FloatingBox.css';
-//import { Resizable } from 'react-resizable-element';
 
 const FloatingBox = ({ children }: { children: any }) => {
     return (
