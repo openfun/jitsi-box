@@ -147,7 +147,7 @@ const StudentMeeting: FunctionComponent = () => {
         if (addressCoord == undefined) {
             console.error('Coordinate address is not configured');
         } else {
-            axios.post(addressCoord, { roomName: information.roomName, coord: coordinatesList }).then(function () {
+            axios.post(addressCoord, { room_name: information.roomName, coord: coordinatesList }).then(function () {
                 setCoord([]);
                 setCircles([]);
             });
@@ -160,7 +160,7 @@ const StudentMeeting: FunctionComponent = () => {
         if (addressCoord == undefined) {
             console.error('Coordinate address is not configured');
         } else {
-            axios.post(addressCoord, { roomName: information.roomName, coord: [] }).then(function () {
+            axios.post(addressCoord, { room_name: information.roomName, coord: [] }).then(function () {
                 setCoord([]);
                 setCircles([]);
             });
@@ -248,7 +248,7 @@ const StudentMeeting: FunctionComponent = () => {
         const address = process.env.REACT_APP_PROCESS;
         setprocessSelected(proc);
         if (address) {
-            axios.get(address, { params: { roomName: information.roomName, process: proc } }).then((resp) => {
+            axios.get(address, { params: { room_name: information.roomName, process: proc } }).then((resp) => {
                 const arrayBuffer = resp.data;
                 const imageSlice = new Image();
                 imageSlice.src = 'data:image/jpg;base64,' + arrayBuffer;
@@ -263,7 +263,7 @@ const StudentMeeting: FunctionComponent = () => {
         if (addressOriginalPhoto == undefined) {
             console.error('Original photo address is not configured');
         } else {
-            axios.get(addressOriginalPhoto, { params: { roomName: information.roomName } }).then((resp) => {
+            axios.get(addressOriginalPhoto, { params: { room_name: information.roomName } }).then((resp) => {
                 const arrayBuffer = resp.data;
                 const imageSlice = new Image();
                 imageSlice.src = 'data:image/jpg;base64,' + arrayBuffer;
