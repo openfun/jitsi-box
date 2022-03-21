@@ -56,7 +56,7 @@
     background-color: rgb(54, 54, 54);
 }
 
-.buttonAmeliorerVue {
+.cropButton {
     display: flex;
     justify-content: center;
     align-items: center;

@@ -332,7 +332,7 @@ const StudentMeeting: FunctionComponent = () => {
             </div>
 
             <div className='sectionButtonsStudent'>
-                <div className='selectProcess'>
+                <div className='selectFilter'>
                     <button
                         // id='button'
                         className='buttonStudent'
@@ -343,7 +343,7 @@ const StudentMeeting: FunctionComponent = () => {
                             handleClick(event);
                         }}
                     >
-                        Select Filter
+                        {t('selectFilter')}
                     </button>
                     <Menu
                         id='menu'
@@ -369,7 +369,7 @@ const StudentMeeting: FunctionComponent = () => {
                         })}
                     </Menu>
                 </div>
-                <div className='buttonAmeliorerVue'>
+                <div className='cropButton'>
                     <button className='buttonStudent' onClick={() => AmeliorerVue()}>
                         {!selectCoord ? t('crop') : t('cancel')}
                     </button>
@@ -391,20 +391,20 @@ const StudentMeeting: FunctionComponent = () => {
                     <HelpIcon sx={{ color: 'white' }} />
                 </IconButton>
             </div>
-            {displayFocus ? (
+            {displayFocus && (
                 <FocusMode
                     focusItems={[
                         { element: '.meetingUrl', textElement: t('tutoMeetingUrl') },
                         { element: '.QrcodeScannerButton', textElement: t('tutoQRCode') },
                         { element: '.QrcodeButton', textElement: t('tutoShareQRCode') },
                         { element: '.OpenTopBarButton', textElement: t('tutoBroadcast') },
-                        { element: '.sectionClickSolo', textElement: t('tutoSelectCamera') },
-                        { element: '.selectProcess', textElement: t('tutoMeetingUrl') },
-                        { element: '.buttonAmeliorerVue', textElement: t('tutoMeetingUrl') },
+                        { element: '.sectionClickSolo', textElement: t('tutoSectionClickSolo') },
+                        { element: '.selectFilter', textElement: t('tutoSelectFilter') },
+                        { element: '.cropButton', textElement: t('tutoCropButton') },
                     ]}
                     setDisplayFocus={setDisplayFocus}
                 />
-            ) : null}
+            )}
         </div>
     );
 };
