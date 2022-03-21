@@ -12,6 +12,7 @@ import { IconButton, Menu, MenuItem } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
 import JitsiMeetExternalAPI from '../../../utils/JitsiMeetExternalAPI';
 import FocusMode from '../FocusMode';
+import { v1 as uuidv1 } from 'uuid';
 
 const StudentMeeting: FunctionComponent = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -68,6 +69,9 @@ const StudentMeeting: FunctionComponent = () => {
     //Animation loading, waiting for new Image
     const [loading, setLoading] = useState<boolean>(false);
 
+    //websocket
+    const [ws, setWs] = useState<WebSocket>();
+
     useEffect(() => {
         if (!selectCoord) {
             setCoord([]);
@@ -84,29 +88,31 @@ const StudentMeeting: FunctionComponent = () => {
     }, [imgOriginal]);
 
     useEffect(() => {
-        const addressWebsocket = process.env.REACT_APP_WS_ADDRESS;
-        if (addressWebsocket == undefined) {
+        const id = uuidv1();
+        const addressWebsocket_general = process.env.REACT_APP_WS_ADDRESS;
+        if (addressWebsocket_general == undefined) {
             console.error('Websocket address is not configured');
         } else {
-            const ws1 = new WebSocket(addressWebsocket);
-            ws1.onmessage = function (event) {
+            const addressWebsocket = addressWebsocket_general + '/' + information.roomName + '/' + id;
+            const ws = new WebSocket(addressWebsocket);
+            setWs(ws);
+        }
+    }, [information]);
+
+    useEffect(() => {
+        if (ws) {
+            ws.onmessage = function (event) {
                 if (event.data == 'true') {
                     // if there is a new image availabe on the back
                     requestProcessedImage(processSelected);
                 }
             };
 
-            // ask to backend if there is a new photo to download
-            const interval = setInterval(() => {
-                ws1.send(information.roomName);
-            }, 1000);
-
             return () => {
-                ws1.close;
-                clearInterval(interval);
+                ws.close;
             };
         }
-    }, [processSelected, information]);
+    }, [ws, processSelected]);
 
     const configureFrame = useCallback(
         (api: JitsiMeetExternalAPI) => {
@@ -136,10 +142,10 @@ const StudentMeeting: FunctionComponent = () => {
         const rapporty = heightImgOriginal / heightAff;
         coordinatesList = coord.map((point) => [point[0] * rapportx, point[1] * rapporty]);
         const addressCoord = process.env.REACT_APP_COORD;
-        if (addressCoord == undefined) {
+        if (addressCoord === undefined) {
             console.error('Coordinate address is not configured');
         } else {
-            axios.post(addressCoord, { roomName: information.roomName, coord: coordinatesList }).then(function () {
+            axios.post(addressCoord, { room_name: information.roomName, coord: coordinatesList }).then(function () {
                 setCoord([]);
                 setCircles([]);
             });
@@ -149,10 +155,10 @@ const StudentMeeting: FunctionComponent = () => {
     function resetCadrage() {
         setImgIsCropped(false);
         const addressCoord = process.env.REACT_APP_COORD;
-        if (addressCoord == undefined) {
+        if (addressCoord === undefined) {
             console.error('Coordinate address is not configured');
         } else {
-            axios.post(addressCoord, { roomName: information.roomName, coord: [] }).then(function () {
+            axios.post(addressCoord, { room_name: information.roomName, coord: [] }).then(function () {
                 setCoord([]);
                 setCircles([]);
             });
@@ -240,7 +246,7 @@ const StudentMeeting: FunctionComponent = () => {
         const address = process.env.REACT_APP_PROCESS;
         setprocessSelected(proc);
         if (address) {
-            axios.get(address, { params: { roomName: information.roomName, process: proc } }).then((resp) => {
+            axios.get(address, { params: { room_name: information.roomName, process: proc } }).then((resp) => {
                 const arrayBuffer = resp.data;
                 const imageSlice = new Image();
                 imageSlice.src = 'data:image/jpg;base64,' + arrayBuffer;
@@ -252,10 +258,10 @@ const StudentMeeting: FunctionComponent = () => {
     //download the original image from the back
     function requestOriginalImage() {
         const addressOriginalPhoto = process.env.REACT_APP_ORIGINAL_PHOTO;
-        if (addressOriginalPhoto == undefined) {
+        if (addressOriginalPhoto === undefined) {
             console.error('Original photo address is not configured');
         } else {
-            axios.get(addressOriginalPhoto, { params: { roomName: information.roomName } }).then((resp) => {
+            axios.get(addressOriginalPhoto, { params: { room_name: information.roomName } }).then((resp) => {
                 const arrayBuffer = resp.data;
                 const imageSlice = new Image();
                 imageSlice.src = 'data:image/jpg;base64,' + arrayBuffer;
