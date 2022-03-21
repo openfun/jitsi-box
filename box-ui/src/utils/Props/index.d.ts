@@ -63,3 +63,8 @@ export type ProgressButtonProps = {
     initialCounter: number;
     onClick: () => void;
 };
+
+export type FocusModeProps = {
+    focusItems: {element: string, textElement: string}[];
+    setDisplayFocus: React.Dispatch<React.SetStateAction<boolean>>
+}

@@ -27,6 +27,17 @@
         "selectCamera": "Select camera ",
         "camera": "camera",
         "joinAMeeting": "Join a meeting",
-        "linkForTeacher": "I am a teacher"
+        "linkForTeacher": "I am a teacher",
+        "tutoSelectCamera" : "Click here to select the camera that will shoot the board for distant students. The first time you click on this button, your cameras names may not appear as you haven't allowed the app to access your cameras yet. Once you grant permissions the shooting will begin and you don't need to reselect a camera",
+        "tutoMeetingUrl" : "You can see here the name of your meeting, all that is after https://meeting.education is your room name ! You can also click here to change your room.",
+        "tutoQRCode" : "If you have a meeting QR code, you can scan it by clicking on this icon",
+        "tutoShareQRCode" : "By clicking here you can get your meeting QR code to share it.",
+        "tutoBroadcast" : "Here you can start a Marsha live.",
+        "tutoSectionClickSolo": "It's here that you'll see board's pictures sent by the jitsi-box" , 
+        "tutoSelectFilter" : "You can select a filter to apply on the picture here. Some filters may improve image's visibility",
+        "tutoCropButton": "By clicking on this button you'll be able to resize the picture you're receiving. Please select the 4 corners of the part of the image you want to focus on, on the left picture that will appear after clicking on the button.",
+        "continueTuto": "Continue tutorial",
+        "quitTuto": "Exit tutorial",
+        "selectFilter" : "select filter"
     }
   }

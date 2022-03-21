@@ -7,11 +7,15 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import '../css/CaptureImage.css';
 import { useTranslation } from 'react-i18next';
+import HelpIcon from '@mui/icons-material/Help';
+import IconButton from '@mui/material/IconButton';
+import FocusMode from './FocusMode';
 
 const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageProps) => {
     const [photoInterval, setPhotoInterval] = useState<ReturnType<typeof setTimeout>>();
     const [cameraList, setCameraList] = useState<MediaDeviceInfo[]>([]);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [displayFocus, setDisplayFocus] = useState(false);
     const open = Boolean(anchorEl);
     const { t } = useTranslation();
 
@@ -100,7 +104,7 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
     return (
         <div className='popupCamera'>
             <Button
-                id='button'
+                id='buttonToSelectCamera'
                 aria-controls={open ? 'menu' : undefined}
                 aria-haspopup='menu'
                 aria-expanded={open ? 'true' : undefined}
@@ -140,6 +144,24 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
                     );
                 })}
             </Menu>
+            <IconButton id='TutoButton' aria-label='help' onClick={() => setDisplayFocus(!displayFocus)}>
+                <HelpIcon />
+            </IconButton>
+            {displayFocus && (
+                <FocusMode
+                    focusItems={[
+                        {
+                            element: '#buttonToSelectCamera',
+                            textElement: t('tutoSelectCamera'),
+                        },
+                        { element: '.meetingUrl', textElement: t('tutoMeetingUrl') },
+                        { element: '.QrcodeScannerButton', textElement: t('tutoQRCode') },
+                        { element: '.QrcodeButton', textElement: t('tutoShareQRCode') },
+                        { element: '.OpenTopBarButton', textElement: t('tutoBroadcast') },
+                    ]}
+                    setDisplayFocus={setDisplayFocus}
+                />
+            )}
         </div>
     );
 };
