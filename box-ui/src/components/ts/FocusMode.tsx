@@ -6,11 +6,9 @@ import '../css/FocusMode.css';
 const FocusMode: FunctionComponent<FocusModeProps> = (props: FocusModeProps) => {
     const [borderSize, setBorderSize] = useState('0px');
     const [tutoState, setTutoState] = useState(0);
-    const [sizeChanged, setSizeChanged] = useState(true);
     const { t } = useTranslation();
     let timerId: NodeJS.Timeout;
-    console.log('help asked');
-    useEffect(() => {
+    const resize = () => {
         let coord;
         let right = 0;
         let bottom = 0;
@@ -20,17 +18,19 @@ const FocusMode: FunctionComponent<FocusModeProps> = (props: FocusModeProps) => 
             bottom = coord?.bottom !== undefined ? window.innerHeight - coord.bottom : 0;
             setBorderSize(`${coord?.top}px ${right > 0 ? right : 0}px ${bottom > 0 ? bottom : 0}px ${coord?.left}px`);
         } else {
-            setTutoState(0);
-            setBorderSize('0px');
+            props.setDisplayFocus(false);
         }
-    }, [tutoState, sizeChanged]);
+    };
+    useEffect(() => {
+        resize();
+    }, [tutoState]);
 
     useEffect(() => {
         window.addEventListener('resize', () => {
             clearTimeout(timerId);
-            timerId = setTimeout(() => setSizeChanged(!sizeChanged), 500);
+            timerId = setTimeout(() => resize(), 100);
         });
-        return window.removeEventListener('resize', () => setSizeChanged(!sizeChanged));
+        return window.removeEventListener('resize', () => resize());
     });
     return (
         <div>
@@ -40,7 +40,7 @@ const FocusMode: FunctionComponent<FocusModeProps> = (props: FocusModeProps) => 
                     borderWidth: `${borderSize}`,
                 }}
             />
-            <div id='centeringExplanation'>
+            <div id='explanationPosition'>
                 <div
                     id='explanation'
                     style={{

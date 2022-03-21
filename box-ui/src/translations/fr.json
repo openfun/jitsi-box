@@ -33,7 +33,11 @@
       "tutoQRCode" : "Si vous possedez un QR code de réunion, vous pouvez appuyer sur cette icone pour scanner le QR code.",
       "tutoShareQRCode" : "En cliquant ici vous pouvez récupérer le QR code de votre réunion pour le partager.",
       "tutoBroadcast" : "Ici vous pouvez démarrer un live avec Marsha.",
+      "tutoSectionClickSolo": "C'est ici que vous pourrez visualiser la photo prise par la jitsi-box." , 
+      "tutoSelectFilter" : "Vous pouvez sélectionner un filtre à appliquer à votre image ici, certains filtres pourraient améliorer la visibilité de l'image.",
+      "tutoCropButton": "En cliquant sur ce bouton vous pourrez redimensionner l'image envoyée par la jitsi-box. Une fois que vous avez appuyé sur le bouton, sélectionnez les 4 coins de la zone de l'image sur laquelle vous souhaitez vous focaliser sur l'image de gauche qui apparaitra.",
       "continueTuto": "Continuer le tutoriel",
-      "quitTuto": "Quitter le tutoriel"
+      "quitTuto": "Quitter le tutoriel",
+      "selectFilter" : "sélectionner un filtre"
     }
   }

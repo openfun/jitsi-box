@@ -12,14 +12,11 @@
     transition: all 0.5s linear;
 }
 
-#centeringExplanation {
+#explanationPosition {
     position: absolute;
-    top: 0px;
-    right: 0px;
     bottom: 0px;
     left: 0px;
     display: flex;
-    align-items: left;
     justify-content: left;
     pointer-events: none;
 }

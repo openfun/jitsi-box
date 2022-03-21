@@ -154,7 +154,7 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
             <IconButton id='TutoButton' aria-label='help' onClick={() => setDisplayFocus(!displayFocus)}>
                 <HelpIcon />
             </IconButton>
-            {displayFocus ? (
+            {displayFocus && (
                 <FocusMode
                     focusItems={[
                         {
@@ -168,7 +168,7 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
                     ]}
                     setDisplayFocus={setDisplayFocus}
                 />
-            ) : null}
+            )}
         </div>
     );
 };
