@@ -76,3 +76,11 @@ export type ViewerProps = {
     addOn?: React.SVGProps<SVGCircleElement>[];
     selectWindow : boolean; 
 };
+
+export type SelectButtonProps = {
+    div ?: React.HTMLAttributes<HTMLDivElement>;
+    selectItems : {inputLabelText : string, menuItems : string[],};
+    value: string;
+    onChange ?: (e :SelectChangeEvent<string>) => void;
+    onClick ?: (e :SelectChangeEvent<string>) => void;
+};
