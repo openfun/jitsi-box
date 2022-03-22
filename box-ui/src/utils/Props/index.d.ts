@@ -65,6 +65,6 @@ export type ProgressButtonProps = {
 };
 
 export type FocusModeProps = {
-    focusItems: {element: string, textElement: string}[];
-    setDisplayFocus: React.Dispatch<React.SetStateAction<boolean>>
-}
+    focusItems: { element: string; textElement: string }[];
+    setDisplayFocus: React.Dispatch<React.SetStateAction<boolean>>;
+};
