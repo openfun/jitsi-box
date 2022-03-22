@@ -12,7 +12,6 @@ import { IconButton, Menu, MenuItem } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
 import JitsiMeetExternalAPI from '../../../utils/JitsiMeetExternalAPI';
 import FocusMode from '../FocusMode';
-import { v1 as uuidv1 } from 'uuid';
 
 const StudentMeeting: FunctionComponent = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
