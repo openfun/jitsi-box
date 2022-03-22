@@ -12,6 +12,7 @@ import { IconButton, Menu, MenuItem } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
 import JitsiMeetExternalAPI from '../../../utils/JitsiMeetExternalAPI';
 import FocusMode from '../FocusMode';
+import FloatingBox from '../FloatingBox';
 
 const StudentMeeting: FunctionComponent = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -67,6 +68,9 @@ const StudentMeeting: FunctionComponent = () => {
 
     //Animation loading, waiting for new Image
     const [loading, setLoading] = useState<boolean>(false);
+
+    //choose if the image or the video is the secondary display
+    const [miniImg, setMiniImg] = useState<boolean>(true);
 
     useEffect(() => {
         if (!selectCoord) {
@@ -191,6 +195,10 @@ const StudentMeeting: FunctionComponent = () => {
         }
     }
 
+    function ChangeView() {
+        setMiniImg((miniImg) => !miniImg);
+    }
+
     function getImgSize(imgSrc: string, original: boolean) {
         const newImg = new Image();
 
@@ -254,14 +262,8 @@ const StudentMeeting: FunctionComponent = () => {
 
     return (
         <div className='CreateMeetingComponent'>
-            <PopupComponent information={information} setInformation={setInformation} />
-            <div className='CreateMeetingContainer'>
-                <div className='JitsiComponent'>
-                    <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
-                </div>
-            </div>
-            <div className='containerStudent'>
-                {!selectCoord && (
+            {!selectCoord && miniImg && (
+                <FloatingBox>
                     <div className='containerImgStudent'>
                         <div className='sectionClickSolo'>
                             <ClickableSVG
@@ -271,16 +273,17 @@ const StudentMeeting: FunctionComponent = () => {
                                     backgroundRepeat: 'no-repeat',
                                     backgroundSize: 'contain',
                                     backgroundPosition: 'center',
-                                    maxWidth: '95vw',
-                                    maxHeight: '50vh',
+                                    maxWidth: '20vw',
+                                    maxHeight: '20vh',
                                 }}
                             ></ClickableSVG>
                             {loading && <CircularProgress className='circularProgress' />}
                         </div>
                     </div>
-                )}
-
-                {selectCoord && (
+                </FloatingBox>
+            )}
+            {selectCoord && miniImg && (
+                <FloatingBox>
                     <div className='containerImgStudent'>
                         <div>
                             <ClickableSVG
@@ -311,8 +314,74 @@ const StudentMeeting: FunctionComponent = () => {
                             ></ClickableSVG>
                         </div>
                     </div>
-                )}
-            </div>
+                </FloatingBox>
+            )}
+            {miniImg && (
+                <div className='CreateMeetingContainer'>
+                    <div className='JitsiComponent'>
+                        <JitsiFrame information={information} options={meetingOptions} />
+                    </div>
+                </div>
+            )}
+            {!miniImg && (
+                <FloatingBox>
+                    <div className='CreateMeetingContainer'>
+                        <div className='JitsiComponent' style={{ margin: '20px' }}>
+                            <JitsiFrame information={information} options={meetingOptions} />
+                        </div>
+                    </div>
+                </FloatingBox>
+            )}
+            {!selectCoord && !miniImg && (
+                <div className='containerImgStudent'>
+                    <div className='sectionClickSolo'>
+                        <ClickableSVG
+                            height={heightImg + 'px'}
+                            style={{
+                                backgroundImage: "url('" + img + "')",
+                                backgroundRepeat: 'no-repeat',
+                                backgroundSize: 'contain',
+                                backgroundPosition: 'center',
+                                maxWidth: '95vw',
+                                maxHeight: '50vh',
+                            }}
+                        ></ClickableSVG>
+                        {loading && <CircularProgress className='circularProgress' />}
+                    </div>
+                </div>
+            )}
+            {selectCoord && !miniImg && (
+                <div className='containerImgStudent'>
+                    <div>
+                        <ClickableSVG
+                            height='45vh'
+                            width={ratioImgOriginal}
+                            onClick={addCircle}
+                            style={{
+                                backgroundImage: "url('" + imgOriginal + "')",
+                                backgroundRepeat: 'no-repeat',
+                                backgroundSize: 'contain',
+                                maxWidth: '45vw',
+                                border: '1px solid blue',
+                            }}
+                        >
+                            {circles}
+                        </ClickableSVG>
+                    </div>
+                    <div className='sectionClick'>
+                        <ClickableSVG
+                            height='45vh'
+                            width={widthImgDouble}
+                            style={{
+                                backgroundImage: "url('" + img + "')",
+                                backgroundRepeat: 'no-repeat',
+                                backgroundSize: 'contain',
+                                maxWidth: '40vw',
+                            }}
+                        ></ClickableSVG>
+                    </div>
+                </div>
+            )}
 
             <div className='sectionButtonsStudent'>
                 <div className='selectFilter'>
@@ -357,6 +426,9 @@ const StudentMeeting: FunctionComponent = () => {
                         {!selectCoord ? t('crop') : t('cancel')}
                     </button>
                 </div>
+                <button className='buttonStudent' onClick={() => ChangeView()}>
+                    change View
+                </button>
                 {coord.length == 4 && (
                     <div>
                         <button className='buttonStudent' onClick={() => validerSaisie()}>
