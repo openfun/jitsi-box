@@ -1,3 +1,5 @@
+import React from "react";
+
 export type InputRoomWithClose = {
     domain: string;
     roomName: string;
@@ -79,7 +81,9 @@ export type ViewerProps = {
 
 export type SelectButtonProps = {
     div ?: React.HTMLAttributes<HTMLDivElement>;
-    selectItems : {inputLabelText : string, menuItems : string[],};
+    className ?: string;
+    menuItemsStyle ?: SxProps<Theme>;
+    selectItems : {inputLabel: {text : string, style ?: SxProps<Theme>}, menuItems : string[],};
     value: string;
     onChange ?: (e :SelectChangeEvent<string>) => void;
     onClick ?: (e :SelectChangeEvent<string>) => void;
