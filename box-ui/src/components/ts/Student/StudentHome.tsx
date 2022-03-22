@@ -56,6 +56,7 @@ const StudentHome: FunctionComponent = () => {
                 menuItemsStyle={{
                     color: 'white',
                     backgroundColor: '#1976D2',
+                    borderRadius: '8px',
                     '& .MuiSelect-icon': { color: 'white' },
                     '&:hover': { background: '#1976D295' },
                 }}

@@ -53,6 +53,7 @@ const BoxHome: FunctionComponent = () => {
                     backgroundColor: '#1976D2',
                     '& .MuiSelect-icon': { color: 'white' },
                     '&:hover': { background: '#1976D295' },
+                    borderRadius: '0.6rem',
                 }}
                 selectItems={{
                     inputLabel: { text: t('lang'), style: { color: 'white' } },

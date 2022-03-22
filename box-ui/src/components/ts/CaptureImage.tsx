@@ -94,7 +94,13 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
     return (
         <div className='popupCamera'>
             <SelectButton
-                menuItemsStyle={{ color: 'white', backgroundColor: '#1976D2' }}
+                menuItemsStyle={{
+                    color: 'white',
+                    backgroundColor: '#1976D2',
+                    borderRadius: '8px',
+                    '& .MuiSelect-icon': { color: 'white' },
+                    '&:hover': { background: '#1976D295' },
+                }}
                 selectItems={{
                     inputLabel: { text: t('selectCamera'), style: { color: 'white' } },
                     menuItems: cameraList.map((camera) => camera.label),

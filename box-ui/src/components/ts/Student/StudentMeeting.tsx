@@ -355,6 +355,8 @@ const StudentMeeting: FunctionComponent = () => {
                             '& .MuiSelect-icon': { color: 'white' },
                             '&:hover': { background: '#14141495' },
                             cursor: 'pointer',
+                            border: 'solid white 1px',
+                            borderRadius: '0.6rem',
                         }}
                         className='buttonStudent'
                         selectItems={{

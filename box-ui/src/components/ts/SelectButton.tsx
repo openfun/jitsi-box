@@ -5,7 +5,7 @@ import { SelectButtonProps } from '../../utils/Props';
 const SelectButton: FunctionComponent<SelectButtonProps> = (props: SelectButtonProps) => {
     return (
         <div {...props.div} className='SelectButton'>
-            <FormControl variant='filled' sx={{ m: 1, minWidth: 120 }}>
+            <FormControl variant='filled' sx={{ m: 1, minWidth: 140 }}>
                 <InputLabel id='input-label' sx={props.selectItems.inputLabel.style}>
                     {props.selectItems.inputLabel.text}
                 </InputLabel>
