@@ -32,6 +32,7 @@ jobs:
         env:
           REACT_APP_MARSHA_URL: https://marsha.education/api/video/pairing-challenge
           REACT_APP_PUBLIC_URL: https://jitsi-box.com
+          REACT_APP_BACK_WEBROOT: https://clearboard.jitsi-box.com
 
       - name: Create the deployment directory, copy the git repo there & checkout the deployment branch
         # We use ../.git instead of .git because we are using ./box-ui as working directory for run commands
