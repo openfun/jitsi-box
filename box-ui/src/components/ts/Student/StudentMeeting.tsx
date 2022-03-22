@@ -121,7 +121,7 @@ const StudentMeeting: FunctionComponent = () => {
         const rapportx = widthImgOriginal / widthAff;
         const rapporty = heightImgOriginal / heightAff;
         coordinatesList = coord.map((point) => [point[0] * rapportx, point[1] * rapporty]);
-        const addressCoord = process.env.REACT_APP_COORD;
+        const addressCoord = process.env.REACT_APP_BACK_WEBROOT + '/coord';
         if (addressCoord === undefined) {
             console.error('Coordinate address is not configured');
         } else {
@@ -134,7 +134,7 @@ const StudentMeeting: FunctionComponent = () => {
 
     function resetCadrage() {
         setImgIsCropped(false);
-        const addressCoord = process.env.REACT_APP_COORD;
+        const addressCoord = process.env.REACT_APP_BACK_WEBROOT + '/coord';
         if (addressCoord === undefined) {
             console.error('Coordinate address is not configured');
         } else {
@@ -223,7 +223,7 @@ const StudentMeeting: FunctionComponent = () => {
     // download the image (with the potential cropped effect) from the back
 
     const requestProcessedImage = (proc: string) => {
-        const address = process.env.REACT_APP_PROCESS;
+        const address = process.env.REACT_APP_BACK_WEBROOT + '/process';
         setprocessSelected(proc);
         if (address) {
             axios.get(address, { params: { room_name: information.roomName, process: proc } }).then((resp) => {
@@ -237,7 +237,7 @@ const StudentMeeting: FunctionComponent = () => {
     };
     //download the original image from the back
     function requestOriginalImage() {
-        const addressOriginalPhoto = process.env.REACT_APP_ORIGINAL_PHOTO;
+        const addressOriginalPhoto = process.env.REACT_APP_BACK_WEBROOT + '/original_photo';
         if (addressOriginalPhoto === undefined) {
             console.error('Original photo address is not configured');
         } else {
