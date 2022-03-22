@@ -5,17 +5,19 @@ import axios from 'axios';
 import '../css/CaptureImage.css';
 import { useTranslation } from 'react-i18next';
 import SelectButton from './SelectButton';
+import { IconButton } from '@mui/material';
+import FocusMode from './FocusMode';
+import HelpIcon from '@mui/icons-material/Help';
 
 const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageProps) => {
     const [photoInterval, setPhotoInterval] = useState<ReturnType<typeof setTimeout>>();
     const [cameraList, setCameraList] = useState<MediaDeviceInfo[]>([]);
+    const [displayFocus, setDisplayFocus] = useState(false);
     const { t } = useTranslation();
     const detectCamera = () => {
-        navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(() => {
-            navigator.mediaDevices.enumerateDevices().then((devices) => {
-                const cameras = devices.filter((value) => value['kind'] === 'videoinput');
-                setCameraList(cameras);
-            });
+        navigator.mediaDevices.enumerateDevices().then((devices) => {
+            const cameras = devices.filter((value) => value['kind'] === 'videoinput');
+            setCameraList(cameras);
         });
     };
 
@@ -108,6 +110,21 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
                         alert('aucune caméra trouvé, avez vous autorisé votre navigateur à accéder à la caméra ?');
                 }}
             />
+            <IconButton id='TutoButton' aria-label='help' onClick={() => setDisplayFocus(!displayFocus)}>
+                <HelpIcon />
+            </IconButton>
+            {displayFocus && (
+                <FocusMode
+                    focusItems={[
+                        { element: '.meetingUrl', textElement: t('tutoMeetingUrl') },
+                        { element: '.QrcodeScannerButton', textElement: t('tutoQRCode') },
+                        { element: '.QrcodeButton', textElement: t('tutoShareQRCode') },
+                        { element: '.OpenTopBarButton', textElement: t('tutoBroadcast') },
+                        { element: '.SelectButton', textElement: t('tutoSelectCamera') },
+                    ]}
+                    setDisplayFocus={setDisplayFocus}
+                />
+            )}
         </div>
     );
 };
