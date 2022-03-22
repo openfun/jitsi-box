@@ -49,12 +49,13 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
                     focusMode: 'single-shot',
                 });
                 const imageCapturer = new ImageCapture(videoTrack);
-                const timeBetweenPictures = parseInt(
+                let timeBetweenPictures = parseInt(
                     process.env.REACT_APP_TIME_BETWEEN_PICTURES !== undefined
                         ? process.env.REACT_APP_TIME_BETWEEN_PICTURES
                         : '5',
                 );
 
+                timeBetweenPictures = Number.isNaN(timeBetweenPictures) ? 5 : timeBetweenPictures;
                 setPhotoInterval(
                     setInterval(() => takePhoto(imageCapturer, props.roomName), timeBetweenPictures * 1000),
                 );
