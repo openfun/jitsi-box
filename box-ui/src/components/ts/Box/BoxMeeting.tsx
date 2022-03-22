@@ -92,7 +92,6 @@ const BoxMeeting: FunctionComponent = () => {
                     {counterRaised > 0 && <div className='overlay' />}
                     <JitsiFrame
                         information={information}
-                        isBox={true}
                         options={meetingOptions}
                         configure={configure}
                         onError={onError}
