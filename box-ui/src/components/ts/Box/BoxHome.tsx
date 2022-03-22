@@ -48,8 +48,14 @@ const BoxHome: FunctionComponent = () => {
                 </ProgressButton>
             </div>
             <SelectButton
+                menuItemsStyle={{
+                    color: 'white',
+                    backgroundColor: '#1976D2',
+                    '& .MuiSelect-icon': { color: 'white' },
+                    '&:hover': { background: '#1976D295' },
+                }}
                 selectItems={{
-                    inputLabelText: t('lang'),
+                    inputLabel: { text: t('lang'), style: { color: 'white' } },
                     menuItems: availableLanguages,
                 }}
                 value={i18n.language}

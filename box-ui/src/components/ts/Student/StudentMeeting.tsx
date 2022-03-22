@@ -6,7 +6,7 @@ import { LocationState } from '../../../utils/State';
 import JitsiFrame from '../JitsiFrame';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import { IconButton, Menu, MenuItem } from '@mui/material';
+import { IconButton } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
 import FocusMode from '../FocusMode';
 import { v1 as uuidv1 } from 'uuid';
@@ -349,8 +349,16 @@ const StudentMeeting: FunctionComponent = () => {
             <div className='sectionButtonsStudent'>
                 <div className='selectFilter'>
                     <SelectButton
+                        menuItemsStyle={{
+                            color: 'white',
+                            backgroundColor: '#141414',
+                            '& .MuiSelect-icon': { color: 'white' },
+                            '&:hover': { background: '#14141495' },
+                            cursor: 'pointer',
+                        }}
+                        className='buttonStudent'
                         selectItems={{
-                            inputLabelText: 'Select Filter',
+                            inputLabel: { text: 'Select Filter', style: { color: 'white' } },
                             menuItems: processes,
                         }}
                         value={'process'}

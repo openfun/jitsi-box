@@ -4,9 +4,6 @@ import { CaptureImageProps } from '../../utils/Props';
 import axios from 'axios';
 import '../css/CaptureImage.css';
 import { useTranslation } from 'react-i18next';
-import HelpIcon from '@mui/icons-material/Help';
-import IconButton from '@mui/material/IconButton';
-import FocusMode from './FocusMode';
 import SelectButton from './SelectButton';
 
 const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageProps) => {
@@ -95,8 +92,9 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
     return (
         <div className='popupCamera'>
             <SelectButton
+                menuItemsStyle={{ color: 'white', backgroundColor: '#1976D2' }}
                 selectItems={{
-                    inputLabelText: t('selectCamera'),
+                    inputLabel: { text: t('selectCamera'), style: { color: 'white' } },
                     menuItems: cameraList.map((camera) => camera.label),
                 }}
                 value={'camera'}
