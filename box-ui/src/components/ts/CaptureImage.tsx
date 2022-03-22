@@ -73,7 +73,7 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
             const data = new FormData();
             data.append('name', 'image');
             data.append('file', blob, `${roomName}.jpg`);
-            const pictureAddress = process.env.REACT_APP_PICTURE_ADDRESS;
+            const pictureAddress = process.env.REACT_APP_BACK_WEBROOT + '/picture';
             if (pictureAddress == undefined) {
                 console.log('No picture address defined, contact your maintainer');
             } else {

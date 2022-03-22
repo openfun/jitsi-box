@@ -63,12 +63,9 @@ Env variables starting with `REACT_APP_` are automatically catched by react, so 
 At the moment 7 variables are used :
 
 -   `REACT_APP_MARSHA_URL` that set marsha's address
--   `REACT_APP_PICTURE_ADDRESS` that should be set to `[backend server | http://localhost:8070]/picture`. If you need to upload pictures on different servers you should set a policy server.
 -   `REACT_APP_TIME_BETWEEN_PICTURES` defines the time between two pictures sent to backend server
--   `REACT_APP_ORIGINAL_PHOTO` defines the address to get the image not processed
--   `REACT_APP_PHOTO` defines the address to get the image of the image processed
--   `REACT_APP_WS_ADDRESS` defines the address used for Websocket commmunication
--   `REACT_APP_COORD` defines the address to post the coordinates used for cropping the image
+-   `REACT_APP_BACK_WEBROOT` defines the webroot of the backend server
+-   `REACT_APP_BACK_WEBSOCKET` defines the address used for Websocket commmunication
 
 ## Dockerfile
 
