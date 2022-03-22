@@ -254,12 +254,7 @@ const StudentMeeting: FunctionComponent = () => {
             <PopupComponent information={information} setInformation={setInformation} />
             <div className='CreateMeetingContainer'>
                 <div className='JitsiComponent'>
-                    <JitsiFrame
-                        isBox={false}
-                        information={information}
-                        options={meetingOptions}
-                        configure={configureFrame}
-                    />
+                    <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
                 </div>
             </div>
             <div className='containerStudent'>
