@@ -17,7 +17,7 @@ import { v1 as uuidv1 } from 'uuid';
 const StudentMeeting: FunctionComponent = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const processes = ['Color', 'B&W', 'Contrast', 'original', 'SuperRes'];
+    const processes = ['Color', 'B&W', 'Contrast', 'original'];
     const [displayFocus, setDisplayFocus] = useState(false);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
