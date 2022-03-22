@@ -8,10 +8,8 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
-import JitsiMeetExternalAPI from '../../../utils/JitsiMeetExternalAPI';
 import FocusMode from '../FocusMode';
 import { v1 as uuidv1 } from 'uuid';
-import JitsiMeetExternalAPI from '../../../utils/JitsiMeetExternalAPI';
 import SelectButton from '../SelectButton';
 
 const StudentMeeting: FunctionComponent = () => {
@@ -27,6 +25,7 @@ const StudentMeeting: FunctionComponent = () => {
         }),
         [],
     );
+    const [displayFocus, setDisplayFocus] = useState(false);
     const state = useLocation().state as LocationState;
     const navigate = useNavigate();
     const information: { roomName: string; domain: string } = useMemo(() => {
