@@ -16,11 +16,9 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
     const [displayFocus, setDisplayFocus] = useState(false);
     const { t } = useTranslation();
     const detectCamera = () => {
-        navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(() => {
-            navigator.mediaDevices.enumerateDevices().then((devices) => {
-                const cameras = devices.filter((value) => value['kind'] === 'videoinput');
-                setCameraList(cameras);
-            });
+        navigator.mediaDevices.enumerateDevices().then((devices) => {
+            const cameras = devices.filter((value) => value['kind'] === 'videoinput');
+            setCameraList(cameras);
         });
     };
 
