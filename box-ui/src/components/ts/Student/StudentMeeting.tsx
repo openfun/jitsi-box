@@ -127,6 +127,7 @@ const StudentMeeting: FunctionComponent = () => {
             axios.post(addressCoord, { room_name: information.roomName, coord: coordinatesList }).then(function () {
                 setCoord([]);
                 setCircles([]);
+                requestProcessedImage(processSelected, true);
             });
         }
     }
@@ -221,7 +222,7 @@ const StudentMeeting: FunctionComponent = () => {
 
     // download the image (with the potential cropped effect) from the back
 
-    const requestProcessedImage = (proc: string) => {
+    const requestProcessedImage = (proc: string, afterCrop = false) => {
         const address = process.env.REACT_APP_BACK_WEBROOT + '/process';
         setprocessSelected(proc);
         if (address) {
@@ -230,7 +231,9 @@ const StudentMeeting: FunctionComponent = () => {
                 const imageSlice = new Image();
                 imageSlice.src = 'data:image/jpg;base64,' + arrayBuffer;
                 setImg(imageSlice.src);
-                setLoading(false);
+                if (afterCrop) {
+                    setLoading(false);
+                }
             });
         }
     };
