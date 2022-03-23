@@ -31,9 +31,26 @@ const StudentMeeting: FunctionComponent = () => {
     const meetingOptions = useMemo(
         () => ({
             configOverwrite: {
-                prejoinConfig: {
-                    enabled: false,
+                userInfo: {
+                    email: '',
+                    displayName: t('student'),
                 },
+                toolbarButtons: [
+                    'microphone',
+                    'camera',
+                    'videoquality',
+                    'fodeviceselection',
+                    'raisehand',
+                    'tileview',
+                    'hangup',
+                    'chat',
+                    'desktop',
+                ],
+                prejoinConfig: {
+                    enabled: true,
+                },
+                startWithVideoMuted: false,
+                startWithAudioMuted: true,
             },
         }),
         [],
