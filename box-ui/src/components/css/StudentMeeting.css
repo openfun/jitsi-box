@@ -92,17 +92,3 @@
     align-items: center;
     flex-wrap: nowrap;
 }
-
-.verticalBox {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.horizontalBox {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}

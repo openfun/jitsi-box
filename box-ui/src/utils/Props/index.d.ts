@@ -67,3 +67,7 @@ export type FocusModeProps = {
     focusItems: { element: string; textElement: string }[];
     setDisplayFocus: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
+export type FloatProps = {
+    children: JSX.Element;
+};

@@ -336,7 +336,7 @@ const StudentMeeting: FunctionComponent = () => {
                                     onClick={() => ChangeMinimize()}
                                     style={{ position: 'absolute', top: '70%', left: '90%' }}
                                 >
-                                    <ArrowRightAltIcon style={{ height: '20px', width: '20px' }} />
+                                    F
                                 </button>
                             </div>
                         )}
@@ -411,7 +411,7 @@ const StudentMeeting: FunctionComponent = () => {
                             <CompareArrowsIcon style={{ height: '20px', width: '20px' }} />
                         </button>
                         <button
-                            className='openWindow'
+                            className='closeWindow'
                             onClick={() => ChangeMinimize()}
                             style={{ position: 'absolute', top: '0%', left: '90%' }}
                         >
@@ -534,7 +534,7 @@ const StudentMeeting: FunctionComponent = () => {
                         { element: '.cropButton', textElement: t('tutoCropButton') },
                         { element: '.openWindow', textElement: t('tutoOpenWindow') },
                         { element: '.closeWindow', textElement: t('tutoCloseWindow') },
-                        { element: '.switch', textElement: t('tutoSwitch') },
+                        { element: '.switch', textElement: t('tutoCloseWindow') },
                     ]}
                     setDisplayFocus={setDisplayFocus}
                 />
