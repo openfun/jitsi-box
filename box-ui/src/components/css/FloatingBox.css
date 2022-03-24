@@ -4,7 +4,7 @@
     position: fixed;
     box-sizing: content-box;
     box-shadow: 1px 3px 3px 0 rgb(0 0 0 / 20%), 1px 3px 15px 2px rgb(0 0 0 / 20%);
-    border-radius: 0.28571429rem;
+    border-radius: 0.3rem;
     overflow: auto;
     resize: both;
 }

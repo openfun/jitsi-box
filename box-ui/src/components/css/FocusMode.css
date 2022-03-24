@@ -7,7 +7,7 @@
     border: solid;
     border-color: rgba(0, 0, 0, 0.7);
     border-image-slice: 1;
-    z-index: 2;
+    z-index: 300;
     pointer-events: none;
     transition: all 0.5s linear;
 }
@@ -29,7 +29,7 @@
     align-self: flex-end;
     background-color: rgb(255, 255, 255);
     border-radius: 25px;
-    z-index: 3;
+    z-index: 400;
     pointer-events: all;
     padding: 1em;
     max-width: 20em;
