@@ -13,6 +13,9 @@ import HelpIcon from '@mui/icons-material/Help';
 import JitsiMeetExternalAPI from '../../../utils/JitsiMeetExternalAPI';
 import FocusMode from '../FocusMode';
 import FloatingBox from '../FloatingBox';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 
 const StudentMeeting: FunctionComponent = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -52,14 +55,14 @@ const StudentMeeting: FunctionComponent = () => {
 
     // img : downloaded from back, potentially cropped
     const [heightImg, setHeightImg] = useState<number>(0);
-    const [widthImgDouble, setWidthImgDouble] = useState<string>('');
+    const [widthImgDouble, setWidthImgDouble] = useState<number>(0);
     const [img, setImg] = useState<string>('../../FirstPicture.png');
     const [imgIsCropped, setImgIsCropped] = useState<boolean>(false);
 
     // img original : not cropped
     const [widthImgOriginal, setWidthImgOriginal] = useState<number>(0);
     const [heightImgOriginal, setHeightImgOriginal] = useState<number>(0);
-    const [ratioImgOriginal, setRatioImgOriginal] = useState<string>('');
+    const [ratioImgOriginal, setRatioImgOriginal] = useState<number>(0);
     const [imgOriginal, setImgOriginal] = useState<string>('../../FirstPicture.png');
 
     //Dimension image affichée
@@ -68,6 +71,9 @@ const StudentMeeting: FunctionComponent = () => {
 
     //Animation loading, waiting for new Image
     const [loading, setLoading] = useState<boolean>(false);
+
+    //choose if the image or the video is the secondary display
+    const [minimize, setMinimize] = useState<boolean>(false);
 
     //choose if the image or the video is the secondary display
     const [miniImg, setMiniImg] = useState<boolean>(true);
@@ -199,6 +205,10 @@ const StudentMeeting: FunctionComponent = () => {
         setMiniImg((miniImg) => !miniImg);
     }
 
+    function ChangeMinimize() {
+        setMinimize((minimize) => !minimize);
+    }
+
     function getImgSize(imgSrc: string, original: boolean) {
         const newImg = new Image();
 
@@ -206,7 +216,7 @@ const StudentMeeting: FunctionComponent = () => {
             const widthNew = newImg.width;
             let heightNew = newImg.height;
             if (original) {
-                const ratioImg = ((widthNew * 45) / heightNew).toString() + 'vh';
+                const ratioImg = (widthNew * 45) / heightNew;
                 setRatioImgOriginal(ratioImg);
                 setWidthImgOriginal(widthNew);
                 setHeightImgOriginal(heightNew);
@@ -214,7 +224,7 @@ const StudentMeeting: FunctionComponent = () => {
                 // dimensions of the original image, not of the image displayed on screen
                 const ViewportWidth = window.innerWidth * 0.9;
                 const ViewportHeight = window.innerHeight * 0.45;
-                setWidthImgDouble(((widthNew * 45) / heightNew).toString() + 'vh');
+                setWidthImgDouble((widthNew * 45) / heightNew);
                 const potentialHeight = (heightNew / widthNew) * ViewportWidth;
                 if (potentialHeight < ViewportHeight) {
                     heightNew = potentialHeight;
@@ -262,33 +272,90 @@ const StudentMeeting: FunctionComponent = () => {
 
     return (
         <div className='CreateMeetingComponent'>
-            {!selectCoord && miniImg && (
-                <FloatingBox>
-                    <div className='containerImgStudent'>
-                        <div className='sectionClickSolo'>
-                            <ClickableSVG
-                                height={heightImg + 'px'}
-                                style={{
-                                    backgroundImage: "url('" + img + "')",
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundSize: 'contain',
-                                    backgroundPosition: 'center',
-                                    maxWidth: '20vw',
-                                    maxHeight: '20vh',
-                                }}
-                            ></ClickableSVG>
-                            {loading && <CircularProgress className='circularProgress' />}
+            {!minimize && (
+                <div className='CreateMeetingComponent'>
+                    <div className='CreateMeetingContainer'>
+                        <div className='JitsiComponent'>
+                            <JitsiFrame
+                                information={information}
+                                options={meetingOptions}
+                                configure={configureFrame}
+                                isBox={false}
+                            />
                         </div>
                     </div>
-                </FloatingBox>
+                    <div className='containerStudent'>
+                        {!selectCoord && (
+                            <div className='containerImgStudent'>
+                                <ClickableSVG
+                                    height={heightImg + 'px'}
+                                    style={{
+                                        backgroundImage: "url('" + img + "')",
+                                        backgroundRepeat: 'no-repeat',
+                                        backgroundSize: 'contain',
+                                        backgroundPosition: 'center',
+                                        maxWidth: '95vw',
+                                        maxHeight: '50vh',
+                                    }}
+                                ></ClickableSVG>
+                                <button
+                                    aria-label='close'
+                                    onClick={() => ChangeMinimize()}
+                                    style={{ position: 'absolute', top: '70%', left: '70%' }}
+                                >
+                                    <ArrowRightAltIcon style={{ height: '20px', width: '20px' }} />
+                                </button>
+                                {loading && <CircularProgress className='circularProgress' />}
+                            </div>
+                        )}
+
+                        {selectCoord && (
+                            <div className='containerImgStudent'>
+                                <ClickableSVG
+                                    height='45vh'
+                                    width={ratioImgOriginal.toString() + 'vh'}
+                                    onClick={addCircle}
+                                    style={{
+                                        backgroundImage: "url('" + imgOriginal + "')",
+                                        backgroundRepeat: 'no-repeat',
+                                        backgroundSize: 'contain',
+                                        maxWidth: '45vw',
+                                        border: '1px solid blue',
+                                    }}
+                                >
+                                    {circles}
+                                </ClickableSVG>
+                                <div className='sectionClick'>
+                                    <ClickableSVG
+                                        height='45vh'
+                                        width={widthImgDouble.toString() + 'vh'}
+                                        style={{
+                                            backgroundImage: "url('" + img + "')",
+                                            backgroundRepeat: 'no-repeat',
+                                            backgroundSize: 'contain',
+                                            maxWidth: '45vw',
+                                        }}
+                                    ></ClickableSVG>
+                                </div>
+                                <button
+                                    aria-label='close'
+                                    onClick={() => ChangeMinimize()}
+                                    style={{ position: 'absolute', top: '70%', left: '90%' }}
+                                >
+                                    F
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                </div>
             )}
-            {selectCoord && miniImg && (
+            {minimize && miniImg && (
                 <FloatingBox>
                     <div className='containerImgStudent'>
-                        <div>
+                        {selectCoord && (
                             <ClickableSVG
-                                height='45vh'
-                                width={ratioImgOriginal}
+                                height='30vh'
+                                width={((ratioImgOriginal / 45) * 30).toString() + 'vh'}
                                 onClick={addCircle}
                                 style={{
                                     backgroundImage: "url('" + imgOriginal + "')",
@@ -300,62 +367,76 @@ const StudentMeeting: FunctionComponent = () => {
                             >
                                 {circles}
                             </ClickableSVG>
-                        </div>
-                        <div className='sectionClick'>
-                            <ClickableSVG
-                                height='45vh'
-                                width={widthImgDouble}
-                                style={{
-                                    backgroundImage: "url('" + img + "')",
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundSize: 'contain',
-                                    maxWidth: '40vw',
-                                }}
-                            ></ClickableSVG>
-                        </div>
+                        )}
+                        <ClickableSVG
+                            height='30vh'
+                            width={((widthImgDouble / 45) * 30).toString() + 'vh'}
+                            style={{
+                                backgroundImage: "url('" + img + "')",
+                                backgroundRepeat: 'no-repeat',
+                                backgroundSize: 'contain',
+                                maxWidth: '45vw',
+                            }}
+                        ></ClickableSVG>
+                        <button
+                            aria-label='close'
+                            onClick={() => ChangeMinimize()}
+                            style={{ position: 'absolute', top: '0%', left: '90%' }}
+                        >
+                            <HighlightOffIcon style={{ height: '20px', width: '20px' }} />
+                        </button>
+                        <button onClick={() => ChangeView()} style={{ position: 'absolute', top: '85%', left: '90%' }}>
+                            <CompareArrowsIcon style={{ height: '20px', width: '20px' }} />
+                        </button>
+                        {loading && <CircularProgress className='circularProgress' />}
                     </div>
                 </FloatingBox>
             )}
-            {miniImg && (
+            {minimize && miniImg && (
                 <div className='CreateMeetingContainer'>
                     <div className='JitsiComponent'>
                         <JitsiFrame information={information} options={meetingOptions} />
                     </div>
                 </div>
             )}
-            {!miniImg && (
+            {minimize && !miniImg && (
                 <FloatingBox>
                     <div className='CreateMeetingContainer'>
                         <div className='JitsiComponent' style={{ margin: '20px' }}>
                             <JitsiFrame information={information} options={meetingOptions} />
                         </div>
+                        <button onClick={() => ChangeView()} style={{ position: 'absolute', top: '85%', left: '90%' }}>
+                            <CompareArrowsIcon style={{ height: '20px', width: '20px' }} />
+                        </button>
+                        <button
+                            aria-label='close'
+                            onClick={() => ChangeMinimize()}
+                            style={{ position: 'absolute', top: '0%', left: '90%' }}
+                        >
+                            <HighlightOffIcon style={{ height: '20px', width: '20px' }} />
+                        </button>
                     </div>
                 </FloatingBox>
             )}
-            {!selectCoord && !miniImg && (
+            {minimize && !selectCoord && !miniImg && (
                 <div className='containerImgStudent'>
-                    <div className='sectionClickSolo'>
-                        <ClickableSVG
-                            height={heightImg + 'px'}
-                            style={{
-                                backgroundImage: "url('" + img + "')",
-                                backgroundRepeat: 'no-repeat',
-                                backgroundSize: 'contain',
-                                backgroundPosition: 'center',
-                                maxWidth: '95vw',
-                                maxHeight: '50vh',
-                            }}
-                        ></ClickableSVG>
-                        {loading && <CircularProgress className='circularProgress' />}
-                    </div>
+                    <ClickableSVG
+                        height='90vh'
+                        width={((widthImgDouble / 45) * 90).toString() + 'vh'}
+                        style={{
+                            backgroundImage: "url('" + img + "')",
+                            backgroundRepeat: 'no-repeat',
+                            backgroundSize: 'contain',
+                        }}
+                    ></ClickableSVG>
                 </div>
             )}
-            {selectCoord && !miniImg && (
+            {minimize && selectCoord && !miniImg && (
                 <div className='containerImgStudent'>
                     <div>
                         <ClickableSVG
                             height='45vh'
-                            width={ratioImgOriginal}
+                            width={ratioImgOriginal.toString() + 'vh'}
                             onClick={addCircle}
                             style={{
                                 backgroundImage: "url('" + imgOriginal + "')",
@@ -371,7 +452,7 @@ const StudentMeeting: FunctionComponent = () => {
                     <div className='sectionClick'>
                         <ClickableSVG
                             height='45vh'
-                            width={widthImgDouble}
+                            width={widthImgDouble.toString() + 'vh'}
                             style={{
                                 backgroundImage: "url('" + img + "')",
                                 backgroundRepeat: 'no-repeat',
@@ -426,9 +507,6 @@ const StudentMeeting: FunctionComponent = () => {
                         {!selectCoord ? t('crop') : t('cancel')}
                     </button>
                 </div>
-                <button className='buttonStudent' onClick={() => ChangeView()}>
-                    change View
-                </button>
                 {coord.length == 4 && (
                     <div>
                         <button className='buttonStudent' onClick={() => validerSaisie()}>
