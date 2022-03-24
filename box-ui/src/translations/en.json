@@ -32,7 +32,7 @@
         "teacherSpace": "Teacher Space",
         "studentSpace": "Student Space",
         "teacher": "Teacher",
-        "student": "Élève",
+        "student": "Student",
         "tutoSelectCamera" : "Click here to select the camera that will shoot the board for distant students. The first time you click on this button, your cameras names may not appear as you haven't allowed the app to access your cameras yet. Once you grant permissions the shooting will begin and you don't need to reselect a camera",
         "tutoMeetingUrl" : "You can see here the name of your meeting, all that is after https://meeting.education is your room name ! You can also click here to change your room.",
         "tutoQRCode" : "If you have a meeting QR code, you can scan it by clicking on this icon",
