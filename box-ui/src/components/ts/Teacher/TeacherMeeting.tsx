@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useState, useMemo, useCallback, useRef, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import CaptureImage from '../CaptureImage';
-import '../../css/BoxMeeting.css';
+import '../../css/Meeting.css';
 import PopupComponent from '../PopupComponent';
 import { LocationState } from '../../../utils/State';
 import JitsiFrame from '../JitsiFrame';
@@ -85,7 +85,7 @@ const TeacherMeeting: FunctionComponent = () => {
     }, [navigate]);
 
     return (
-        <div className='BoxMeeting'>
+        <div className='Meeting'>
             <PopupComponent information={information} setInformation={setInformation} />
             <div className='CreateMeetingContainer'>
                 <div className='JitsiComponent'>
