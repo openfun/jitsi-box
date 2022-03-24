@@ -336,7 +336,7 @@ const StudentMeeting: FunctionComponent = () => {
                                     onClick={() => ChangeMinimize()}
                                     style={{ position: 'absolute', top: '70%', left: '90%' }}
                                 >
-                                    F
+                                    <ArrowRightAltIcon style={{ height: '20px', width: '20px' }} />
                                 </button>
                             </div>
                         )}
