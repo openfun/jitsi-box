@@ -36,7 +36,9 @@
       "tutoSectionClickSolo": "C'est ici que vous pourrez visualiser la photo prise par la jitsi-box." , 
       "tutoSelectFilter" : "Vous pouvez sélectionner un filtre à appliquer à votre image ici, certains filtres pourraient améliorer la visibilité de l'image.",
       "tutoCropButton": "En cliquant sur ce bouton vous pourrez redimensionner l'image envoyée par la jitsi-box. Une fois que vous avez appuyé sur le bouton, sélectionnez les 4 coins de la zone de l'image sur laquelle vous souhaitez vous focaliser sur l'image de gauche qui apparaitra.",
-      "continueTuto": "Continuer le tutoriel",
+      "tutoOpenWindow" : "En cliquant sur ce bouton, l'image en bas de l'écran sera transformée en une fenetre que vous pourrez positionner à votre guise sur l'écran ",
+      "tutoCloseWindow": "En cliquant sur ce bouton, l'image flotante retournera à la disposition d'écran originale ",
+      "tutoSwitch": "En cliquant sur ce bouton, l'image et la vidéo vont changer de place",
       "quitTuto": "Quitter le tutoriel",
       "selectFilter" : "sélectionner un filtre"
     }

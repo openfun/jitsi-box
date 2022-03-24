@@ -36,6 +36,9 @@
         "tutoSectionClickSolo": "It's here that you'll see board's pictures sent by the jitsi-box" , 
         "tutoSelectFilter" : "You can select a filter to apply on the picture here. Some filters may improve image's visibility",
         "tutoCropButton": "By clicking on this button you'll be able to resize the picture you're receiving. Please select the 4 corners of the part of the image you want to focus on, on the left picture that will appear after clicking on the button.",
+        "tutoOpenWindow" : "By clicking on this button, the image displayed will transform into a floating window that you can drag on screen",
+        "tutoCloseWindow": "By clicking on this button, the floating window will revert to the original display ",
+        "tutoSwitch": "By clicking on this button, the image and the video will switch places",
         "continueTuto": "Continue tutorial",
         "quitTuto": "Exit tutorial",
         "selectFilter" : "select filter"
