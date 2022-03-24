@@ -1,7 +1,6 @@
 import React, { useState, FunctionComponent, useEffect, useMemo, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../../css/StudentMeeting.css';
-import PopupComponent from '../PopupComponent';
 import CircularProgress from '@mui/material/CircularProgress';
 import { LocationState } from '../../../utils/State';
 import styled from '@emotion/styled';
@@ -276,12 +275,7 @@ const StudentMeeting: FunctionComponent = () => {
                 <div className='CreateMeetingComponent'>
                     <div className='CreateMeetingContainer'>
                         <div className='JitsiComponent'>
-                            <JitsiFrame
-                                information={information}
-                                options={meetingOptions}
-                                configure={configureFrame}
-                                isBox={false}
-                            />
+                            <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
                         </div>
                     </div>
                     <div className='containerStudent'>
@@ -299,7 +293,7 @@ const StudentMeeting: FunctionComponent = () => {
                                     }}
                                 ></ClickableSVG>
                                 <button
-                                    aria-label='close'
+                                    className='openWindow'
                                     onClick={() => ChangeMinimize()}
                                     style={{ position: 'absolute', top: '70%', left: '70%' }}
                                 >
@@ -338,7 +332,7 @@ const StudentMeeting: FunctionComponent = () => {
                                     ></ClickableSVG>
                                 </div>
                                 <button
-                                    aria-label='close'
+                                    className='openWindow'
                                     onClick={() => ChangeMinimize()}
                                     style={{ position: 'absolute', top: '70%', left: '90%' }}
                                 >
@@ -379,13 +373,17 @@ const StudentMeeting: FunctionComponent = () => {
                             }}
                         ></ClickableSVG>
                         <button
-                            aria-label='close'
+                            className='closeWindow'
                             onClick={() => ChangeMinimize()}
                             style={{ position: 'absolute', top: '0%', left: '90%' }}
                         >
                             <HighlightOffIcon style={{ height: '20px', width: '20px' }} />
                         </button>
-                        <button onClick={() => ChangeView()} style={{ position: 'absolute', top: '85%', left: '90%' }}>
+                        <button
+                            className='switch'
+                            onClick={() => ChangeView()}
+                            style={{ position: 'absolute', top: '85%', left: '90%' }}
+                        >
                             <CompareArrowsIcon style={{ height: '20px', width: '20px' }} />
                         </button>
                         {loading && <CircularProgress className='circularProgress' />}
@@ -405,11 +403,15 @@ const StudentMeeting: FunctionComponent = () => {
                         <div className='JitsiComponent' style={{ margin: '20px' }}>
                             <JitsiFrame information={information} options={meetingOptions} />
                         </div>
-                        <button onClick={() => ChangeView()} style={{ position: 'absolute', top: '85%', left: '90%' }}>
+                        <button
+                            className='switch'
+                            onClick={() => ChangeView()}
+                            style={{ position: 'absolute', top: '85%', left: '90%' }}
+                        >
                             <CompareArrowsIcon style={{ height: '20px', width: '20px' }} />
                         </button>
                         <button
-                            aria-label='close'
+                            className='openWindow'
                             onClick={() => ChangeMinimize()}
                             style={{ position: 'absolute', top: '0%', left: '90%' }}
                         >
@@ -527,13 +529,12 @@ const StudentMeeting: FunctionComponent = () => {
             {displayFocus && (
                 <FocusMode
                     focusItems={[
-                        { element: '.meetingUrl', textElement: t('tutoMeetingUrl') },
-                        { element: '.QrcodeScannerButton', textElement: t('tutoQRCode') },
-                        { element: '.QrcodeButton', textElement: t('tutoShareQRCode') },
-                        { element: '.OpenTopBarButton', textElement: t('tutoBroadcast') },
                         { element: '.sectionClickSolo', textElement: t('tutoSectionClickSolo') },
                         { element: '.selectFilter', textElement: t('tutoSelectFilter') },
                         { element: '.cropButton', textElement: t('tutoCropButton') },
+                        { element: '.openWindow', textElement: t('tutoOpenWindow') },
+                        { element: '.closeWindow', textElement: t('tutoCloseWindow') },
+                        { element: '.switch', textElement: t('tutoSwitch') },
                     ]}
                     setDisplayFocus={setDisplayFocus}
                 />
