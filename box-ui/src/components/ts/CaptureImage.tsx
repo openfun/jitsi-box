@@ -4,7 +4,6 @@ import { CaptureImageProps } from '../../utils/Props';
 import axios from 'axios';
 import '../css/CaptureImage.css';
 import { useTranslation } from 'react-i18next';
-import SelectButton from './SelectButton';
 import { IconButton } from '@mui/material';
 import FocusMode from './FocusMode';
 import HelpIcon from '@mui/icons-material/Help';

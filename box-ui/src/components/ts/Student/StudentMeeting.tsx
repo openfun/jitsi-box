@@ -9,8 +9,12 @@ import { useTranslation } from 'react-i18next';
 import { IconButton } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
 import FocusMode from '../FocusMode';
-import { v1 as uuidv1 } from 'uuid';
 import SelectButton from '../SelectButton';
+import FloatingBox from '../FloatingBox';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import LaunchIcon from '@mui/icons-material/Launch';
+import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
+import ImageViewer from '../ImageViewer';
 
 const StudentMeeting: FunctionComponent = () => {
     const processes = ['Color', 'B&W', 'Contrast', 'original', 'SuperRes'];
