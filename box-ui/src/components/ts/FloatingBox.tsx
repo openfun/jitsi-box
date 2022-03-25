@@ -5,11 +5,9 @@ import { FloatProps } from '../../utils/Props';
 
 const FloatingBox = ({ children }: FloatProps) => {
     return (
-        <div>
-            <Draggable>
-                <div className='pipWindow'>{children}</div>
-            </Draggable>
-        </div>
+        <Draggable>
+            <div className='pipWindow'>{children}</div>
+        </Draggable>
     );
 };
 
