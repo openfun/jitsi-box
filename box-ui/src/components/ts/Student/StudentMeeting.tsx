@@ -287,10 +287,10 @@ const StudentMeeting: FunctionComponent = () => {
                                 onclick={addCircle}
                                 addOn={circles}
                                 selectWindow={selectCoord}
-                            ></ImageViewer>
+                            />
                             <button
                                 className='openWindow'
-                                onClick={() => ChangeMinimize()}
+                                onClick={ChangeMinimize}
                                 style={{ position: 'absolute', top: '70%', left: '90%' }}
                             >
                                 <LaunchIcon style={{ height: '20px', width: '20px' }} />
@@ -308,17 +308,17 @@ const StudentMeeting: FunctionComponent = () => {
                             onclick={addCircle}
                             addOn={circles}
                             selectWindow={selectCoord}
-                        ></ImageViewer>
+                        />
                         <button
                             className='closeWindow'
-                            onClick={() => ChangeMinimize()}
+                            onClick={ChangeMinimize}
                             style={{ position: 'absolute', top: '0%', left: '90%' }}
                         >
                             <HighlightOffIcon style={{ height: '20px', width: '20px' }} />
                         </button>
                         <button
                             className='switch'
-                            onClick={() => ChangeView()}
+                            onClick={ChangeView}
                             style={{ position: 'absolute', top: '85%', left: '90%' }}
                         >
                             <CompareArrowsIcon style={{ height: '20px', width: '20px' }} />
@@ -342,14 +342,14 @@ const StudentMeeting: FunctionComponent = () => {
                         </div>
                         <button
                             className='switch'
-                            onClick={() => ChangeView()}
+                            onClick={ChangeView}
                             style={{ position: 'absolute', top: '85%', left: '90%' }}
                         >
                             <CompareArrowsIcon style={{ height: '20px', width: '20px' }} />
                         </button>
                         <button
                             className='closeWindow'
-                            onClick={() => ChangeMinimize()}
+                            onClick={ChangeMinimize}
                             style={{ position: 'absolute', top: '0%', left: '90%' }}
                         >
                             <HighlightOffIcon style={{ height: '20px', width: '20px' }} />
@@ -363,7 +363,7 @@ const StudentMeeting: FunctionComponent = () => {
                         img1={[img, '45vh', widthImgDouble.toString() + 'vh']}
                         img2={[img, '45vh', ratioImgOriginal.toString() + 'vh']}
                         selectWindow={selectCoord}
-                    ></ImageViewer>
+                    />
                 </div>
             )}
 
