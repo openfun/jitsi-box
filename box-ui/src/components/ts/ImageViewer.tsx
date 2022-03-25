@@ -1,9 +1,6 @@
-import React, { useState, FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent } from 'react';
 import { ViewerProps } from '../../utils/Props';
 import styled from '@emotion/styled';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 
 const ImageViewer: FunctionComponent<ViewerProps> = (props: ViewerProps) => {
     return (
