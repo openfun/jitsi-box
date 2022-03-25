@@ -71,3 +71,11 @@ export type FocusModeProps = {
 export type FloatProps = {
     children: JSX.Element;
 };
+
+export type ViewerProps = {
+    img1 : [string,string,string];
+    img2? : [string,string,string];
+    onclick?: (event: React.MouseEvent) => void;
+    addOn?: React.SVGProps<SVGCircleElement>[];
+    selectWindow : boolean; 
+};

@@ -15,6 +15,7 @@ import FloatingBox from '../FloatingBox';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
+import ImageViewer from '../ImageViewer';
 
 const StudentMeeting: FunctionComponent = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -279,99 +280,35 @@ const StudentMeeting: FunctionComponent = () => {
                         </div>
                     </div>
                     <div className='containerStudent'>
-                        {!selectCoord && (
-                            <div className='containerImgStudent'>
-                                <ClickableSVG
-                                    height={heightImg + 'px'}
-                                    style={{
-                                        backgroundImage: "url('" + img + "')",
-                                        backgroundRepeat: 'no-repeat',
-                                        backgroundSize: 'contain',
-                                        backgroundPosition: 'center',
-                                        maxWidth: '95vw',
-                                        maxHeight: '50vh',
-                                    }}
-                                ></ClickableSVG>
-                                <button
-                                    className='openWindow'
-                                    onClick={() => ChangeMinimize()}
-                                    style={{ position: 'absolute', top: '70%', left: '70%' }}
-                                >
-                                    <ArrowRightAltIcon style={{ height: '20px', width: '20px' }} />
-                                </button>
-                                {loading && <CircularProgress className='circularProgress' />}
-                            </div>
-                        )}
-
-                        {selectCoord && (
-                            <div className='containerImgStudent'>
-                                <ClickableSVG
-                                    height='45vh'
-                                    width={ratioImgOriginal.toString() + 'vh'}
-                                    onClick={addCircle}
-                                    style={{
-                                        backgroundImage: "url('" + imgOriginal + "')",
-                                        backgroundRepeat: 'no-repeat',
-                                        backgroundSize: 'contain',
-                                        maxWidth: '45vw',
-                                        border: '1px solid blue',
-                                    }}
-                                >
-                                    {circles}
-                                </ClickableSVG>
-                                <div className='sectionClick'>
-                                    <ClickableSVG
-                                        height='45vh'
-                                        width={widthImgDouble.toString() + 'vh'}
-                                        style={{
-                                            backgroundImage: "url('" + img + "')",
-                                            backgroundRepeat: 'no-repeat',
-                                            backgroundSize: 'contain',
-                                            maxWidth: '45vw',
-                                        }}
-                                    ></ClickableSVG>
-                                </div>
-                                <button
-                                    className='openWindow'
-                                    onClick={() => ChangeMinimize()}
-                                    style={{ position: 'absolute', top: '70%', left: '90%' }}
-                                >
-                                    F
-                                </button>
-                            </div>
-                        )}
+                        <div className='containerImgStudent'>
+                            <ImageViewer
+                                img1={[img, '45vh', widthImgDouble.toString() + 'vh']}
+                                img2={[imgOriginal, '45vh', widthImgDouble.toString() + 'vh']}
+                                onclick={addCircle}
+                                addOn={circles}
+                                selectWindow={selectCoord}
+                            ></ImageViewer>
+                            <button
+                                className='openWindow'
+                                onClick={() => ChangeMinimize()}
+                                style={{ position: 'absolute', top: '70%', left: '90%' }}
+                            >
+                                <ArrowRightAltIcon style={{ height: '20px', width: '20px' }} />
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
             {minimize && miniImg && (
                 <FloatingBox>
                     <div className='containerImgStudent'>
-                        {selectCoord && (
-                            <ClickableSVG
-                                height='30vh'
-                                width={((ratioImgOriginal / 45) * 30).toString() + 'vh'}
-                                onClick={addCircle}
-                                style={{
-                                    backgroundImage: "url('" + imgOriginal + "')",
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundSize: 'contain',
-                                    maxWidth: '45vw',
-                                    border: '1px solid blue',
-                                }}
-                            >
-                                {circles}
-                            </ClickableSVG>
-                        )}
-                        <ClickableSVG
-                            height='30vh'
-                            width={((widthImgDouble / 45) * 30).toString() + 'vh'}
-                            style={{
-                                backgroundImage: "url('" + img + "')",
-                                backgroundRepeat: 'no-repeat',
-                                backgroundSize: 'contain',
-                                maxWidth: '45vw',
-                            }}
-                        ></ClickableSVG>
+                        <ImageViewer
+                            img1={[img, '30vh', ((widthImgDouble / 45) * 30).toString() + 'vh']}
+                            img2={[imgOriginal, '30vh', ((ratioImgOriginal / 45) * 30).toString() + 'vh']}
+                            onclick={addCircle}
+                            addOn={circles}
+                            selectWindow={selectCoord}
+                        ></ImageViewer>
                         <button
                             className='closeWindow'
                             onClick={() => ChangeMinimize()}
@@ -420,49 +357,13 @@ const StudentMeeting: FunctionComponent = () => {
                     </div>
                 </FloatingBox>
             )}
-            {minimize && !selectCoord && !miniImg && (
+            {minimize && !miniImg && (
                 <div className='containerImgStudent'>
-                    <ClickableSVG
-                        height='90vh'
-                        width={((widthImgDouble / 45) * 90).toString() + 'vh'}
-                        style={{
-                            backgroundImage: "url('" + img + "')",
-                            backgroundRepeat: 'no-repeat',
-                            backgroundSize: 'contain',
-                        }}
-                    ></ClickableSVG>
-                </div>
-            )}
-            {minimize && selectCoord && !miniImg && (
-                <div className='containerImgStudent'>
-                    <div>
-                        <ClickableSVG
-                            height='45vh'
-                            width={ratioImgOriginal.toString() + 'vh'}
-                            onClick={addCircle}
-                            style={{
-                                backgroundImage: "url('" + imgOriginal + "')",
-                                backgroundRepeat: 'no-repeat',
-                                backgroundSize: 'contain',
-                                maxWidth: '45vw',
-                                border: '1px solid blue',
-                            }}
-                        >
-                            {circles}
-                        </ClickableSVG>
-                    </div>
-                    <div className='sectionClick'>
-                        <ClickableSVG
-                            height='45vh'
-                            width={widthImgDouble.toString() + 'vh'}
-                            style={{
-                                backgroundImage: "url('" + img + "')",
-                                backgroundRepeat: 'no-repeat',
-                                backgroundSize: 'contain',
-                                maxWidth: '40vw',
-                            }}
-                        ></ClickableSVG>
-                    </div>
+                    <ImageViewer
+                        img1={[img, '45vh', widthImgDouble.toString() + 'vh']}
+                        img2={[img, '45vh', ratioImgOriginal.toString() + 'vh']}
+                        selectWindow={selectCoord}
+                    ></ImageViewer>
                 </div>
             )}
 
@@ -542,16 +443,4 @@ const StudentMeeting: FunctionComponent = () => {
         </div>
     );
 };
-
-// style of the component image to click on
-const ClickableSVG = styled.svg`
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-color: black;
-    & * {
-        /* Block your circles from triggering 'add circle' */
-        pointer-events: none;
-    }
-`;
-
 export default StudentMeeting;
