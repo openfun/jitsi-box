@@ -13,7 +13,7 @@ import JitsiMeetExternalAPI from '../../../utils/JitsiMeetExternalAPI';
 import FocusMode from '../FocusMode';
 import FloatingBox from '../FloatingBox';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import LaunchIcon from '@mui/icons-material/Launch';
 import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import ImageViewer from '../ImageViewer';
 
@@ -293,7 +293,7 @@ const StudentMeeting: FunctionComponent = () => {
                                 onClick={() => ChangeMinimize()}
                                 style={{ position: 'absolute', top: '70%', left: '90%' }}
                             >
-                                <ArrowRightAltIcon style={{ height: '20px', width: '20px' }} />
+                                <LaunchIcon style={{ height: '20px', width: '20px' }} />
                             </button>
                         </div>
                     </div>

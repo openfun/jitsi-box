@@ -68,9 +68,6 @@ export type FocusModeProps = {
     setDisplayFocus: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export type FloatProps = {
-    children: JSX.Element;
-};
 
 export type ViewerProps = {
     img1 : [string,string,string];
