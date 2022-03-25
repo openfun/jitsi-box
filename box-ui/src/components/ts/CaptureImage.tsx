@@ -9,6 +9,7 @@ import '../css/CaptureImage.css';
 import { useTranslation } from 'react-i18next';
 import HelpIcon from '@mui/icons-material/Help';
 import IconButton from '@mui/material/IconButton';
+import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import FocusMode from './FocusMode';
 
 const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageProps) => {
@@ -16,6 +17,10 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
     const [cameraList, setCameraList] = useState<MediaDeviceInfo[]>([]);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [displayFocus, setDisplayFocus] = useState(false);
+    const [videoLoopback, setVideoLoopback] = useState<MediaStream>();
+    const [showLoopback, setShowLoopback] = useState<boolean>(false);
+    const [showArrow, setShowArrow] = useState<boolean>(false);
+    const [cameraLoopback, setCameraLoopback] = useState<MediaDeviceInfo>();
     const open = Boolean(anchorEl);
     const { t } = useTranslation();
 
@@ -25,6 +30,7 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
     const handleClose = () => {
         setAnchorEl(null);
     };
+
     const detectCamera = () => {
         navigator.mediaDevices.enumerateDevices().then((devices) => {
             const cameras = devices.filter((value) => value['kind'] === 'videoinput');
@@ -33,6 +39,9 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
     };
 
     const setCamera = (camera: MediaDeviceInfo) => {
+        setCameraLoopback(camera);
+        setShowArrow(true);
+        setShowLoopback(true);
         const mediaStreamPromise = navigator.mediaDevices.getUserMedia({
             video: {
                 deviceId: {
@@ -40,8 +49,10 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
                 },
             },
         });
+
         mediaStreamPromise
             .then((mediastream: MediaStream) => {
+                setVideoLoopback(mediastream);
                 const videoTrack = mediastream.getVideoTracks()[0];
                 videoTrack.applyConstraints({
                     //whiteBalanceMode: 'single-shot',
@@ -69,6 +80,32 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
             });
     };
 
+    const getLoopbackVideo = (camera: MediaDeviceInfo) => {
+        navigator.mediaDevices
+            .getUserMedia({
+                video: {
+                    deviceId: {
+                        exact: camera['deviceId'],
+                    },
+                },
+            })
+            .then((mediaStream) => {
+                const el = document.getElementById('videoContainer');
+                let vid = document.querySelector('video');
+                if (el) {
+                    if (!(vid == undefined)) {
+                        vid.remove();
+                    }
+                    vid = document.createElement('video');
+                    vid.setAttribute('autoplay', '');
+                    vid.setAttribute('className', 'videoLoopback');
+                    vid.srcObject = mediaStream;
+                    el.appendChild(vid);
+                }
+            })
+            .catch((error) => console.log(error));
+    };
+
     const takePhoto = (imageCapturer: ImageCapture, roomName: string) => {
         imageCapturer.takePhoto().then((blob: Blob) => {
             const data = new FormData();
@@ -89,6 +126,13 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
         });
     };
 
+    const changeViewLoopback = () => {
+        if (cameraLoopback) {
+            getLoopbackVideo(cameraLoopback);
+        }
+        setShowLoopback(!showLoopback);
+    };
+
     useEffect(() => {
         return () => {
             if (photoInterval !== undefined) {
@@ -104,65 +148,85 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
 
     return (
         <div className='popupCamera'>
-            <Button
-                id='buttonToSelectCamera'
-                aria-controls={open ? 'menu' : undefined}
-                aria-haspopup='menu'
-                aria-expanded={open ? 'true' : undefined}
-                onClick={(event) => {
-                    detectCamera(), handleClick(event);
-                }}
-            >
-                {t('selectCamera')}
-            </Button>
-            <Menu
-                id='menu'
-                aria-labelledby='button'
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                }}
-            >
-                {cameraList.map((camera, index) => {
-                    return (
-                        <div key={index}>
-                            <MenuItem
-                                onClick={() => {
-                                    handleClose(), setCamera(camera), alert(`New camera selected ${camera['label']}`);
-                                }}
-                                key={index}
-                            >
-                                {camera['label'] !== '' ? camera['label'] : `${t('camera')} ${index + 1}`}
-                            </MenuItem>
-                        </div>
-                    );
-                })}
-            </Menu>
-            <IconButton id='TutoButton' aria-label='help' onClick={() => setDisplayFocus(!displayFocus)}>
-                <HelpIcon />
-            </IconButton>
-            {displayFocus && (
-                <FocusMode
-                    focusItems={[
-                        {
-                            element: '#buttonToSelectCamera',
-                            textElement: t('tutoSelectCamera'),
-                        },
-                        { element: '.meetingUrl', textElement: t('tutoMeetingUrl') },
-                        { element: '.QrcodeScannerButton', textElement: t('tutoQRCode') },
-                        { element: '.QrcodeButton', textElement: t('tutoShareQRCode') },
-                        { element: '.OpenTopBarButton', textElement: t('tutoBroadcast') },
-                    ]}
-                    setDisplayFocus={setDisplayFocus}
-                />
+            {false && (
+                <div className='arrowContainer' onClick={changeViewLoopback}>
+                    <DoubleArrowIcon className={showLoopback ? 'arrowDown' : 'arrowUp'} />
+                </div>
             )}
+            <div className='sectionSelectCam'>
+                {showLoopback && (
+                    <div id='videoContainer'>
+                        <div className='recordingIcon'></div>
+                    </div>
+                )}
+                {showArrow && (
+                    <div className='arrowContainer' onClick={changeViewLoopback}>
+                        <DoubleArrowIcon className={showLoopback ? 'arrowDown' : 'arrowUp'} />
+                    </div>
+                )}
+                <Button
+                    id='buttonToSelectCamera'
+                    aria-controls={open ? 'menu' : undefined}
+                    aria-haspopup='menu'
+                    aria-expanded={open ? 'true' : undefined}
+                    onClick={(event) => {
+                        detectCamera(), handleClick(event);
+                    }}
+                >
+                    {t('selectCamera')}
+                </Button>
+                <Menu
+                    id='menu'
+                    aria-labelledby='button'
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'left',
+                    }}
+                >
+                    {cameraList.map((camera, index) => {
+                        return (
+                            <div key={index}>
+                                <MenuItem
+                                    onClick={() => {
+                                        handleClose(),
+                                            setCamera(camera),
+                                            getLoopbackVideo(camera),
+                                            alert(`New camera selected ${camera['label']}`);
+                                    }}
+                                    key={index}
+                                >
+                                    {camera['label'] !== '' ? camera['label'] : `${t('camera')} ${index + 1}`}
+                                </MenuItem>
+                            </div>
+                        );
+                    })}
+                </Menu>
+                <IconButton id='TutoButton' aria-label='help' onClick={() => setDisplayFocus(!displayFocus)}>
+                    <HelpIcon />
+                </IconButton>
+                {displayFocus && (
+                    <FocusMode
+                        focusItems={[
+                            {
+                                element: '#buttonToSelectCamera',
+                                textElement: t('tutoSelectCamera'),
+                            },
+                            { element: '.meetingUrl', textElement: t('tutoMeetingUrl') },
+                            { element: '.QrcodeScannerButton', textElement: t('tutoQRCode') },
+                            { element: '.QrcodeButton', textElement: t('tutoShareQRCode') },
+                            { element: '.OpenTopBarButton', textElement: t('tutoBroadcast') },
+                        ]}
+                        setDisplayFocus={setDisplayFocus}
+                    />
+                )}
+            </div>
         </div>
     );
 };
