@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import '../../css/StudentMeeting.css';
 import CircularProgress from '@mui/material/CircularProgress';
 import { LocationState } from '../../../utils/State';
-import styled from '@emotion/styled';
 import JitsiFrame from '../JitsiFrame';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
@@ -41,10 +40,12 @@ const StudentMeeting: FunctionComponent = () => {
     );
     const state = useLocation().state as LocationState;
     const navigate = useNavigate();
-    const [information, setInformation] = useState({
-        roomName: state && state.roomName ? state.roomName : 'dty',
-        domain: state && state.domain ? state.domain : 'meeting.education',
-    });
+    const information: { roomName: string; domain: string } = useMemo(() => {
+        return {
+            roomName: state && state.roomName ? state.roomName : 'dty',
+            domain: state && state.domain ? state.domain : 'meeting.education',
+        };
+    }, []);
 
     const [selectCoord, setSelectCoord] = useState<boolean>(false);
     const [coord, setCoord] = useState<[number, number][]>([]);
@@ -54,7 +55,6 @@ const StudentMeeting: FunctionComponent = () => {
     const [circles, setCircles] = useState<React.SVGProps<SVGCircleElement>[]>([]);
 
     // img : downloaded from back, potentially cropped
-    const [heightImg, setHeightImg] = useState<number>(0);
     const [widthImgDouble, setWidthImgDouble] = useState<number>(0);
     const [img, setImg] = useState<string>('../../FirstPicture.png');
     const [imgIsCropped, setImgIsCropped] = useState<boolean>(false);
@@ -214,7 +214,7 @@ const StudentMeeting: FunctionComponent = () => {
 
         newImg.onload = function () {
             const widthNew = newImg.width;
-            let heightNew = newImg.height;
+            const heightNew = newImg.height;
             if (original) {
                 const ratioImg = (widthNew * 45) / heightNew;
                 setRatioImgOriginal(ratioImg);
@@ -222,16 +222,7 @@ const StudentMeeting: FunctionComponent = () => {
                 setHeightImgOriginal(heightNew);
             } else {
                 // dimensions of the original image, not of the image displayed on screen
-                const ViewportWidth = window.innerWidth * 0.9;
-                const ViewportHeight = window.innerHeight * 0.45;
                 setWidthImgDouble((widthNew * 45) / heightNew);
-                const potentialHeight = (heightNew / widthNew) * ViewportWidth;
-                if (potentialHeight < ViewportHeight) {
-                    heightNew = potentialHeight;
-                } else {
-                    heightNew = ViewportHeight;
-                }
-                setHeightImg(heightNew);
             }
         };
 
