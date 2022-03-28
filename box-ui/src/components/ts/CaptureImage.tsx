@@ -17,7 +17,6 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
     const [cameraList, setCameraList] = useState<MediaDeviceInfo[]>([]);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [displayFocus, setDisplayFocus] = useState(false);
-    const [videoLoopback, setVideoLoopback] = useState<MediaStream>();
     const [showLoopback, setShowLoopback] = useState<boolean>(false);
     const [showArrow, setShowArrow] = useState<boolean>(false);
     const [cameraLoopback, setCameraLoopback] = useState<MediaDeviceInfo>();
@@ -52,7 +51,6 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
 
         mediaStreamPromise
             .then((mediastream: MediaStream) => {
-                setVideoLoopback(mediastream);
                 const videoTrack = mediastream.getVideoTracks()[0];
                 videoTrack.applyConstraints({
                     //whiteBalanceMode: 'single-shot',
@@ -148,11 +146,6 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
 
     return (
         <div className='popupCamera'>
-            {false && (
-                <div className='arrowContainer' onClick={changeViewLoopback}>
-                    <DoubleArrowIcon className={showLoopback ? 'arrowDown' : 'arrowUp'} />
-                </div>
-            )}
             <div className='sectionSelectCam'>
                 {showLoopback && (
                     <div id='videoContainer'>
