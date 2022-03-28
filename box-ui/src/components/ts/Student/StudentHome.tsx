@@ -1,12 +1,12 @@
 import React, { FunctionComponent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import LanguageSelector from '../LanguageSelector';
 import InputButton from '../InputButton';
 import JitsiBoxLogo from '../../../logo/jitsibox.svg';
 import '../../css/Home.css';
 import { LocationState } from '../../../utils/State';
 import ProgressButton from '../ProgressButton';
+import LanguageSelector from '../LanguageSelector';
 
 const StudentHome: FunctionComponent = () => {
     const { t } = useTranslation();

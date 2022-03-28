@@ -2,12 +2,12 @@ import React, { FunctionComponent } from 'react';
 import HomeButton from '../HomeButton';
 import '../../css/Home.css';
 import JitsiBoxLogo from '../../../logo/jitsibox.svg';
-import LanguageSelector from '../LanguageSelector';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { LocationState } from '../../../utils/State';
 import { useTranslation } from 'react-i18next';
 import GenerateRandomFrenchRoomName from '../../../dictionnaries_fr';
 import ProgressButton from '../ProgressButton';
+import LanguageSelector from '../LanguageSelector';
 
 const BoxHome: FunctionComponent = () => {
     const state = useLocation().state as LocationState | null;

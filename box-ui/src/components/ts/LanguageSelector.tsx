@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from 'react';
-import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { availableLanguages } from '../../i18n';
 import '../css/LanguageSelector.css';
+import SelectButton from './SelectButton';
 
 const LanguageSelector: FunctionComponent<React.HTMLAttributes<HTMLDivElement>> = (
     props: React.HTMLAttributes<HTMLDivElement>,
@@ -10,27 +10,24 @@ const LanguageSelector: FunctionComponent<React.HTMLAttributes<HTMLDivElement>> 
     const { t, i18n } = useTranslation();
     return (
         <div {...props} className='LanguageSelector'>
-            <FormControl variant='filled' sx={{ m: 1, minWidth: 120 }} style={{ backgroundColor: '#1976D2' }}>
-                <InputLabel id='demo-simple-select-label' style={{ color: 'white' }}>
-                    {t('lang')}
-                </InputLabel>
-                <Select
-                    value={i18n.language}
-                    defaultValue={i18n.language}
-                    onChange={(e) => {
-                        const boxStorage = window.localStorage;
-                        boxStorage.setItem('language', e.target.value as string);
-                        i18n.changeLanguage(e.target.value as string);
-                    }}
-                    style={{ color: 'white' }}
-                >
-                    {availableLanguages.map((language) => (
-                        <MenuItem value={language} key={language}>
-                            {new Intl.DisplayNames([language], { type: 'language' }).of(language)}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
+            <SelectButton
+                menuItemsStyle={{
+                    color: 'white',
+                    backgroundColor: '#1976D2',
+                    borderRadius: '8px',
+                    '& .MuiSelect-icon': { color: 'white' },
+                    '&:hover': { background: '#1976D295' },
+                }}
+                selectItems={{
+                    inputLabel: { text: t('lang'), style: { color: 'white' } },
+                    menuItems: availableLanguages.map((lang, index) => {
+                        return { id: index, text: lang };
+                    }),
+                }}
+                onChange={(e) => {
+                    i18n.changeLanguage(e.target.value as string);
+                }}
+            />
         </div>
     );
 };

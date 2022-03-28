@@ -6,10 +6,10 @@ import { LocationState } from '../../../utils/State';
 import JitsiFrame from '../JitsiFrame';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import { IconButton, Menu, MenuItem } from '@mui/material';
+import { IconButton } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
-import JitsiMeetExternalAPI from '../../../utils/JitsiMeetExternalAPI';
 import FocusMode from '../FocusMode';
+import SelectButton from '../SelectButton';
 import FloatingBox from '../FloatingBox';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import LaunchIcon from '@mui/icons-material/Launch';
@@ -19,16 +19,12 @@ import ImageViewer from '../ImageViewer';
 const StudentMeeting: FunctionComponent = () => {
     const displayName = useRef<string>();
     const [prejoin, setPrejoin] = useState(true);
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-    const processes = ['Color', 'B&W', 'Contrast', 'original'];
-    const [displayFocus, setDisplayFocus] = useState(false);
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    const processes = [
+        { id: 0, text: 'Color' },
+        { id: 1, text: 'B&W' },
+        { id: 2, text: 'Contrast' },
+        { id: 3, text: 'Original' },
+    ];
     const { t } = useTranslation();
     const meetingOptions = useMemo(
         () => ({
@@ -57,6 +53,7 @@ const StudentMeeting: FunctionComponent = () => {
         }),
         [prejoin],
     );
+    const [displayFocus, setDisplayFocus] = useState(false);
     const state = useLocation().state as LocationState;
     const navigate = useNavigate();
     const information: { roomName: string; domain: string } = useMemo(() => {
@@ -384,41 +381,25 @@ const StudentMeeting: FunctionComponent = () => {
 
             <div className='sectionButtonsStudent'>
                 <div className='selectFilter'>
-                    <button
-                        // id='button'
+                    <SelectButton
+                        menuItemsStyle={{
+                            color: 'white',
+                            backgroundColor: '#141414',
+                            '& .MuiSelect-icon': { color: 'white' },
+                            '&:hover': { background: '#14141495' },
+                            cursor: 'pointer',
+                            border: 'solid white 1px',
+                            borderRadius: '0.6rem',
+                        }}
                         className='buttonStudent'
-                        aria-controls={open ? 'menu' : undefined}
-                        aria-haspopup='menu'
-                        aria-expanded={open ? 'true' : undefined}
-                        onClick={(event) => {
-                            handleClick(event);
+                        selectItems={{
+                            inputLabel: { text: 'Select Filter', style: { color: 'white' } },
+                            menuItems: processes,
                         }}
-                    >
-                        {t('selectFilter')}
-                    </button>
-                    <Menu
-                        id='menu'
-                        aria-labelledby='button'
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'left',
+                        onChange={(e) => {
+                            requestProcessedImage(e.target.value);
                         }}
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'left',
-                        }}
-                    >
-                        {processes.map((element, index) => {
-                            return (
-                                <MenuItem onClick={() => requestProcessedImage(element)} key={index}>
-                                    select {element}
-                                </MenuItem>
-                            );
-                        })}
-                    </Menu>
+                    />
                 </div>
                 <div className='cropButton'>
                     <button className='buttonStudent' onClick={() => AmeliorerVue()}>
@@ -445,7 +426,7 @@ const StudentMeeting: FunctionComponent = () => {
             {displayFocus && (
                 <FocusMode
                     focusItems={[
-                        { element: '.sectionClickSolo', textElement: t('tutoSectionClickSolo') },
+                        { element: '.containerImgStudent', textElement: t('tutoSectionClickSolo') },
                         { element: '.selectFilter', textElement: t('tutoSelectFilter') },
                         { element: '.cropButton', textElement: t('tutoCropButton') },
                         { element: '.openWindow', textElement: t('tutoOpenWindow') },
