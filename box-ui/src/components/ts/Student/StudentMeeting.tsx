@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, FunctionComponent, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../../css/StudentMeeting.css';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -17,6 +17,8 @@ import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import ImageViewer from '../ImageViewer';
 
 const StudentMeeting: FunctionComponent = () => {
+    const displayName = useRef<string>();
+    const [prejoin, setPrejoin] = useState(true);
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const processes = ['Color', 'B&W', 'Contrast', 'original'];
@@ -30,11 +32,11 @@ const StudentMeeting: FunctionComponent = () => {
     const { t } = useTranslation();
     const meetingOptions = useMemo(
         () => ({
+            userInfo: {
+                email: '',
+                displayName: displayName.current ?? t('student'),
+            },
             configOverwrite: {
-                userInfo: {
-                    email: '',
-                    displayName: t('student'),
-                },
                 toolbarButtons: [
                     'microphone',
                     'camera',
@@ -47,13 +49,13 @@ const StudentMeeting: FunctionComponent = () => {
                     'desktop',
                 ],
                 prejoinConfig: {
-                    enabled: true,
+                    enabled: prejoin,
                 },
                 startWithVideoMuted: false,
                 startWithAudioMuted: true,
             },
         }),
-        [],
+        [prejoin],
     );
     const state = useLocation().state as LocationState;
     const navigate = useNavigate();
@@ -131,6 +133,9 @@ const StudentMeeting: FunctionComponent = () => {
                         domain: information.domain,
                     },
                 });
+            });
+            api.addListener('videoConferenceJoined', (participant) => {
+                displayName.current = api.getDisplayName(participant.id);
             });
         },
         [information],
@@ -220,10 +225,12 @@ const StudentMeeting: FunctionComponent = () => {
 
     function ChangeView() {
         setMiniImg((miniImg) => !miniImg);
+        setPrejoin(false);
     }
 
     function ChangeMinimize() {
         setMinimize((minimize) => !minimize);
+        setPrejoin(false);
     }
 
     function getImgSize(imgSrc: string, original: boolean) {
@@ -338,7 +345,7 @@ const StudentMeeting: FunctionComponent = () => {
             {minimize && miniImg && (
                 <div className='CreateMeetingContainer'>
                     <div className='JitsiComponent'>
-                        <JitsiFrame information={information} options={meetingOptions} />
+                        <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
                     </div>
                 </div>
             )}
@@ -346,7 +353,7 @@ const StudentMeeting: FunctionComponent = () => {
                 <FloatingBox>
                     <div className='CreateMeetingContainer'>
                         <div className='JitsiComponent' style={{ margin: '20px' }}>
-                            <JitsiFrame information={information} options={meetingOptions} />
+                            <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
                         </div>
                         <button
                             className='switch'

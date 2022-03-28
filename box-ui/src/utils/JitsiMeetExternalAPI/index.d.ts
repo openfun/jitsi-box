@@ -21,6 +21,7 @@ declare class JitsiMeetExternalAPI {
         },
     );
 
+    getDisplayName: (participantID: number) => string;
     getLivestreamUrl: () => Promise<any>;
     executeCommand: (
         command: JitsiMeetExternalAPI.Command,
