@@ -13,10 +13,16 @@ const FocusMode: FunctionComponent<FocusModeProps> = (props: FocusModeProps) => 
         let right = 0;
         let bottom = 0;
         if (tutoState < props.focusItems.length) {
-            coord = document.querySelector(props.focusItems[tutoState].element)?.getBoundingClientRect();
-            right = coord?.right !== undefined ? window.innerWidth - coord.right : 0;
-            bottom = coord?.bottom !== undefined ? window.innerHeight - coord.bottom : 0;
-            setBorderSize(`${coord?.top}px ${right > 0 ? right : 0}px ${bottom > 0 ? bottom : 0}px ${coord?.left}px`);
+            const element = document.querySelector(props.focusItems[tutoState].element);
+            if (element === null) setTutoState(tutoState + 1);
+            else {
+                coord = element.getBoundingClientRect();
+                right = coord?.right !== undefined ? window.innerWidth - coord.right : 0;
+                bottom = coord?.bottom !== undefined ? window.innerHeight - coord.bottom : 0;
+                setBorderSize(
+                    `${coord?.top}px ${right > 0 ? right : 0}px ${bottom > 0 ? bottom : 0}px ${coord?.left}px`,
+                );
+            }
         } else {
             props.setDisplayFocus(false);
         }

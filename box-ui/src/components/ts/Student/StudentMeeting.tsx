@@ -17,6 +17,8 @@ import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import ImageViewer from '../ImageViewer';
 
 const StudentMeeting: FunctionComponent = () => {
+    const displayName = useRef<string>();
+    const [prejoin, setPrejoin] = useState(true);
     const processes = [
         { id: 0, text: 'Color' },
         { id: 1, text: 'B&W' },
@@ -424,7 +426,7 @@ const StudentMeeting: FunctionComponent = () => {
             {displayFocus && (
                 <FocusMode
                     focusItems={[
-                        { element: '.sectionClickSolo', textElement: t('tutoSectionClickSolo') },
+                        { element: '.containerImgStudent', textElement: t('tutoSectionClickSolo') },
                         { element: '.selectFilter', textElement: t('tutoSelectFilter') },
                         { element: '.cropButton', textElement: t('tutoCropButton') },
                         { element: '.openWindow', textElement: t('tutoOpenWindow') },
