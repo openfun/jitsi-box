@@ -2,38 +2,30 @@ import React, { useState, useEffect, FunctionComponent } from 'react';
 import { ImageCapture } from 'image-capture';
 import { CaptureImageProps } from '../../utils/Props';
 import axios from 'axios';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
 import '../css/CaptureImage.css';
 import { useTranslation } from 'react-i18next';
-import HelpIcon from '@mui/icons-material/Help';
-import IconButton from '@mui/material/IconButton';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
+import { IconButton } from '@mui/material';
 import FocusMode from './FocusMode';
+import HelpIcon from '@mui/icons-material/Help';
+import SelectButton from './SelectButton';
 
 const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageProps) => {
     const [photoInterval, setPhotoInterval] = useState<ReturnType<typeof setTimeout>>();
     const [cameraList, setCameraList] = useState<MediaDeviceInfo[]>([]);
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [displayFocus, setDisplayFocus] = useState(false);
     const [showLoopback, setShowLoopback] = useState<boolean>(false);
     const [showArrow, setShowArrow] = useState<boolean>(false);
     const [cameraLoopback, setCameraLoopback] = useState<MediaDeviceInfo>();
-    const open = Boolean(anchorEl);
     const { t } = useTranslation();
 
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
-
     const detectCamera = () => {
-        navigator.mediaDevices.enumerateDevices().then((devices) => {
-            const cameras = devices.filter((value) => value['kind'] === 'videoinput');
-            setCameraList(cameras);
+        navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then((cameras) => {
+            console.log(cameras);
+            navigator.mediaDevices.enumerateDevices().then((devices) => {
+                const cameras = devices.filter((value) => value['kind'] === 'videoinput');
+                setCameraList(cameras);
+            });
         });
     };
 
@@ -53,7 +45,7 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
             .then((mediastream: MediaStream) => {
                 const videoTrack = mediastream.getVideoTracks()[0];
                 videoTrack.applyConstraints({
-                    //whiteBalanceMode: 'single-shot',
+                    whiteBalanceMode: 'single-shot',
                     exposureMode: 'single-shot',
                     focusMode: 'single-shot',
                 });
@@ -157,64 +149,49 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
                         <DoubleArrowIcon className={showLoopback ? 'arrowDown' : 'arrowUp'} />
                     </div>
                 )}
-                <Button
-                    id='buttonToSelectCamera'
-                    aria-controls={open ? 'menu' : undefined}
-                    aria-haspopup='menu'
-                    aria-expanded={open ? 'true' : undefined}
-                    onClick={(event) => {
-                        detectCamera(), handleClick(event);
+
+                <SelectButton
+                    menuItemsStyle={{
+                        color: 'white',
+                        backgroundColor: '#1976D2',
+                        borderRadius: '8px',
+                        '& .MuiSelect-icon': { color: 'white' },
+                        '&:hover': { background: '#1976D295' },
                     }}
-                >
-                    {t('selectCamera')}
-                </Button>
-                <Menu
-                    id='menu'
-                    aria-labelledby='button'
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
+                    selectItems={{
+                        inputLabel: { text: t('selectCamera'), style: { color: 'white' } },
+                        menuItems: cameraList.map((camera, index) => {
+                            return {
+                                id: camera.deviceId,
+                                text: camera.label !== '' ? camera.label : `camera ${index + 1}`,
+                            };
+                        }),
                     }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'left',
+                    onChange={(e) => {
+                        const camera = cameraList.find((camera) => camera.label === e.target.value);
+                        if (camera !== undefined) {
+                            setCamera(camera);
+                            getLoopbackVideo(camera);
+                            alert(`New camera selected ${camera.label}`);
+                        }
                     }}
-                >
-                    {cameraList.map((camera, index) => {
-                        return (
-                            <div key={index}>
-                                <MenuItem
-                                    onClick={() => {
-                                        handleClose(),
-                                            setCamera(camera),
-                                            getLoopbackVideo(camera),
-                                            alert(`New camera selected ${camera['label']}`);
-                                    }}
-                                    key={index}
-                                >
-                                    {camera['label'] !== '' ? camera['label'] : `${t('camera')} ${index + 1}`}
-                                </MenuItem>
-                            </div>
-                        );
-                    })}
-                </Menu>
+                    onClick={() => {
+                        detectCamera();
+                        if (cameraList.length === 0)
+                            alert('aucune caméra trouvé, avez vous autorisé votre navigateur à accéder à la caméra ?');
+                    }}
+                />
                 <IconButton id='TutoButton' aria-label='help' onClick={() => setDisplayFocus(!displayFocus)}>
                     <HelpIcon />
                 </IconButton>
                 {displayFocus && (
                     <FocusMode
                         focusItems={[
-                            {
-                                element: '#buttonToSelectCamera',
-                                textElement: t('tutoSelectCamera'),
-                            },
                             { element: '.meetingUrl', textElement: t('tutoMeetingUrl') },
                             { element: '.QrcodeScannerButton', textElement: t('tutoQRCode') },
                             { element: '.QrcodeButton', textElement: t('tutoShareQRCode') },
                             { element: '.OpenTopBarButton', textElement: t('tutoBroadcast') },
+                            { element: '.SelectButton', textElement: t('tutoSelectCamera') },
                         ]}
                         setDisplayFocus={setDisplayFocus}
                     />

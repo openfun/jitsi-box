@@ -4,11 +4,22 @@
     justify-content: flex-start;
     text-align: center;
     align-self: center;
-    background: #1f1f1f;
     color: #efefef;
     font-size: large;
     height: 100vh;
     width: 100vw;
+}
+
+.BoxHome {
+    background-color: #1f1f1f;
+}
+
+.StudentHome {
+    background-color: #184777;
+}
+
+.TeacherHome {
+    background-color: #efefef;
 }
 
 .HomeButtonsContainer {
@@ -27,4 +38,13 @@
 
 .logo {
     display: flex;
+}
+
+.HomeContainer a {
+    color: cornflowerblue;
+    margin-top: 2em;
+}
+
+.HomeContainer a:visited {
+    color: cornflowerblue;
 }

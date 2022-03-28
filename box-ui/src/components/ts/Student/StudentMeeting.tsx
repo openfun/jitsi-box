@@ -1,46 +1,67 @@
-import React, { useState, FunctionComponent, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, FunctionComponent, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../../css/StudentMeeting.css';
-import PopupComponent from '../PopupComponent';
 import CircularProgress from '@mui/material/CircularProgress';
 import { LocationState } from '../../../utils/State';
-import styled from '@emotion/styled';
 import JitsiFrame from '../JitsiFrame';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import { IconButton, Menu, MenuItem } from '@mui/material';
+import { IconButton } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
-import JitsiMeetExternalAPI from '../../../utils/JitsiMeetExternalAPI';
 import FocusMode from '../FocusMode';
+import SelectButton from '../SelectButton';
+import FloatingBox from '../FloatingBox';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import LaunchIcon from '@mui/icons-material/Launch';
+import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
+import ImageViewer from '../ImageViewer';
 
 const StudentMeeting: FunctionComponent = () => {
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-    const processes = ['Color', 'B&W', 'Contrast', 'original'];
-    const [displayFocus, setDisplayFocus] = useState(false);
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    const displayName = useRef<string>();
+    const [prejoin, setPrejoin] = useState(true);
+    const processes = [
+        { id: 0, text: 'Color' },
+        { id: 1, text: 'B&W' },
+        { id: 2, text: 'Contrast' },
+        { id: 3, text: 'Original' },
+    ];
     const { t } = useTranslation();
     const meetingOptions = useMemo(
         () => ({
+            userInfo: {
+                email: '',
+                displayName: displayName.current ?? t('student'),
+            },
             configOverwrite: {
+                toolbarButtons: [
+                    'microphone',
+                    'camera',
+                    'videoquality',
+                    'fodeviceselection',
+                    'raisehand',
+                    'tileview',
+                    'hangup',
+                    'chat',
+                    'desktop',
+                ],
                 prejoinConfig: {
-                    enabled: false,
+                    enabled: prejoin,
                 },
+                startWithVideoMuted: false,
+                startWithAudioMuted: true,
             },
         }),
-        [],
+        [prejoin],
     );
+    const [displayFocus, setDisplayFocus] = useState(false);
     const state = useLocation().state as LocationState;
     const navigate = useNavigate();
-    const [information, setInformation] = useState({
-        roomName: state && state.roomName ? state.roomName : 'dty',
-        domain: state && state.domain ? state.domain : 'meeting.education',
-    });
+    const information: { roomName: string; domain: string } = useMemo(() => {
+        return {
+            roomName: state && state.roomName ? state.roomName : 'dty',
+            domain: state && state.domain ? state.domain : 'meeting.education',
+        };
+    }, []);
 
     const [selectCoord, setSelectCoord] = useState<boolean>(false);
     const [coord, setCoord] = useState<[number, number][]>([]);
@@ -50,15 +71,14 @@ const StudentMeeting: FunctionComponent = () => {
     const [circles, setCircles] = useState<React.SVGProps<SVGCircleElement>[]>([]);
 
     // img : downloaded from back, potentially cropped
-    const [heightImg, setHeightImg] = useState<number>(0);
-    const [widthImgDouble, setWidthImgDouble] = useState<string>('');
+    const [widthImgDouble, setWidthImgDouble] = useState<number>(0);
     const [img, setImg] = useState<string>('../../FirstPicture.png');
     const [imgIsCropped, setImgIsCropped] = useState<boolean>(false);
 
     // img original : not cropped
     const [widthImgOriginal, setWidthImgOriginal] = useState<number>(0);
     const [heightImgOriginal, setHeightImgOriginal] = useState<number>(0);
-    const [ratioImgOriginal, setRatioImgOriginal] = useState<string>('');
+    const [ratioImgOriginal, setRatioImgOriginal] = useState<number>(0);
     const [imgOriginal, setImgOriginal] = useState<string>('../../FirstPicture.png');
 
     //Dimension image affichée
@@ -67,6 +87,12 @@ const StudentMeeting: FunctionComponent = () => {
 
     //Animation loading, waiting for new Image
     const [loading, setLoading] = useState<boolean>(false);
+
+    //choose if the image or the video is the secondary display
+    const [minimize, setMinimize] = useState<boolean>(false);
+
+    //choose if the image or the video is the secondary display
+    const [miniImg, setMiniImg] = useState<boolean>(true);
 
     useEffect(() => {
         if (!selectCoord) {
@@ -104,6 +130,9 @@ const StudentMeeting: FunctionComponent = () => {
                         domain: information.domain,
                     },
                 });
+            });
+            api.addListener('videoConferenceJoined', (participant) => {
+                displayName.current = api.getDisplayName(participant.id);
             });
         },
         [information],
@@ -191,29 +220,30 @@ const StudentMeeting: FunctionComponent = () => {
         }
     }
 
+    function ChangeView() {
+        setMiniImg((miniImg) => !miniImg);
+        setPrejoin(false);
+    }
+
+    function ChangeMinimize() {
+        setMinimize((minimize) => !minimize);
+        setPrejoin(false);
+    }
+
     function getImgSize(imgSrc: string, original: boolean) {
         const newImg = new Image();
 
         newImg.onload = function () {
             const widthNew = newImg.width;
-            let heightNew = newImg.height;
+            const heightNew = newImg.height;
             if (original) {
-                const ratioImg = ((widthNew * 45) / heightNew).toString() + 'vh';
+                const ratioImg = (widthNew * 45) / heightNew;
                 setRatioImgOriginal(ratioImg);
                 setWidthImgOriginal(widthNew);
                 setHeightImgOriginal(heightNew);
             } else {
                 // dimensions of the original image, not of the image displayed on screen
-                const ViewportWidth = window.innerWidth * 0.9;
-                const ViewportHeight = window.innerHeight * 0.45;
-                setWidthImgDouble(((widthNew * 45) / heightNew).toString() + 'vh');
-                const potentialHeight = (heightNew / widthNew) * ViewportWidth;
-                if (potentialHeight < ViewportHeight) {
-                    heightNew = potentialHeight;
-                } else {
-                    heightNew = ViewportHeight;
-                }
-                setHeightImg(heightNew);
+                setWidthImgDouble((widthNew * 45) / heightNew);
             }
         };
 
@@ -254,103 +284,122 @@ const StudentMeeting: FunctionComponent = () => {
 
     return (
         <div className='CreateMeetingComponent'>
-            <PopupComponent information={information} setInformation={setInformation} />
-            <div className='CreateMeetingContainer'>
-                <div className='JitsiComponent'>
-                    <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
-                </div>
-            </div>
-            <div className='containerStudent'>
-                {!selectCoord && (
-                    <div className='containerImgStudent'>
-                        <div className='sectionClickSolo'>
-                            <ClickableSVG
-                                height={heightImg + 'px'}
-                                style={{
-                                    backgroundImage: "url('" + img + "')",
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundSize: 'contain',
-                                    backgroundPosition: 'center',
-                                    maxWidth: '95vw',
-                                    maxHeight: '50vh',
-                                }}
-                            ></ClickableSVG>
-                            {loading && <CircularProgress className='circularProgress' />}
+            {!minimize && (
+                <div className='CreateMeetingComponent'>
+                    <div className='CreateMeetingContainer'>
+                        <div className='JitsiComponent'>
+                            <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
                         </div>
                     </div>
-                )}
-
-                {selectCoord && (
-                    <div className='containerImgStudent'>
-                        <div>
-                            <ClickableSVG
-                                height='45vh'
-                                width={ratioImgOriginal}
-                                onClick={addCircle}
-                                style={{
-                                    backgroundImage: "url('" + imgOriginal + "')",
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundSize: 'contain',
-                                    maxWidth: '45vw',
-                                    border: '1px solid blue',
-                                }}
+                    <div className='containerStudent'>
+                        <div className='containerImgStudent'>
+                            <ImageViewer
+                                img1={[img, '45vh', widthImgDouble.toString() + 'vh']}
+                                img2={[imgOriginal, '45vh', widthImgDouble.toString() + 'vh']}
+                                onclick={addCircle}
+                                addOn={circles}
+                                selectWindow={selectCoord}
+                            />
+                            <button
+                                className='openWindow'
+                                onClick={ChangeMinimize}
+                                style={{ position: 'absolute', top: '70%', left: '90%' }}
                             >
-                                {circles}
-                            </ClickableSVG>
-                        </div>
-                        <div className='sectionClick'>
-                            <ClickableSVG
-                                height='45vh'
-                                width={widthImgDouble}
-                                style={{
-                                    backgroundImage: "url('" + img + "')",
-                                    backgroundRepeat: 'no-repeat',
-                                    backgroundSize: 'contain',
-                                    maxWidth: '40vw',
-                                }}
-                            ></ClickableSVG>
+                                <LaunchIcon style={{ height: '20px', width: '20px' }} />
+                            </button>
                         </div>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
+            {minimize && miniImg && (
+                <FloatingBox>
+                    <div className='containerImgStudent'>
+                        <ImageViewer
+                            img1={[img, '30vh', ((widthImgDouble / 45) * 30).toString() + 'vh']}
+                            img2={[imgOriginal, '30vh', ((ratioImgOriginal / 45) * 30).toString() + 'vh']}
+                            onclick={addCircle}
+                            addOn={circles}
+                            selectWindow={selectCoord}
+                        />
+                        <button
+                            className='closeWindow'
+                            onClick={ChangeMinimize}
+                            style={{ position: 'absolute', top: '0%', left: '90%' }}
+                        >
+                            <HighlightOffIcon style={{ height: '20px', width: '20px' }} />
+                        </button>
+                        <button
+                            className='switch'
+                            onClick={ChangeView}
+                            style={{ position: 'absolute', top: '85%', left: '90%' }}
+                        >
+                            <CompareArrowsIcon style={{ height: '20px', width: '20px' }} />
+                        </button>
+                        {loading && <CircularProgress className='circularProgress' />}
+                    </div>
+                </FloatingBox>
+            )}
+            {minimize && miniImg && (
+                <div className='CreateMeetingContainer'>
+                    <div className='JitsiComponent'>
+                        <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
+                    </div>
+                </div>
+            )}
+            {minimize && !miniImg && (
+                <FloatingBox>
+                    <div className='CreateMeetingContainer'>
+                        <div className='JitsiComponent' style={{ margin: '20px' }}>
+                            <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
+                        </div>
+                        <button
+                            className='switch'
+                            onClick={ChangeView}
+                            style={{ position: 'absolute', top: '85%', left: '90%' }}
+                        >
+                            <CompareArrowsIcon style={{ height: '20px', width: '20px' }} />
+                        </button>
+                        <button
+                            className='closeWindow'
+                            onClick={ChangeMinimize}
+                            style={{ position: 'absolute', top: '0%', left: '90%' }}
+                        >
+                            <HighlightOffIcon style={{ height: '20px', width: '20px' }} />
+                        </button>
+                    </div>
+                </FloatingBox>
+            )}
+            {minimize && !miniImg && (
+                <div className='containerImgStudent'>
+                    <ImageViewer
+                        img1={[img, '45vh', widthImgDouble.toString() + 'vh']}
+                        img2={[img, '45vh', ratioImgOriginal.toString() + 'vh']}
+                        selectWindow={selectCoord}
+                    />
+                </div>
+            )}
 
             <div className='sectionButtonsStudent'>
                 <div className='selectFilter'>
-                    <button
-                        // id='button'
+                    <SelectButton
+                        menuItemsStyle={{
+                            color: 'white',
+                            backgroundColor: '#141414',
+                            '& .MuiSelect-icon': { color: 'white' },
+                            '&:hover': { background: '#14141495' },
+                            cursor: 'pointer',
+                            border: 'solid white 1px',
+                            borderRadius: '0.6rem',
+                        }}
                         className='buttonStudent'
-                        aria-controls={open ? 'menu' : undefined}
-                        aria-haspopup='menu'
-                        aria-expanded={open ? 'true' : undefined}
-                        onClick={(event) => {
-                            handleClick(event);
+                        selectItems={{
+                            inputLabel: { text: 'Select Filter', style: { color: 'white' } },
+                            menuItems: processes,
                         }}
-                    >
-                        {t('selectFilter')}
-                    </button>
-                    <Menu
-                        id='menu'
-                        aria-labelledby='button'
-                        anchorEl={anchorEl}
-                        open={open}
-                        onClose={handleClose}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'left',
+                        onChange={(e) => {
+                            requestProcessedImage(e.target.value);
                         }}
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'left',
-                        }}
-                    >
-                        {processes.map((element, index) => {
-                            return (
-                                <MenuItem onClick={() => requestProcessedImage(element)} key={index}>
-                                    select {element}
-                                </MenuItem>
-                            );
-                        })}
-                    </Menu>
+                    />
                 </div>
                 <div className='cropButton'>
                     <button className='buttonStudent' onClick={() => AmeliorerVue()}>
@@ -377,13 +426,12 @@ const StudentMeeting: FunctionComponent = () => {
             {displayFocus && (
                 <FocusMode
                     focusItems={[
-                        { element: '.meetingUrl', textElement: t('tutoMeetingUrl') },
-                        { element: '.QrcodeScannerButton', textElement: t('tutoQRCode') },
-                        { element: '.QrcodeButton', textElement: t('tutoShareQRCode') },
-                        { element: '.OpenTopBarButton', textElement: t('tutoBroadcast') },
-                        { element: '.sectionClickSolo', textElement: t('tutoSectionClickSolo') },
+                        { element: '.containerImgStudent', textElement: t('tutoSectionClickSolo') },
                         { element: '.selectFilter', textElement: t('tutoSelectFilter') },
                         { element: '.cropButton', textElement: t('tutoCropButton') },
+                        { element: '.openWindow', textElement: t('tutoOpenWindow') },
+                        { element: '.closeWindow', textElement: t('tutoCloseWindow') },
+                        { element: '.switch', textElement: t('tutoCloseWindow') },
                     ]}
                     setDisplayFocus={setDisplayFocus}
                 />
@@ -391,16 +439,4 @@ const StudentMeeting: FunctionComponent = () => {
         </div>
     );
 };
-
-// style of the component image to click on
-const ClickableSVG = styled.svg`
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-color: black;
-    & * {
-        /* Block your circles from triggering 'add circle' */
-        pointer-events: none;
-    }
-`;
-
 export default StudentMeeting;

@@ -1,3 +1,5 @@
+import React from "react";
+
 export type InputRoomWithClose = {
     domain: string;
     roomName: string;
@@ -66,4 +68,22 @@ export type ProgressButtonProps = {
 export type FocusModeProps = {
     focusItems: { element: string; textElement: string }[];
     setDisplayFocus: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+
+export type ViewerProps = {
+    img1 : [string,string,string];
+    img2? : [string,string,string];
+    onclick?: (event: React.MouseEvent) => void;
+    addOn?: React.SVGProps<SVGCircleElement>[];
+    selectWindow : boolean; 
+};
+
+export type SelectButtonProps = {
+    div ?: React.HTMLAttributes<HTMLDivElement>;
+    className ?: string;
+    menuItemsStyle ?: SxProps<Theme>;
+    selectItems : {inputLabel: {text : string, style ?: SxProps<Theme>}, menuItems : {id : number | string, text : string}[],};
+    onChange ?: (e :SelectChangeEvent<string>) => void;
+    onClick ?: (e :SelectChangeEvent<string>) => void;
 };

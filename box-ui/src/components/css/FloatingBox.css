@@ -1,0 +1,20 @@
+.pipWindow {
+    background-color: #242d36;
+    z-index: 100;
+    position: fixed;
+    box-sizing: content-box;
+    box-shadow: 1px 3px 3px 0 rgb(0 0 0 / 20%), 1px 3px 15px 2px rgb(0 0 0 / 20%);
+    border-radius: 0.3rem;
+    overflow: auto;
+    resize: both;
+}
+
+.pipWindow:hover {
+    cursor: grab;
+}
+
+.pipWindow:active {
+    cursor: grabbing;
+    outline: -webkit-focus-ring-color auto 1px;
+    outline: dashed red auto 1px;
+}
