@@ -9,6 +9,7 @@ import GenerateRandomFrenchRoomName from '../../../dictionnaries_fr';
 import ProgressButton from '../ProgressButton';
 import SelectButton from '../SelectButton';
 import { availableLanguages } from '../../../i18n';
+import LanguageSelector from '../LanguageSelector';
 
 const BoxHome: FunctionComponent = () => {
     const state = useLocation().state as LocationState | null;
@@ -47,21 +48,7 @@ const BoxHome: FunctionComponent = () => {
                     {state ? state.roomName : ''}
                 </ProgressButton>
             </div>
-            <SelectButton
-                menuItemsStyle={{
-                    color: 'white',
-                    backgroundColor: '#1976D2',
-                    '& .MuiSelect-icon': { color: 'white' },
-                    '&:hover': { background: '#1976D295' },
-                    borderRadius: '0.6rem',
-                }}
-                selectItems={{
-                    inputLabel: { text: t('lang'), style: { color: 'white' } },
-                    menuItems: availableLanguages,
-                }}
-                value={i18n.language}
-                onChange={(e) => i18n.changeLanguage(e.target.value)}
-            />
+            <LanguageSelector />
         </div>
     );
 };

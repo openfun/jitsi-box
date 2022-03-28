@@ -9,6 +9,7 @@ import { LocationState } from '../../../utils/State';
 import ProgressButton from '../ProgressButton';
 import SelectButton from '../SelectButton';
 import { availableLanguages } from '../../../i18n';
+import LanguageSelector from '../LanguageSelector';
 
 const StudentHome: FunctionComponent = () => {
     const { t, i18n } = useTranslation();
@@ -52,23 +53,7 @@ const StudentHome: FunctionComponent = () => {
                 </ProgressButton>
                 <Link to='/teacher'>{t('linkForTeacher')}</Link>
             </div>
-            <SelectButton
-                menuItemsStyle={{
-                    color: 'white',
-                    backgroundColor: '#1976D2',
-                    borderRadius: '8px',
-                    '& .MuiSelect-icon': { color: 'white' },
-                    '&:hover': { background: '#1976D295' },
-                }}
-                selectItems={{
-                    inputLabel: { text: t('lang'), style: { color: 'white' } },
-                    menuItems: availableLanguages,
-                }}
-                value={i18n.language}
-                onChange={(e) => {
-                    i18n.changeLanguage(e.target.value as string);
-                }}
-            />
+            <LanguageSelector />
         </div>
     );
 };
