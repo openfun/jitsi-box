@@ -4,7 +4,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import InputButton from '../InputButton';
 import JitsiBoxLogo from '../../../logo/jitsibox.svg';
 import '../../css/Home.css';
-import '../../css/StudentHome.css';
 import { LocationState } from '../../../utils/State';
 import ProgressButton from '../ProgressButton';
 import LanguageSelector from '../LanguageSelector';
@@ -38,10 +37,11 @@ const StudentHome: FunctionComponent = () => {
     };
 
     return (
-        <div className='HomeContainer'>
+        <div className='HomeContainer StudentHome'>
             <div className='LogoContainer'>
                 <img src={JitsiBoxLogo} alt='logo de la jitsi-box' className='logo' />
             </div>
+            <h2 style={{ color: '#e0e0e0' }}>{t('studentSpace')}</h2>
             <div className='HomeButtonsContainer'>
                 <InputButton buttonLabel={t('joinAMeeting')} inputLabel={t('enterRoomName')} onSubmit={joinMeeting} />
                 <ProgressButton initialCounter={state ? state.count : 0} onClick={launchLastMeeting}>

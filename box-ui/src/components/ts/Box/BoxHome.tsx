@@ -32,7 +32,7 @@ const BoxHome: FunctionComponent = () => {
     };
 
     return (
-        <div className='HomeContainer'>
+        <div className='HomeContainer BoxHome'>
             <div className='LogoContainer'>
                 <img src={JitsiBoxLogo} alt='logo de la jitsi-box' className='logo' />
             </div>
