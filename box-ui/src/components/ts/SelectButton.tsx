@@ -15,9 +15,9 @@ const SelectButton: FunctionComponent<SelectButtonProps> = (props: SelectButtonP
                     onChange={(e) => (props.onChange ? props.onChange(e) : null)}
                     onClick={(e) => (props.onClick ? props.onClick(e) : null)}
                 >
-                    {props.selectItems.menuItems.map((menuItemText, index) => (
-                        <MenuItem key={index} value={menuItemText ? menuItemText : ''}>
-                            {menuItemText}
+                    {props.selectItems.menuItems.map((menuItem) => (
+                        <MenuItem key={menuItem.id} value={menuItem.text ? menuItem.text : ''}>
+                            {menuItem.text}
                         </MenuItem>
                     ))}
                 </Select>

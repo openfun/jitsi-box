@@ -83,8 +83,7 @@ export type SelectButtonProps = {
     div ?: React.HTMLAttributes<HTMLDivElement>;
     className ?: string;
     menuItemsStyle ?: SxProps<Theme>;
-    selectItems : {inputLabel: {text : string, style ?: SxProps<Theme>}, menuItems : string[],};
-    value: string;
+    selectItems : {inputLabel: {text : string, style ?: SxProps<Theme>}, menuItems : {id : number | string, text : string}[],};
     onChange ?: (e :SelectChangeEvent<string>) => void;
     onClick ?: (e :SelectChangeEvent<string>) => void;
 };

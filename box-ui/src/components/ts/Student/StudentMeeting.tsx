@@ -17,7 +17,12 @@ import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import ImageViewer from '../ImageViewer';
 
 const StudentMeeting: FunctionComponent = () => {
-    const processes = ['Color', 'B&W', 'Contrast', 'original', 'SuperRes'];
+    const processes = [
+        { id: 0, text: 'Color' },
+        { id: 1, text: 'B&W' },
+        { id: 2, text: 'Contrast' },
+        { id: 3, text: 'Original' },
+    ];
     const { t } = useTranslation();
     const meetingOptions = useMemo(
         () => ({
@@ -367,7 +372,6 @@ const StudentMeeting: FunctionComponent = () => {
                             inputLabel: { text: 'Select Filter', style: { color: 'white' } },
                             menuItems: processes,
                         }}
-                        value={'process'}
                         onChange={(e) => {
                             requestProcessedImage(e.target.value);
                         }}

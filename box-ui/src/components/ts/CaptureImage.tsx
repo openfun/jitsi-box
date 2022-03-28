@@ -15,9 +15,12 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
     const [displayFocus, setDisplayFocus] = useState(false);
     const { t } = useTranslation();
     const detectCamera = () => {
-        navigator.mediaDevices.enumerateDevices().then((devices) => {
-            const cameras = devices.filter((value) => value['kind'] === 'videoinput');
-            setCameraList(cameras);
+        navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then((cameras) => {
+            console.log(cameras);
+            navigator.mediaDevices.enumerateDevices().then((devices) => {
+                const cameras = devices.filter((value) => value['kind'] === 'videoinput');
+                setCameraList(cameras);
+            });
         });
     };
 
@@ -103,12 +106,19 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
                 }}
                 selectItems={{
                     inputLabel: { text: t('selectCamera'), style: { color: 'white' } },
-                    menuItems: cameraList.map((camera) => camera.label),
+                    menuItems: cameraList.map((camera, index) => {
+                        return {
+                            id: camera.deviceId,
+                            text: camera.label !== '' ? camera.label : `camera ${index + 1}`,
+                        };
+                    }),
                 }}
-                value={'camera'}
                 onChange={(e) => {
                     const camera = cameraList.find((camera) => camera.label === e.target.value);
-                    if (camera !== undefined) setCamera(camera);
+                    if (camera !== undefined) {
+                        setCamera(camera);
+                        alert(`New camera selected ${camera.label}`);
+                    }
                 }}
                 onClick={() => {
                     detectCamera();

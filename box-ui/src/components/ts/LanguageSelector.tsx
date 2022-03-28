@@ -20,9 +20,10 @@ const LanguageSelector: FunctionComponent<React.HTMLAttributes<HTMLDivElement>> 
                 }}
                 selectItems={{
                     inputLabel: { text: t('lang'), style: { color: 'white' } },
-                    menuItems: availableLanguages,
+                    menuItems: availableLanguages.map((lang, index) => {
+                        return { id: index, text: lang };
+                    }),
                 }}
-                value={i18n.language}
                 onChange={(e) => {
                     i18n.changeLanguage(e.target.value as string);
                 }}

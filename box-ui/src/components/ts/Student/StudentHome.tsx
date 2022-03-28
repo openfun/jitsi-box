@@ -7,12 +7,10 @@ import '../../css/Home.css';
 import '../../css/StudentHome.css';
 import { LocationState } from '../../../utils/State';
 import ProgressButton from '../ProgressButton';
-import SelectButton from '../SelectButton';
-import { availableLanguages } from '../../../i18n';
 import LanguageSelector from '../LanguageSelector';
 
 const StudentHome: FunctionComponent = () => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const state = useLocation().state as LocationState | null;
     const navigate = useNavigate();
 

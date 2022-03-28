@@ -7,13 +7,11 @@ import { LocationState } from '../../../utils/State';
 import { useTranslation } from 'react-i18next';
 import GenerateRandomFrenchRoomName from '../../../dictionnaries_fr';
 import ProgressButton from '../ProgressButton';
-import SelectButton from '../SelectButton';
-import { availableLanguages } from '../../../i18n';
 import LanguageSelector from '../LanguageSelector';
 
 const BoxHome: FunctionComponent = () => {
     const state = useLocation().state as LocationState | null;
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const launchMeeting = () => {
         navigate(
