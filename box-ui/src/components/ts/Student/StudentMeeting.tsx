@@ -367,7 +367,7 @@ const StudentMeeting: FunctionComponent = () => {
                     <ImageViewer
                         img1={
                             selectCoord
-                                ? [img, '40vh', widthImgDouble.toString() + 'vh']
+                                ? [img, '45vh', widthImgDouble.toString() + 'vh']
                                 : [img, '90vh', ((90 * widthImgDouble) / 45).toString() + 'vh']
                         }
                         img2={[img, '45vh', ratioImgOriginal.toString() + 'vh']}
