@@ -3,7 +3,7 @@
     flex-direction: column;
     flex-wrap: wrap;
     align-items: center;
-    max-height: 50px;
+    max-height: 200px;
 }
 
 .sectionSelectCam {
@@ -61,6 +61,21 @@ video {
     position: absolute;
     top: 5px;
     left: 5px;
+    width: 15px;
+    height: 15px;
+    font-size: 0;
+    background-color: red;
+    border: 0;
+    border-radius: 35px;
+    margin: 18px;
+    outline: none;
+    animation-name: pulse;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+
+.recordingIconOutside {
     width: 15px;
     height: 15px;
     font-size: 0;

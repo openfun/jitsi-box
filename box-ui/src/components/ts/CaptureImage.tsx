@@ -149,6 +149,7 @@ const CaptureImage: FunctionComponent<CaptureImageProps> = (props: CaptureImageP
                         <DoubleArrowIcon className={showLoopback ? 'arrowDown' : 'arrowUp'} />
                     </div>
                 )}
+                {showArrow && <div className='recordingIconOutside'></div>}
 
                 <SelectButton
                     menuItemsStyle={{
