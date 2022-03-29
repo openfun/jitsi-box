@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent, useEffect, useRef, useMemo, useCallback } from 'react';
+import React, { useState, FunctionComponent, useEffect, useMemo, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../../css/StudentMeeting.css';
 import CircularProgress from '@mui/material/CircularProgress';
