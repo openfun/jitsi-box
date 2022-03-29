@@ -77,9 +77,14 @@
 
 .circularProgress {
     position: absolute;
-    left: center;
-    top: center;
+    top: 50%;
+    left: 48%;
     color: blue;
+    z-index: 3;
+}
+
+.container_loading {
+    position: relative;
 }
 
 .containerImgStudent {

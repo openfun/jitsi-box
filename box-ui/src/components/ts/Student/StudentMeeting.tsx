@@ -1,7 +1,6 @@
 import React, { useState, FunctionComponent, useEffect, useRef, useMemo, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../../css/StudentMeeting.css';
-import CircularProgress from '@mui/material/CircularProgress';
 import { LocationState } from '../../../utils/State';
 import JitsiFrame from '../JitsiFrame';
 import axios from 'axios';
@@ -23,7 +22,7 @@ const StudentMeeting: FunctionComponent = () => {
         { id: 2, text: 'Contrast' },
         { id: 3, text: 'Original' },
     ];
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const meetingOptions = useMemo(
         () => ({
             userInfo: {
@@ -67,17 +66,20 @@ const StudentMeeting: FunctionComponent = () => {
 
     //circle : svg element to display on click on the image
     const [circles, setCircles] = useState<React.SVGProps<SVGCircleElement>[]>([]);
-
     // img : downloaded from back, potentially cropped
     const [widthImgDouble, setWidthImgDouble] = useState<number>(0);
-    const [img, setImg] = useState<string>('../../FirstPicture.png');
+    const [img, setImg] = useState<string>(
+        i18n.language == 'en' ? '../../FirstPictureEN.png' : '../../FirstPictureFR.png',
+    );
     const [imgIsCropped, setImgIsCropped] = useState<boolean>(false);
 
     // img original : not cropped
     const [widthImgOriginal, setWidthImgOriginal] = useState<number>(0);
     const [heightImgOriginal, setHeightImgOriginal] = useState<number>(0);
     const [ratioImgOriginal, setRatioImgOriginal] = useState<number>(0);
-    const [imgOriginal, setImgOriginal] = useState<string>('../../FirstPicture.png');
+    const [imgOriginal, setImgOriginal] = useState<string>(
+        i18n.language == 'en' ? '../../FirstPictureEN.png' : '../../FirstPictureFR.png',
+    );
 
     //Dimension image affichée
     const [widthAff, setWidthAff] = useState<number>(0);
@@ -253,7 +255,9 @@ const StudentMeeting: FunctionComponent = () => {
                 const arrayBuffer = resp.data;
                 const imageSlice = new Image();
                 imageSlice.src = 'data:image/jpg;base64,' + arrayBuffer;
-                setImg(imageSlice.src);
+                if (!(arrayBuffer == undefined)) {
+                    setImg(imageSlice.src);
+                }
                 if (afterCrop) {
                     setLoading(false);
                 }
@@ -291,6 +295,7 @@ const StudentMeeting: FunctionComponent = () => {
                                 img2={[imgOriginal, '45vh', widthImgDouble.toString() + 'vh']}
                                 onclick={addCircle}
                                 addOn={circles}
+                                loading={loading}
                                 selectWindow={selectCoord}
                             />
                             <button
@@ -312,6 +317,7 @@ const StudentMeeting: FunctionComponent = () => {
                             img2={[imgOriginal, '30vh', ((ratioImgOriginal / 45) * 30).toString() + 'vh']}
                             onclick={addCircle}
                             addOn={circles}
+                            loading={loading}
                             selectWindow={selectCoord}
                         />
                         <button
@@ -328,7 +334,6 @@ const StudentMeeting: FunctionComponent = () => {
                         >
                             <CompareArrowsIcon style={{ height: '20px', width: '20px' }} />
                         </button>
-                        {loading && <CircularProgress className='circularProgress' />}
                     </div>
                 </FloatingBox>
             )}
@@ -368,6 +373,7 @@ const StudentMeeting: FunctionComponent = () => {
                         img1={[img, '45vh', widthImgDouble.toString() + 'vh']}
                         img2={[img, '45vh', ratioImgOriginal.toString() + 'vh']}
                         selectWindow={selectCoord}
+                        loading={loading}
                     />
                 </div>
             )}
