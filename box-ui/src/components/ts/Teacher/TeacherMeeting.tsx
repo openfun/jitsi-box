@@ -50,7 +50,7 @@ const TeacherMeeting: FunctionComponent = () => {
                     'desktop',
                 ],
                 prejoinConfig: {
-                    enabled: true,
+                    enabled: false,
                 },
                 startWithVideoMuted: false,
                 startWithAudioMuted: true,

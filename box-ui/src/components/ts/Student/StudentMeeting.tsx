@@ -17,8 +17,6 @@ import CompareArrowsIcon from '@mui/icons-material/CompareArrows';
 import ImageViewer from '../ImageViewer';
 
 const StudentMeeting: FunctionComponent = () => {
-    const displayName = useRef<string>();
-    const [prejoin, setPrejoin] = useState(true);
     const processes = [
         { id: 0, text: 'Color' },
         { id: 1, text: 'B&W' },
@@ -30,7 +28,7 @@ const StudentMeeting: FunctionComponent = () => {
         () => ({
             userInfo: {
                 email: '',
-                displayName: displayName.current ?? t('student'),
+                displayName: t('student'),
             },
             configOverwrite: {
                 toolbarButtons: [
@@ -45,13 +43,13 @@ const StudentMeeting: FunctionComponent = () => {
                     'desktop',
                 ],
                 prejoinConfig: {
-                    enabled: prejoin,
+                    enabled: false,
                 },
                 startWithVideoMuted: false,
                 startWithAudioMuted: true,
             },
         }),
-        [prejoin],
+        [],
     );
     const [displayFocus, setDisplayFocus] = useState(false);
     const state = useLocation().state as LocationState;
@@ -130,9 +128,6 @@ const StudentMeeting: FunctionComponent = () => {
                         domain: information.domain,
                     },
                 });
-            });
-            api.addListener('videoConferenceJoined', (participant) => {
-                displayName.current = api.getDisplayName(participant.id);
             });
         },
         [information],
@@ -222,12 +217,10 @@ const StudentMeeting: FunctionComponent = () => {
 
     function ChangeView() {
         setMiniImg((miniImg) => !miniImg);
-        setPrejoin(false);
     }
 
     function ChangeMinimize() {
         setMinimize((minimize) => !minimize);
-        setPrejoin(false);
     }
 
     function getImgSize(imgSrc: string, original: boolean) {
