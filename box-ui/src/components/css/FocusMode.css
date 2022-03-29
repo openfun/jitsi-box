@@ -39,3 +39,7 @@
     overflow-wrap: break-word;
     max-width: 20em;
 }
+
+#quitterTuto {
+    margin-top: 5px;
+}
