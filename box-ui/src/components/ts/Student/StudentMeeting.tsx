@@ -1,4 +1,4 @@
-import React, { useState, FunctionComponent, useEffect, useRef, useMemo, useCallback } from 'react';
+import React, { useState, FunctionComponent, useEffect, useMemo, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../../css/StudentMeeting.css';
 import { LocationState } from '../../../utils/State';
@@ -370,7 +370,11 @@ const StudentMeeting: FunctionComponent = () => {
             {minimize && !miniImg && (
                 <div className='containerImgStudent'>
                     <ImageViewer
-                        img1={[img, '45vh', widthImgDouble.toString() + 'vh']}
+                        img1={
+                            selectCoord
+                                ? [img, '45vh', widthImgDouble.toString() + 'vh']
+                                : [img, '90vh', ((90 * widthImgDouble) / 45).toString() + 'vh']
+                        }
                         img2={[img, '45vh', ratioImgOriginal.toString() + 'vh']}
                         selectWindow={selectCoord}
                         loading={loading}

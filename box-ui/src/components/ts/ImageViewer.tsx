@@ -17,7 +17,6 @@ const ImageViewer: FunctionComponent<ViewerProps> = (props: ViewerProps) => {
                             backgroundImage: "url('" + props.img2[0] + "')",
                             backgroundRepeat: 'no-repeat',
                             backgroundSize: 'contain',
-                            maxWidth: '45vw',
                             border: '1px solid blue',
                         }}
                     >
@@ -33,7 +32,6 @@ const ImageViewer: FunctionComponent<ViewerProps> = (props: ViewerProps) => {
                         backgroundImage: "url('" + props.img1[0] + "')",
                         backgroundRepeat: 'no-repeat',
                         backgroundSize: 'contain',
-                        maxWidth: '45vw',
                     }}
                 ></ClickableSVG>
                 {props.loading && <CircularProgress className='circularProgress' />}

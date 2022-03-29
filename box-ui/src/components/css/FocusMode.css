@@ -10,23 +10,36 @@
     z-index: 300;
     pointer-events: none;
     transition: all 0.5s linear;
+    background-clip: content-box;
+    background-color: rgba(199, 41, 41, 0.473);
+    animation: blinkingBackground 2s infinite;
+}
+
+@keyframes blinkingBackground {
+    0% {
+        background-color: rgba(255, 255, 0, 0.5);
+    }
+    50% {
+        background-color: rgba(255, 255, 0, 0);
+    }
+    100% {
+        background-color: rgba(255, 255, 0, 0.5);
+    }
 }
 
 #explanationPosition {
+    z-index: 300;
     position: absolute;
+    top: 0px;
+    right: 0px;
     bottom: 0px;
     left: 0px;
     display: flex;
-    justify-content: left;
-    pointer-events: none;
+    align-items: center;
+    justify-content: center;
 }
 
 #explanation {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    align-self: flex-end;
     background-color: rgb(255, 255, 255);
     border-radius: 25px;
     z-index: 400;
@@ -40,6 +53,6 @@
     max-width: 20em;
 }
 
-#quitterTuto {
-    margin-top: 5px;
+#continueTuto {
+    margin-bottom: 10px;
 }
