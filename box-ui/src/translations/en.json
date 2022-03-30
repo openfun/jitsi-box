@@ -46,6 +46,6 @@
         "tutoSwitch": "By clicking on this button, the image and the video will switch places",
         "continueTuto": "Continue tutorial",
         "quitTuto": "Exit tutorial",
-        "selectFilter" : "select filter"
+        "selectFilter" : "Filter"
     }
   }
