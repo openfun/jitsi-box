@@ -2,10 +2,11 @@ import React, { useState, FunctionComponent, useEffect, useMemo, useCallback } f
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../../css/StudentMeeting.css';
 import { LocationState } from '../../../utils/State';
+import { TutoButtonProps, SelectFilterButtonProps, CropButtonProps } from '../../../utils/Props';
 import JitsiFrame from '../JitsiFrame';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import { IconButton } from '@mui/material';
+import { IconButton, CircularProgress } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
 import FocusMode from '../FocusMode';
 import SelectButton from '../SelectButton';
@@ -291,6 +292,7 @@ const StudentMeeting: FunctionComponent = () => {
                             onclick={addCircle}
                             addOn={circles}
                             selectWindow={selectCoord}
+                            loading={loading}
                         />
                         <div className='sectionButtonsStudent'>
                             <button className='openWindow' onClick={ChangeMinimize}>
@@ -303,13 +305,9 @@ const StudentMeeting: FunctionComponent = () => {
                                 validerSaisie={validerSaisie}
                                 imgIsCropped={imgIsCropped}
                                 resetCadrage={resetCadrage}
-                                style={{ alignSelf: 'center' }}
-                            />
-                            <SelectFilterButton
-                                requestProcessedImage={requestProcessedImage}
-                                processes={processes}
                                 AmeliorerVue={AmeliorerVue}
                             />
+                            <SelectFilterButton requestProcessedImage={requestProcessedImage} processes={processes} />
                         </div>
                     </div>
                 </>
@@ -335,19 +333,16 @@ const StudentMeeting: FunctionComponent = () => {
                                     <HighlightOffIcon style={{ height: '20px', width: '20px' }} />
                                 </button>
                             </div>
-                            <SelectFilterButton
-                                requestProcessedImage={requestProcessedImage}
-                                processes={processes}
-                                AmeliorerVue={AmeliorerVue}
-                            />
+                            <TutoButton setDisplayFocus={setDisplayFocus} displayFocus={displayFocus} />
                             <CropButton
                                 selectCoord={selectCoord}
                                 coord={coord}
                                 validerSaisie={validerSaisie}
                                 imgIsCropped={imgIsCropped}
                                 resetCadrage={resetCadrage}
+                                AmeliorerVue={AmeliorerVue}
                             />
-                            <TutoButton setDisplayFocus={setDisplayFocus} displayFocus={displayFocus} />
+                            <SelectFilterButton requestProcessedImage={requestProcessedImage} processes={processes} />
                         </div>
                     </div>
                 </FloatingBox>
@@ -383,19 +378,16 @@ const StudentMeeting: FunctionComponent = () => {
                         loading={loading}
                     />
                     <div className='sectionButtonsStudent maximize'>
-                        <SelectFilterButton
-                            requestProcessedImage={requestProcessedImage}
-                            processes={processes}
-                            AmeliorerVue={AmeliorerVue}
-                        />
+                        <TutoButton setDisplayFocus={setDisplayFocus} displayFocus={displayFocus} />
                         <CropButton
                             selectCoord={selectCoord}
                             coord={coord}
                             validerSaisie={validerSaisie}
                             imgIsCropped={imgIsCropped}
                             resetCadrage={resetCadrage}
+                            AmeliorerVue={AmeliorerVue}
                         />
-                        <TutoButton setDisplayFocus={setDisplayFocus} displayFocus={displayFocus} />
+                        <SelectFilterButton requestProcessedImage={requestProcessedImage} processes={processes} />
                     </div>
                 </div>
             )}
@@ -417,7 +409,7 @@ const StudentMeeting: FunctionComponent = () => {
     );
 };
 
-const TutoButton: FunctionComponent<any> = (props) => {
+const TutoButton: FunctionComponent<TutoButtonProps> = (props) => {
     return (
         <IconButton
             id='TutoButton'
@@ -433,7 +425,7 @@ const TutoButton: FunctionComponent<any> = (props) => {
     );
 };
 
-const SelectFilterButton: FunctionComponent<any> = (props) => {
+const SelectFilterButton: FunctionComponent<SelectFilterButtonProps> = (props) => {
     const { t } = useTranslation();
     return (
         <div className='selectFilter'>
@@ -469,7 +461,7 @@ const SelectFilterButton: FunctionComponent<any> = (props) => {
     );
 };
 
-const CropButton: FunctionComponent<any> = (props) => {
+const CropButton: FunctionComponent<CropButtonProps> = (props) => {
     const { t } = useTranslation();
     return (
         <>
