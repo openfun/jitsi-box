@@ -6,7 +6,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 const ImageViewer: FunctionComponent<ViewerProps> = (props: ViewerProps) => {
     return (
-        <div className='containerImgStudent'>
+        <div className='ImageViewer'>
             {props.img2 && props.selectWindow && (
                 <div className='sectionClick'>
                     <ClickableSVG

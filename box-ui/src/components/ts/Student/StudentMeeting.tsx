@@ -2,10 +2,11 @@ import React, { useState, FunctionComponent, useEffect, useMemo, useCallback } f
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../../css/StudentMeeting.css';
 import { LocationState } from '../../../utils/State';
+import { TutoButtonProps, SelectFilterButtonProps, CropButtonProps } from '../../../utils/Props';
 import JitsiFrame from '../JitsiFrame';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import { IconButton } from '@mui/material';
+import { IconButton, CircularProgress } from '@mui/material';
 import HelpIcon from '@mui/icons-material/Help';
 import FocusMode from '../FocusMode';
 import SelectButton from '../SelectButton';
@@ -280,38 +281,40 @@ const StudentMeeting: FunctionComponent = () => {
     }
 
     return (
-        <div className='CreateMeetingComponent'>
+        <div className='studentMeeting'>
             {!minimize && (
-                <div className='CreateMeetingComponent'>
-                    <div className='CreateMeetingContainer'>
-                        <div className='JitsiComponent'>
-                            <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
-                        </div>
-                    </div>
-                    <div className='containerStudent'>
-                        <div className='containerImgStudent'>
-                            <ImageViewer
-                                img1={[img, '45vh', widthImgDouble.toString() + 'vh']}
-                                img2={[imgOriginal, '45vh', widthImgDouble.toString() + 'vh']}
-                                onclick={addCircle}
-                                addOn={circles}
-                                loading={loading}
-                                selectWindow={selectCoord}
-                            />
-                            <button
-                                className='openWindow'
-                                onClick={ChangeMinimize}
-                                style={{ position: 'absolute', top: '70%', left: '90%' }}
-                            >
+                <>
+                    <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
+                    <div className='containerImgStudent'>
+                        <ImageViewer
+                            img1={[img, '45vh', widthImgDouble.toString() + 'vh']}
+                            img2={[imgOriginal, '45vh', widthImgDouble.toString() + 'vh']}
+                            onclick={addCircle}
+                            addOn={circles}
+                            selectWindow={selectCoord}
+                            loading={loading}
+                        />
+                        <div className='sectionButtonsStudent'>
+                            <button className='openWindow' onClick={ChangeMinimize}>
                                 <LaunchIcon style={{ height: '20px', width: '20px' }} />
                             </button>
+                            <TutoButton setDisplayFocus={setDisplayFocus} displayFocus={displayFocus} />
+                            <CropButton
+                                selectCoord={selectCoord}
+                                coord={coord}
+                                validerSaisie={validerSaisie}
+                                imgIsCropped={imgIsCropped}
+                                resetCadrage={resetCadrage}
+                                AmeliorerVue={AmeliorerVue}
+                            />
+                            <SelectFilterButton requestProcessedImage={requestProcessedImage} processes={processes} />
                         </div>
                     </div>
-                </div>
+                </>
             )}
             {minimize && miniImg && (
                 <FloatingBox>
-                    <div className='containerImgStudent'>
+                    <div className='containerImgStudent floating'>
                         <ImageViewer
                             img1={[img, '30vh', ((widthImgDouble / 45) * 30).toString() + 'vh']}
                             img2={[imgOriginal, '30vh', ((ratioImgOriginal / 45) * 30).toString() + 'vh']}
@@ -320,48 +323,43 @@ const StudentMeeting: FunctionComponent = () => {
                             loading={loading}
                             selectWindow={selectCoord}
                         />
-                        <button
-                            className='closeWindow'
-                            onClick={ChangeMinimize}
-                            style={{ position: 'absolute', top: '0%', left: '90%' }}
-                        >
-                            <HighlightOffIcon style={{ height: '20px', width: '20px' }} />
-                        </button>
-                        <button
-                            className='switch'
-                            onClick={ChangeView}
-                            style={{ position: 'absolute', top: '85%', left: '90%' }}
-                        >
-                            <CompareArrowsIcon style={{ height: '20px', width: '20px' }} />
-                        </button>
+                        {loading && <CircularProgress className='circularProgress' />}
+                        <div className='sectionButtonsStudent'>
+                            <div className='windowButtons'>
+                                <button className='switch' onClick={ChangeView}>
+                                    <CompareArrowsIcon style={{ height: '20px', width: '20px' }} />
+                                </button>
+                                <button className='closeWindow' onClick={ChangeMinimize}>
+                                    <HighlightOffIcon style={{ height: '20px', width: '20px' }} />
+                                </button>
+                            </div>
+                            <TutoButton setDisplayFocus={setDisplayFocus} displayFocus={displayFocus} />
+                            <CropButton
+                                selectCoord={selectCoord}
+                                coord={coord}
+                                validerSaisie={validerSaisie}
+                                imgIsCropped={imgIsCropped}
+                                resetCadrage={resetCadrage}
+                                AmeliorerVue={AmeliorerVue}
+                            />
+                            <SelectFilterButton requestProcessedImage={requestProcessedImage} processes={processes} />
+                        </div>
                     </div>
                 </FloatingBox>
             )}
             {minimize && miniImg && (
-                <div className='CreateMeetingContainer'>
-                    <div className='JitsiComponent'>
-                        <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
-                    </div>
-                </div>
+                <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
             )}
             {minimize && !miniImg && (
                 <FloatingBox>
-                    <div className='CreateMeetingContainer'>
-                        <div className='JitsiComponent' style={{ margin: '20px' }}>
-                            <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
-                        </div>
-                        <button
-                            className='switch'
-                            onClick={ChangeView}
-                            style={{ position: 'absolute', top: '85%', left: '90%' }}
-                        >
+                    <div className='jitsiFloating'>
+                        <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
+                    </div>
+                    <div className='windowButtons meeting'>
+                        <button className='switch' onClick={ChangeView}>
                             <CompareArrowsIcon style={{ height: '20px', width: '20px' }} />
                         </button>
-                        <button
-                            className='closeWindow'
-                            onClick={ChangeMinimize}
-                            style={{ position: 'absolute', top: '0%', left: '90%' }}
-                        >
+                        <button className='closeWindow' onClick={ChangeMinimize}>
                             <HighlightOffIcon style={{ height: '20px', width: '20px' }} />
                         </button>
                     </div>
@@ -379,53 +377,21 @@ const StudentMeeting: FunctionComponent = () => {
                         selectWindow={selectCoord}
                         loading={loading}
                     />
+                    <div className='sectionButtonsStudent maximize'>
+                        <TutoButton setDisplayFocus={setDisplayFocus} displayFocus={displayFocus} />
+                        <CropButton
+                            selectCoord={selectCoord}
+                            coord={coord}
+                            validerSaisie={validerSaisie}
+                            imgIsCropped={imgIsCropped}
+                            resetCadrage={resetCadrage}
+                            AmeliorerVue={AmeliorerVue}
+                        />
+                        <SelectFilterButton requestProcessedImage={requestProcessedImage} processes={processes} />
+                    </div>
                 </div>
             )}
 
-            <div className='sectionButtonsStudent'>
-                <div className='selectFilter'>
-                    <SelectButton
-                        menuItemsStyle={{
-                            color: 'white',
-                            backgroundColor: '#141414',
-                            '& .MuiSelect-icon': { color: 'white' },
-                            '&:hover': { background: '#14141495' },
-                            cursor: 'pointer',
-                            border: 'solid white 1px',
-                            borderRadius: '0.6rem',
-                        }}
-                        className='buttonStudent'
-                        selectItems={{
-                            inputLabel: { text: 'Select Filter', style: { color: 'white' } },
-                            menuItems: processes,
-                        }}
-                        onChange={(e) => {
-                            requestProcessedImage(e.target.value);
-                        }}
-                    />
-                </div>
-                <div className='cropButton'>
-                    <button className='buttonStudent' onClick={() => AmeliorerVue()}>
-                        {!selectCoord ? t('crop') : t('cancel')}
-                    </button>
-                </div>
-                {coord.length == 4 && (
-                    <div>
-                        <button className='buttonStudent' onClick={() => validerSaisie()}>
-                            {t('validate')}
-                        </button>
-                    </div>
-                )}
-
-                {imgIsCropped && (
-                    <button className='buttonStudent' onClick={() => resetCadrage()}>
-                        {t('resetCropping')}
-                    </button>
-                )}
-                <IconButton id='TutoButton' aria-label='help' onClick={() => setDisplayFocus(!displayFocus)}>
-                    <HelpIcon sx={{ color: 'white' }} />
-                </IconButton>
-            </div>
             {displayFocus && (
                 <FocusMode
                     focusItems={[
@@ -442,4 +408,83 @@ const StudentMeeting: FunctionComponent = () => {
         </div>
     );
 };
+
+const TutoButton: FunctionComponent<TutoButtonProps> = (props) => {
+    return (
+        <IconButton
+            id='TutoButton'
+            aria-label='help'
+            onClick={() => props.setDisplayFocus((displayFocus: boolean) => !displayFocus)}
+        >
+            <HelpIcon
+                sx={{
+                    color: 'white',
+                }}
+            />
+        </IconButton>
+    );
+};
+
+const SelectFilterButton: FunctionComponent<SelectFilterButtonProps> = (props) => {
+    const { t } = useTranslation();
+    return (
+        <div className='selectFilter'>
+            <SelectButton
+                menuItemsStyle={{
+                    color: 'white',
+                    backgroundColor: 'rgb(30,30,30)',
+                    fontSize: 'medium',
+                    '& .MuiSelect-icon': {
+                        color: 'white',
+                    },
+                    '&:hover': {
+                        background: 'rgba(30,30,30,0.5)',
+                    },
+                    cursor: 'pointer',
+                    borderRadius: '0.6rem',
+                }}
+                className='buttonStudent'
+                selectItems={{
+                    inputLabel: {
+                        text: t('selectFilter'),
+                        style: {
+                            color: 'white',
+                        },
+                    },
+                    menuItems: props.processes,
+                }}
+                onChange={(e) => {
+                    props.requestProcessedImage(e.target.value);
+                }}
+            />
+        </div>
+    );
+};
+
+const CropButton: FunctionComponent<CropButtonProps> = (props) => {
+    const { t } = useTranslation();
+    return (
+        <>
+            <div className='cropButton'>
+                <button className='buttonStudent' onClick={() => props.AmeliorerVue()}>
+                    {!props.selectCoord ? t('crop') : t('cancel')}
+                </button>
+            </div>
+            {props.coord.length == 4 && (
+                <div>
+                    <button className='buttonStudent' onClick={() => props.validerSaisie()}>
+                        {t('validate')}
+                    </button>
+                </div>
+            )}
+
+            {props.imgIsCropped && (
+                <button className='buttonStudent' onClick={() => props.resetCadrage()}>
+                    {t('resetCropping')}
+                </button>
+            )}
+        </>
+    );
+};
+
 export default StudentMeeting;
