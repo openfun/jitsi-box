@@ -76,7 +76,8 @@ export type ViewerProps = {
     img2? : [string,string,string];
     onclick?: (event: React.MouseEvent) => void;
     addOn?: React.SVGProps<SVGCircleElement>[];
-    selectWindow : boolean; 
+    selectWindow: boolean;
+    loading: boolean;
 };
 
 export type SelectButtonProps = {

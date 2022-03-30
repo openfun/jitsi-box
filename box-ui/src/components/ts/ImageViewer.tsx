@@ -1,6 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { ViewerProps } from '../../utils/Props';
 import styled from '@emotion/styled';
+import '../css/StudentMeeting.css';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const ImageViewer: FunctionComponent<ViewerProps> = (props: ViewerProps) => {
     return (
@@ -22,7 +24,7 @@ const ImageViewer: FunctionComponent<ViewerProps> = (props: ViewerProps) => {
                     </ClickableSVG>
                 </div>
             )}
-            <div>
+            <div className='container_loading'>
                 <ClickableSVG
                     height={props.img1[1]}
                     width={props.img1[2]}
@@ -32,6 +34,7 @@ const ImageViewer: FunctionComponent<ViewerProps> = (props: ViewerProps) => {
                         backgroundSize: 'contain',
                     }}
                 ></ClickableSVG>
+                {props.loading && <CircularProgress className='circularProgress' />}
             </div>
         </div>
     );

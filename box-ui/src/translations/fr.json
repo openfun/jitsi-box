@@ -45,6 +45,7 @@
       "tutoCloseWindow": "En cliquant sur ce bouton, l'image flotante retournera à la disposition d'écran originale ",
       "tutoSwitch": "En cliquant sur ce bouton, l'image et la vidéo vont changer de place",
       "quitTuto": "Quitter le tutoriel",
+      "continueTuto": "Continuer le tutoriel",
       "selectFilter" : "sélectionner un filtre"
     }
   }
