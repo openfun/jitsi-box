@@ -376,6 +376,7 @@ const StudentMeeting: FunctionComponent = () => {
                         img2={[img, '45vh', ratioImgOriginal.toString() + 'vh']}
                         selectWindow={selectCoord}
                         loading={loading}
+                        addOn={circles}
                     />
                     <div className='sectionButtonsStudent maximize'>
                         <TutoButton setDisplayFocus={setDisplayFocus} displayFocus={displayFocus} />
