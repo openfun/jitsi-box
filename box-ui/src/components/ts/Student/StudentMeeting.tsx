@@ -377,6 +377,7 @@ const StudentMeeting: FunctionComponent = () => {
                         selectWindow={selectCoord}
                         loading={loading}
                         addOn={circles}
+                        onclick={addCircle}
                     />
                     <div className='sectionButtonsStudent maximize'>
                         <TutoButton setDisplayFocus={setDisplayFocus} displayFocus={displayFocus} />
