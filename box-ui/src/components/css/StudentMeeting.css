@@ -110,6 +110,8 @@ button:hover {
     grid-area: viewer;
     place-self: center;
     place-self: center;
+    display: flex;
+    flex-direction: row;
 }
 
 .jitsiFloating {
