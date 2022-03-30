@@ -373,7 +373,7 @@ const StudentMeeting: FunctionComponent = () => {
                                 ? [img, '45vh', widthImgDouble.toString() + 'vh']
                                 : [img, '90vh', ((90 * widthImgDouble) / 45).toString() + 'vh']
                         }
-                        img2={[img, '45vh', ratioImgOriginal.toString() + 'vh']}
+                        img2={[imgOriginal, '45vh', widthImgDouble.toString() + 'vh']}
                         selectWindow={selectCoord}
                         loading={loading}
                         addOn={circles}
