@@ -9,7 +9,7 @@ const ImageViewer: FunctionComponent<ViewerProps> = (props: ViewerProps) => {
         <div className='ImageViewer'>
             {props.img2 && props.selectWindow && (
                 <div className='sectionClick' onClick={props.onclick}>
-                    <img id='originalImage' src={props.img2} />
+                    <img draggable='false' id='originalImage' src={props.img2} />
                     <ClickableSVG>
                         {props.coords?.map((coord) => {
                             return (
@@ -36,7 +36,7 @@ const ImageViewer: FunctionComponent<ViewerProps> = (props: ViewerProps) => {
                 </div>
             )}
             <div className='containerLoading'>
-                <img id='croppedImage' src={props.img1} />
+                <img draggable='false' id='croppedImage' src={props.img1} />
                 {props.loading && (
                     <div className='circularProgress'>
                         <CircularProgress />
