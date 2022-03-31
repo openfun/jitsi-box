@@ -1,12 +1,10 @@
 .HomeContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
+    display: grid;
+    grid-template-rows: repeat(minmax(0,1fr), 3);
+    place-items: center center;
     text-align: center;
-    align-self: center;
     font-size: large;
-    height: 100vh;
-    width: 100vw;
+    min-height: 100vh;
 }
 
 .BoxHome {
@@ -26,11 +24,11 @@
 
 .HomeButtonsContainer {
     width: 100%;
-    margin-top: 4rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    place-self: flex-start center;
 }
 
 .BoxHome #StartMeetingButton, .BoxHome #ReturnToMeetingButton{
@@ -58,4 +56,8 @@
 
 .HomeContainer a:visited {
     color: cornflowerblue;
+}
+
+.LanguageSelector {
+    place-self: flex-end flex-end;
 }
