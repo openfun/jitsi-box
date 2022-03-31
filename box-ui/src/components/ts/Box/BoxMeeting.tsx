@@ -87,17 +87,8 @@ const BoxMeeting: FunctionComponent = () => {
     return (
         <div className='Meeting'>
             <PopupComponent information={information} setInformation={setInformation} />
-            <div className='CreateMeetingContainer'>
-                <div className='JitsiComponent'>
-                    {counterRaised > 0 && <div className='overlay' />}
-                    <JitsiFrame
-                        information={information}
-                        options={meetingOptions}
-                        configure={configure}
-                        onError={onError}
-                    />
-                </div>
-            </div>
+            {counterRaised > 0 && <div className='overlay' />}
+            <JitsiFrame information={information} options={meetingOptions} configure={configure} onError={onError} />
             <div className='CameraManagement'>
                 <CaptureImage roomName={information.roomName} />
             </div>
