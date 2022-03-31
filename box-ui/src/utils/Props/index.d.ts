@@ -71,10 +71,10 @@ export type FocusModeProps = {
 };
 
 export type ViewerProps = {
-    img1: [string, string, string];
-    img2?: [string, string, string];
+    img1: string;
+    img2?: string;
     onclick?: (event: React.MouseEvent) => void;
-    addOn?: React.SVGProps<SVGCircleElement>[];
+    coords?: [number, number][];
     selectWindow: boolean;
     loading: boolean;
 };

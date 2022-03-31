@@ -8,41 +8,51 @@ const ImageViewer: FunctionComponent<ViewerProps> = (props: ViewerProps) => {
     return (
         <div className='ImageViewer'>
             {props.img2 && props.selectWindow && (
-                <div className='sectionClick'>
-                    <ClickableSVG
-                        height={props.img2[1]}
-                        width={props.img2[2]}
-                        onClick={props.onclick}
-                        style={{
-                            backgroundImage: "url('" + props.img2[0] + "')",
-                            backgroundRepeat: 'no-repeat',
-                            backgroundSize: 'contain',
-                            border: '1px solid blue',
-                        }}
-                    >
-                        {props.addOn}
+                <div className='sectionClick' onClick={props.onclick}>
+                    <img id='originalImage' src={props.img2} />
+                    <ClickableSVG>
+                        {props.coords?.map((coord) => {
+                            return (
+                                <circle
+                                    key={Math.round(coord[0] + coord[1] * 100)}
+                                    cx={Math.round(
+                                        coord[0] *
+                                            (document.getElementById('originalImage')?.getBoundingClientRect().width ??
+                                                0),
+                                    )}
+                                    cy={Math.round(
+                                        coord[1] *
+                                            (document.getElementById('originalImage')?.getBoundingClientRect().height ??
+                                                0),
+                                    )}
+                                    r='6'
+                                    stroke='white'
+                                    strokeWidth='2'
+                                    fill='blue'
+                                />
+                            );
+                        })}
                     </ClickableSVG>
                 </div>
             )}
-            <div className='container_loading'>
-                <ClickableSVG
-                    height={props.img1[1]}
-                    width={props.img1[2]}
-                    style={{
-                        backgroundImage: "url('" + props.img1[0] + "')",
-                        backgroundRepeat: 'no-repeat',
-                        backgroundSize: 'contain',
-                    }}
-                ></ClickableSVG>
-                {props.loading && <CircularProgress className='circularProgress' />}
+            <div className='containerLoading'>
+                <img id='croppedImage' src={props.img1} />
+                {props.loading && (
+                    <div className='circularProgress'>
+                        <CircularProgress />
+                    </div>
+                )}
             </div>
         </div>
     );
 };
 const ClickableSVG = styled.svg`
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-color: black;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
     & * {
         /* Block your circles from triggering 'add circle' */
         pointer-events: none;

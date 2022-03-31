@@ -66,9 +66,7 @@ const StudentMeeting: FunctionComponent = () => {
     const [processSelected, setprocessSelected] = useState<string>('original');
 
     //circle : svg element to display on click on the image
-    const [circles, setCircles] = useState<React.SVGProps<SVGCircleElement>[]>([]);
     // img : downloaded from back, potentially cropped
-    const [widthImgDouble, setWidthImgDouble] = useState<number>(0);
     const [img, setImg] = useState<string>(
         i18n.language == 'en' ? '../../FirstPictureEN.png' : '../../FirstPictureFR.png',
     );
@@ -77,14 +75,9 @@ const StudentMeeting: FunctionComponent = () => {
     // img original : not cropped
     const [widthImgOriginal, setWidthImgOriginal] = useState<number>(0);
     const [heightImgOriginal, setHeightImgOriginal] = useState<number>(0);
-    const [ratioImgOriginal, setRatioImgOriginal] = useState<number>(0);
     const [imgOriginal, setImgOriginal] = useState<string>(
         i18n.language == 'en' ? '../../FirstPictureEN.png' : '../../FirstPictureFR.png',
     );
-
-    //Dimension image affichée
-    const [widthAff, setWidthAff] = useState<number>(0);
-    const [heightAff, setHeightAff] = useState<number>(0);
 
     //Animation loading, waiting for new Image
     const [loading, setLoading] = useState<boolean>(false);
@@ -96,18 +89,7 @@ const StudentMeeting: FunctionComponent = () => {
     const [miniImg, setMiniImg] = useState<boolean>(true);
 
     useEffect(() => {
-        if (!selectCoord) {
-            setCoord([]);
-            setCircles([]);
-        }
-    }, [selectCoord]);
-
-    useEffect(() => {
-        getImgSize(img, false);
-    }, [img]);
-
-    useEffect(() => {
-        getImgSize(imgOriginal, true);
+        getImgSize(imgOriginal);
     }, [imgOriginal]);
 
     useEffect(() => {
@@ -144,16 +126,14 @@ const StudentMeeting: FunctionComponent = () => {
         let coordinatesList: [number, number][] = [];
 
         // operation to send the correct coordinates to the back
-        const rapportx = widthImgOriginal / widthAff;
-        const rapporty = heightImgOriginal / heightAff;
-        coordinatesList = coord.map((point) => [point[0] * rapportx, point[1] * rapporty]);
+        coordinatesList = coord.map((point) => [point[0] * widthImgOriginal, point[1] * heightImgOriginal]);
         const addressCoord = process.env.REACT_APP_BACK_WEBROOT + '/coord';
         if (addressCoord === undefined) {
             console.error('Coordinate address is not configured');
+            setCoord([]);
         } else {
             axios.post(addressCoord, { room_name: information.roomName, coord: coordinatesList }).then(function () {
                 setCoord([]);
-                setCircles([]);
                 requestProcessedImage(processSelected, true);
             });
         }
@@ -167,49 +147,29 @@ const StudentMeeting: FunctionComponent = () => {
         } else {
             axios.post(addressCoord, { room_name: information.roomName, coord: [] }).then(function () {
                 setCoord([]);
-                setCircles([]);
             });
         }
     }
 
-    // get relative coodinates of the click of the user
-    const getClickCoords = (event: React.MouseEvent) => {
+    // get relative coordinates of the click in proportion of image dimensions
+    const getClickCoordsProportional = (event: React.MouseEvent) => {
         const dim = (event.target as Element).getBoundingClientRect();
-        const x = event.clientX - dim.left;
-        const y = event.clientY - dim.top;
+        const x = (event.clientX - dim.left) / dim.width;
+        const y = (event.clientY - dim.top) / dim.height;
         return [x, y];
     };
 
     const addCircle = (event: React.MouseEvent) => {
         if (selectCoord && !(coord.length == 4)) {
-            // get click coordinates
-            const [x, y] = getClickCoords(event);
-            setCoord([...coord, [x, y]]);
-            // make new svg circle element
-            const newCircle = (
-                <circle key={circles.length + 1} cx={x} cy={y} r='6' stroke='white' strokeWidth='2' fill='blue' />
-            );
-
-            // update the array of circles; you HAVE to spread the current array
-            // as 'circles' is immutible and will not accept new info
-            const allCircles: React.SVGProps<SVGCircleElement>[] = [...circles, newCircle];
-
-            const cnt = allCircles.length;
-            if (cnt == 4) {
-                // if there are 4 coordinates, do not allow to click again
-                const dim = (event.target as Element).getBoundingClientRect();
-                // dimensions of the image displayed on screen
-                setHeightAff(dim.bottom - dim.top);
-                setWidthAff(dim.right - dim.left);
-            }
-            // update 'circles'
-            setCircles(allCircles);
+            const [xProportional, yProportional] = getClickCoordsProportional(event);
+            setCoord([...coord, [xProportional, yProportional]]);
         }
     };
 
     // function called on click of the button
     function AmeliorerVue() {
         if (selectCoord) {
+            setCoord([]);
             setSelectCoord(false);
             setLoading(false);
         } else {
@@ -226,21 +186,12 @@ const StudentMeeting: FunctionComponent = () => {
         setMinimize((minimize) => !minimize);
     }
 
-    function getImgSize(imgSrc: string, original: boolean) {
+    function getImgSize(imgSrc: string) {
         const newImg = new Image();
 
         newImg.onload = function () {
-            const widthNew = newImg.width;
-            const heightNew = newImg.height;
-            if (original) {
-                const ratioImg = (widthNew * 45) / heightNew;
-                setRatioImgOriginal(ratioImg);
-                setWidthImgOriginal(widthNew);
-                setHeightImgOriginal(heightNew);
-            } else {
-                // dimensions of the original image, not of the image displayed on screen
-                setWidthImgDouble((widthNew * 45) / heightNew);
-            }
+            setWidthImgOriginal(newImg.width);
+            setHeightImgOriginal(newImg.height);
         };
 
         newImg.src = imgSrc; // this must be done AFTER setting onload
@@ -287,10 +238,10 @@ const StudentMeeting: FunctionComponent = () => {
                     <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
                     <div className='containerImgStudent'>
                         <ImageViewer
-                            img1={[img, '45vh', widthImgDouble.toString() + 'vh']}
-                            img2={[imgOriginal, '45vh', widthImgDouble.toString() + 'vh']}
+                            img1={img}
+                            img2={imgOriginal}
                             onclick={addCircle}
-                            addOn={circles}
+                            coords={coord}
                             selectWindow={selectCoord}
                             loading={loading}
                         />
@@ -313,26 +264,71 @@ const StudentMeeting: FunctionComponent = () => {
                 </>
             )}
             {minimize && miniImg && (
-                <FloatingBox>
-                    <div className='containerImgStudent floating'>
-                        <ImageViewer
-                            img1={[img, '30vh', ((widthImgDouble / 45) * 30).toString() + 'vh']}
-                            img2={[imgOriginal, '30vh', ((ratioImgOriginal / 45) * 30).toString() + 'vh']}
-                            onclick={addCircle}
-                            addOn={circles}
-                            loading={loading}
-                            selectWindow={selectCoord}
-                        />
-                        {loading && <CircularProgress className='circularProgress' />}
-                        <div className='sectionButtonsStudent'>
-                            <div className='windowButtons'>
-                                <button className='switch' onClick={ChangeView}>
-                                    <CompareArrowsIcon style={{ height: '20px', width: '20px' }} />
-                                </button>
-                                <button className='closeWindow' onClick={ChangeMinimize}>
-                                    <HighlightOffIcon style={{ height: '20px', width: '20px' }} />
-                                </button>
+                <>
+                    <FloatingBox>
+                        <div className='containerImgStudent floating'>
+                            <ImageViewer
+                                img1={img}
+                                img2={imgOriginal}
+                                onclick={addCircle}
+                                coords={coord}
+                                loading={loading}
+                                selectWindow={selectCoord}
+                            />
+                            {loading && <CircularProgress className='circularProgress' />}
+                            <div className='sectionButtonsStudent'>
+                                <div className='windowButtons'>
+                                    <button className='switch' onClick={ChangeView}>
+                                        <CompareArrowsIcon style={{ height: '20px', width: '20px' }} />
+                                    </button>
+                                    <button className='closeWindow' onClick={ChangeMinimize}>
+                                        <HighlightOffIcon style={{ height: '20px', width: '20px' }} />
+                                    </button>
+                                </div>
+                                <TutoButton setDisplayFocus={setDisplayFocus} displayFocus={displayFocus} />
+                                <CropButton
+                                    selectCoord={selectCoord}
+                                    coord={coord}
+                                    validerSaisie={validerSaisie}
+                                    imgIsCropped={imgIsCropped}
+                                    resetCadrage={resetCadrage}
+                                    AmeliorerVue={AmeliorerVue}
+                                />
+                                <SelectFilterButton
+                                    requestProcessedImage={requestProcessedImage}
+                                    processes={processes}
+                                />
                             </div>
+                        </div>
+                    </FloatingBox>
+                    <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
+                </>
+            )}
+            {minimize && !miniImg && (
+                <>
+                    <FloatingBox>
+                        <div className='jitsiFrame floating'>
+                            <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
+                        </div>
+                        <div className='windowButtons meeting'>
+                            <button className='switch' onClick={ChangeView}>
+                                <CompareArrowsIcon style={{ height: '20px', width: '20px' }} />
+                            </button>
+                            <button className='closeWindow' onClick={ChangeMinimize}>
+                                <HighlightOffIcon style={{ height: '20px', width: '20px' }} />
+                            </button>
+                        </div>
+                    </FloatingBox>
+                    <div className='containerImgStudent maximize'>
+                        <ImageViewer
+                            img1={img}
+                            img2={imgOriginal}
+                            selectWindow={selectCoord}
+                            loading={loading}
+                            coords={coord}
+                            onclick={addCircle}
+                        />
+                        <div className='sectionButtonsStudent maximize'>
                             <TutoButton setDisplayFocus={setDisplayFocus} displayFocus={displayFocus} />
                             <CropButton
                                 selectCoord={selectCoord}
@@ -345,53 +341,7 @@ const StudentMeeting: FunctionComponent = () => {
                             <SelectFilterButton requestProcessedImage={requestProcessedImage} processes={processes} />
                         </div>
                     </div>
-                </FloatingBox>
-            )}
-            {minimize && miniImg && (
-                <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
-            )}
-            {minimize && !miniImg && (
-                <FloatingBox>
-                    <div className='jitsiFloating'>
-                        <JitsiFrame information={information} options={meetingOptions} configure={configureFrame} />
-                    </div>
-                    <div className='windowButtons meeting'>
-                        <button className='switch' onClick={ChangeView}>
-                            <CompareArrowsIcon style={{ height: '20px', width: '20px' }} />
-                        </button>
-                        <button className='closeWindow' onClick={ChangeMinimize}>
-                            <HighlightOffIcon style={{ height: '20px', width: '20px' }} />
-                        </button>
-                    </div>
-                </FloatingBox>
-            )}
-            {minimize && !miniImg && (
-                <div className='containerImgStudent'>
-                    <ImageViewer
-                        img1={
-                            selectCoord
-                                ? [img, '45vh', widthImgDouble.toString() + 'vh']
-                                : [img, '90vh', ((90 * widthImgDouble) / 45).toString() + 'vh']
-                        }
-                        img2={[imgOriginal, '45vh', widthImgDouble.toString() + 'vh']}
-                        selectWindow={selectCoord}
-                        loading={loading}
-                        addOn={circles}
-                        onclick={addCircle}
-                    />
-                    <div className='sectionButtonsStudent maximize'>
-                        <TutoButton setDisplayFocus={setDisplayFocus} displayFocus={displayFocus} />
-                        <CropButton
-                            selectCoord={selectCoord}
-                            coord={coord}
-                            validerSaisie={validerSaisie}
-                            imgIsCropped={imgIsCropped}
-                            resetCadrage={resetCadrage}
-                            AmeliorerVue={AmeliorerVue}
-                        />
-                        <SelectFilterButton requestProcessedImage={requestProcessedImage} processes={processes} />
-                    </div>
-                </div>
+                </>
             )}
 
             {displayFocus && (
