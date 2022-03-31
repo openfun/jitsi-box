@@ -4,7 +4,6 @@
     justify-content: flex-start;
     text-align: center;
     align-self: center;
-    color: #efefef;
     font-size: large;
     height: 100vh;
     width: 100vw;
@@ -12,14 +11,17 @@
 
 .BoxHome {
     background-color: #1f1f1f;
+    color: #efefef;
 }
 
 .StudentHome {
     background-color: #184777;
+    color: #efefef;
 }
 
 .TeacherHome {
     background-color: #efefef;
+    color: #505050;
 }
 
 .HomeButtonsContainer {
@@ -29,6 +31,15 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+}
+
+.BoxHome #StartMeetingButton, .BoxHome #ReturnToMeetingButton{
+    width: 60vw;
+    height: 15vh;
+}
+
+.StudentHome #ReturnToMeetingButton, .TeacherHome #ReturnToMeetingButton {
+    max-width: 40em;
 }
 
 .LogoContainer {

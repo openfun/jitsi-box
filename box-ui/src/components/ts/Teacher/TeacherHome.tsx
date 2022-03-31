@@ -41,7 +41,7 @@ const TeacherHome: FunctionComponent = () => {
             <div className='LogoContainer'>
                 <img src={JitsiBoxLogo} alt='logo de la jitsi-box' className='logo' />
             </div>
-            <h2 style={{ color: '#505050' }}>{t('teacherSpace')}</h2>
+            <h2>{t('teacherSpace')}</h2>
             <div className='HomeButtonsContainer'>
                 <InputButton buttonLabel={t('joinAMeeting')} inputLabel={t('enterRoomName')} onSubmit={joinMeeting} />
                 <ProgressButton initialCounter={state ? state.count : 0} onClick={launchLastMeeting}>
