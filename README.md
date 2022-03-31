@@ -16,7 +16,7 @@ The `Jitsi-Box` is a web application with 3 different interfaces each tailored f
  - One for the Raspberry which should be installed in the classroom. 
  - The last one for the students, where they can crop and filter the image of the whiteboard captured by the 2 previous interfaces (see  section "general overview" for more details).
 
- The Teacher and Box (Raspberry) interfaces are used to record simultaneously the whiteboard and the classroom. It is recommanded to follow the instructions below for the configuration of the devices in the classroom : 
+ The Teacher and Box (Raspberry) interfaces are used to record simultaneously the whiteboard and the classroom. It is recommanded to follow the instructions below for the devices' configuration in the classroom : 
  
 - a sound system to render the sound of the people online
 - At least 2 cameras dispersed in the room to film an overview of the classroom but also the whiteboard
