@@ -5,60 +5,35 @@ A **hybrid classroom** combines traditional face-to-face teaching with online te
 
 **Our ambition is to blend the virtual classroom with the real classroom through the use of a simple device called the `Jitsi-Box`**.
 
-The `Jitsi-Box` is a case with an interface which allows teachers to connect their physical classroom to their online teaching meeting. 
-
-Ultimately, the idea is to ensure that online students feel as if they were actually in the classroom with easy interactions with their peers in the class and vice-versa.
+Ultimately, the idea is to ensure that online students feel as if they were actually in the classroom with easy interactions with their peers in the class and vice-versa. Furthemore, the Jitsi-Box is designed to give the students an enhanced vision of the whiteboard, so as to help them attend their lessons more easily.
 
 <p align="center">
   <img src="./docs/images/jitsi-box-in-hybrid-classroom.jpg" width="500" alt="Jitsi Box in hybrid classroom"/>
 </p>
 
-In order to do that, the `Jitsi-Box` device can be placed in a classroom (on a wall or desk) and then connected to:
+The `Jitsi-Box` is a web application with 3 different interfaces each tailored for specific users : 
+ - One which allows teachers to connect (with the computer of the classroom) to their online teaching meeting. 
+ - One for the Raspberry which should be installed in the classroom. 
+ - The last one for the students, where they can crop and filter the image of the whiteboard captured by the 2 previous interfaces (see  section "general overview" for more details).
 
+ The Teacher and Box (Raspberry) interfaces are used to record simultaneously the whiteboard and the classroom. It is recommanded to follow the instructions below for the configuration of the devices in the classroom : 
+ 
 - a sound system to render the sound of the people online
-- various cameras dispersed in the room to render the classroom to the people online
-- a microphone to take the sound from the classroom
-- a TV to see the people online within the classroom
+- At least 2 cameras dispersed in the room to film an overview of the classroom but also the whiteboard
+- a microphone to record the sound of the classroom and the teacher
+- a screen to see the people online within the classroom
 
 All of these outputs can be chosen by he/she who setups the jitsi-box in a room.
 
 A version of the application is available on https://jitsi-box.com
 
-The application has been configured as a `Progressive Web App` and can therefore be installed on the desktop of any device.
-
 ## Architecture
 
-The `Jitsi-box` is made up of 3 essential building blocks: a `React` frontend application, a `Raspberry Pie` controller and a `touchscreen` to control the application.
+The `Jitsi-box` is made up of 2 essential building blocks: a `React` frontend application, a `FastAPI` backend application.
 
+The interfaces Teacher or Box (Raspberry) are used to send images of the whiteboard at regular intervals. Then, the backend application processes the image (crop and filter), in function of the needs specified by the students. Finally, the server sends the newly processed images to the front applications of the students. 
 
 ## Getting Started
-
-### `React` Front-end
-
-A simplified tree of the app:
-
-<pre>
-├── src
-│   ├── App.css
-│   ├── App.test.tsx
-│   ├── App.tsx
-│   ├── components
-│   │   ├── css
-│   │   ├── tests
-│   │   └── ts
-│   │       ├── ConnectionComponent.tsx
-│   │       ├── CreateMeetingComponent.tsx
-│   │       ├── FormJoinMeeting.tsx
-│   │       ├── HomeButtonsComponent.tsx
-│   │       ├── HomeComponent.tsx
-│   │       ├── JitsiComponent.tsx
-│   │       ├── JoinMeetingComponent.tsx
-│   │       ├── MarshaLoginComponent.tsx
-│   │       ├── PopupComponent.tsx
-│   │       ├── QrCodeComponent.tsx
-│   │       └── QrCodeScanner.tsx
-│   ├── dictionnaries_fr
-</pre>
 
 ### `Raspberry`
 
@@ -97,11 +72,17 @@ For the deployment setup and launch, please see the following **[ReadMe](./stagi
 
 This project is an MVP developed by 3 MEng Students from the **Paris Digital Lab** a digital innovation program of CentraleSupélec.
 
-The team is composed of:
+The first team was composed of:
 
 **Mohamed Khairallah Gharbi \
 Arthur Naudy \
 Simon Maréchal**
+
+A second team continued the project Jitsi-Box : 
+**Vianney Ruhlmann \
+Adrien Berger \
+Fayssal Defaa \
+Julien Jacquot **
 
 ## Contributions
 
