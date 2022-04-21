@@ -6,7 +6,7 @@ object-assign
 
 /*!
          * 
-         *   simple-keyboard v3.4.55
+         *   simple-keyboard v3.4.3
          *   https://github.com/hodgef/simple-keyboard
          *
          *   Copyright (c) Francisco Hodge (https://github.com/hodgef) and project contributors.
@@ -15,17 +15,6 @@ object-assign
          *   LICENSE file in the root directory of this source tree.
          *
          */
-
-/**
- * React Router DOM v6.2.1
- *
- * Copyright (c) Remix Software Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.md file in the root directory of this source tree.
- *
- * @license MIT
- */
 
 /**
  * React Router v6.2.1
@@ -38,7 +27,7 @@ object-assign
  * @license MIT
  */
 
-/** @license MUI v5.4.2
+/** @license MUI v5.4.1
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
